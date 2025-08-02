@@ -13487,43 +13487,85 @@ profile("Inf Yield", function()
         return x:FindFirstChild("Torso") or x:FindFirstChild("UpperTorso") or x:FindFirstChild("LowerTorso") or x:FindFirstChild("HumanoidRootPart")
     end
 
+    local bangAnim, bang, bangLoop, bangDied
+    local isDead = false
+
     addcmd("bang", { "rape" }, function(args, speaker)
-        execCmd("unbang")
+        execCmd("unbang", speaker)
         task.wait()
-        local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+
+        local char = speaker.Character
+        if not char then
+            return
+        end
+
+        local humanoid = char:FindFirstChildWhichIsA("Humanoid")
+        if not humanoid or humanoid.Health <= 0 then
+            return
+        end
+
+        isDead = false
         bangAnim = Instance.new("Animation")
-        bangAnim.AnimationId = not r15(speaker) and "rbxassetid://148840371" or "rbxassetid://5918726674"
+        bangAnim.AnimationId = r15(speaker) and "rbxassetid://5918726674" or "rbxassetid://148840371"
+
         bang = humanoid:LoadAnimation(bangAnim)
         bang:Play(0.1, 1, 1)
-        bang:AdjustSpeed(args[2] or 3)
+        bang:AdjustSpeed(tonumber(args[2]) or 3)
+
         bangDied = humanoid.Died:Connect(function()
-            bang:Stop()
-            bangAnim:Destroy()
-            bangDied:Disconnect()
-            bangLoop:Disconnect()
+            isDead = true
+            execCmd("unbang", speaker)
         end)
-        if args[1] then
-            local players = getPlayer(args[1], speaker)
-            for _, v in pairs(players) do
-                local bangplr = Players[v].Name
-                local bangOffet = CFrame.new(0, 0, 1.1)
-                bangLoop = RunService.Stepped:Connect(function()
-                    pcall(function()
-                        local otherRoot = getTorso(Players[bangplr].Character)
-                        getRoot(speaker.Character).CFrame = otherRoot.CFrame * bangOffet
-                    end)
-                end)
-            end
+
+        if isDead or not args[1] then
+            return
         end
+
+        local targetPlayers = getPlayer(args[1], speaker)
+        local target = targetPlayers and Players[targetPlayers[1]]
+        if not (target and target.Character) then
+            return
+        end
+
+        local offset = CFrame.new(0, 0, 1.1)
+        bangLoop = RunService.Stepped:Connect(function()
+            if isDead then
+                return
+            end
+            pcall(function()
+                local targetTorso = getTorso(target.Character)
+                local speakerRoot = getRoot(speaker.Character)
+                if targetTorso and speakerRoot then
+                    speakerRoot.CFrame = targetTorso.CFrame * offset
+                end
+            end)
+        end)
     end)
 
     addcmd("unbang", { "unrape" }, function(args, speaker)
-        if bangDied then
-            bangDied:Disconnect()
-            bang:Stop()
-            bangAnim:Destroy()
-            bangLoop:Disconnect()
+        if bang then
+            pcall(function()
+                bang:Stop()
+            end)
         end
+        if bangAnim then
+            pcall(function()
+                bangAnim:Destroy()
+            end)
+        end
+        if bangLoop then
+            pcall(function()
+                bangLoop:Disconnect()
+            end)
+        end
+        if bangDied then
+            pcall(function()
+                bangDied:Disconnect()
+            end)
+        end
+
+        bang, bangAnim, bangLoop, bangDied = nil, nil, nil, nil
+        isDead = false
     end)
 
     addcmd("carpet", {}, function(args, speaker)
@@ -14681,7 +14723,7 @@ profile("Inf Yield", function()
         bambam.Parent = getRoot(speaker.Character)
         bambam.Force = Vector3.new(99999, 99999 * 10, 99999)
         bambam.Location = getRoot(speaker.Character).Position
-end)
+    end)
 
     addcmd("antifling", {}, function(args, speaker)
         if antifling then
