@@ -2023,7 +2023,7 @@ profile("Inf Yield", function()
     end
 
     function getRoot(char)
-        local rootPart = char:FindFirstChild("HumanoidRootPart") or char:FindFirstChild("Torso") or char:FindFirstChild("UpperTorso")
+        local rootPart = char:FindFirstChild("HumanoidRootPart") or char:FindFirstChild("Torso") or char:FindFirstChild("UpperTorso") -- ONE-TIME ISSUE: char was nil
         return rootPart
     end
 
