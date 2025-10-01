@@ -26,7 +26,7 @@ profile("Inf Yield", function()
                 return service
             end
             error("Service '" .. key .. "' not found", 2)
-        end,
+        end
     })
 
     pcall(function()
@@ -263,7 +263,7 @@ profile("Inf Yield", function()
                 return ("03 %02d"):format(G)
             end)(tonumber(os.date("%Y")))] = "🥚",
             ["10 31"] = "🎃",
-            ["12 25"] = "🎄",
+            ["12 25"] = "🎄"
         })[os.date("%m %d")]
         if emoji then
             Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
@@ -1503,7 +1503,8 @@ profile("Inf Yield", function()
     PositionsHint.Size = UDim2.new(0, 200, 0, 70)
     PositionsHint.Font = Enum.Font.SourceSansItalic
     PositionsHint.TextSize = 16
-    PositionsHint.Text = "Use the 'swp' or 'setwaypoint' command to add a position using your character (NOTE: Part teleports will not save)"
+    PositionsHint.Text =
+        "Use the 'swp' or 'setwaypoint' command to add a position using your character (NOTE: Part teleports will not save)"
     PositionsHint.TextColor3 = Color3.new(1, 1, 1)
     PositionsHint.TextStrokeColor3 = Color3.new(1, 1, 1)
     PositionsHint.TextWrapped = true
@@ -1879,8 +1880,10 @@ profile("Inf Yield", function()
             local leftEnd = -self.TextBox.Position.X.Offset
             local rightEnd = leftEnd + self.View.AbsoluteSize.X
 
-            local totalTextSize = TextService:GetTextSize(text, self.TextBox.TextSize, self.TextBox.Font, Vector2.new(999999999, 100)).X
-            local cursorTextSize = TextService:GetTextSize(cursorText, self.TextBox.TextSize, self.TextBox.Font, Vector2.new(999999999, 100)).X
+            local totalTextSize = TextService:GetTextSize(text, self.TextBox.TextSize, self.TextBox.Font,
+                                      Vector2.new(999999999, 100)).X
+            local cursorTextSize = TextService:GetTextSize(cursorText, self.TextBox.TextSize, self.TextBox.Font,
+                                       Vector2.new(999999999, 100)).X
 
             if cursorTextSize > rightEnd then
                 pos = math.max(-2, cursorTextSize - self.View.AbsoluteSize.X + 2)
@@ -1900,7 +1903,10 @@ profile("Inf Yield", function()
         mt.__index = funcs
 
         local function convert(textbox)
-            local obj = setmetatable({ OffsetX = 0, TextBox = textbox }, mt)
+            local obj = setmetatable({
+                OffsetX = 0,
+                TextBox = textbox
+            }, mt)
 
             local view = Instance.new("Frame")
             view.BackgroundTransparency = textbox.BackgroundTransparency
@@ -1936,7 +1942,9 @@ profile("Inf Yield", function()
             return obj
         end
 
-        return { convert = convert }
+        return {
+            convert = convert
+        }
     end)()
 
     ViewportTextBox.convert(Cmdbar).View.ZIndex = 10
@@ -1984,9 +1992,10 @@ profile("Inf Yield", function()
     sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
     gethidden = gethiddenproperty or get_hidden_property or get_hidden_prop
     queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-    httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+    httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or
+                      request
     PlaceId, JobId = game.PlaceId, game.JobId
-    local IsOnMobile = table.find({ Enum.Platform.IOS, Enum.Platform.Android }, UserInputService:GetPlatform())
+    local IsOnMobile = table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform())
     everyClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
     isLegacyChat = TextChatService.ChatVersion == Enum.ChatVersion.LegacyChatService
 
@@ -2023,12 +2032,14 @@ profile("Inf Yield", function()
     end
 
     function getRoot(char)
-        local rootPart = char:FindFirstChild("HumanoidRootPart") or char:FindFirstChild("Torso") or char:FindFirstChild("UpperTorso") -- ONE-TIME ISSUE: char was nil
+        local rootPart = char:FindFirstChild("HumanoidRootPart") or char:FindFirstChild("Torso") or
+                             char:FindFirstChild("UpperTorso") -- ONE-TIME ISSUE: char was nil
         return rootPart
     end
 
     function tools(plr)
-        if plr:FindFirstChildOfClass("Backpack"):FindFirstChildOfClass("Tool") or plr.Character:FindFirstChildOfClass("Tool") then
+        if plr:FindFirstChildOfClass("Backpack"):FindFirstChildOfClass("Tool") or
+            plr.Character:FindFirstChildOfClass("Tool") then
             return true
         end
     end
@@ -2142,11 +2153,15 @@ profile("Inf Yield", function()
             local startPos
             local function update(input)
                 local delta = input.Position - dragStart
-                local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-                TweenService:Create(gui, TweenInfo.new(0.20), { Position = Position }):Play()
+                local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale,
+                    startPos.Y.Offset + delta.Y)
+                TweenService:Create(gui, TweenInfo.new(0.20), {
+                    Position = Position
+                }):Play()
             end
             gui.InputBegan:Connect(function(input)
-                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType ==
+                    Enum.UserInputType.Touch then
                     dragging = true
                     dragStart = input.Position
                     startPos = gui.Position
@@ -2159,7 +2174,8 @@ profile("Inf Yield", function()
                 end
             end)
             gui.InputChanged:Connect(function(input)
-                if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType ==
+                    Enum.UserInputType.Touch then
                     dragInput = input
                 end
             end)
@@ -2182,14 +2198,14 @@ profile("Inf Yield", function()
         local function registerEvent(name, sets)
             events[name] = {
                 commands = {},
-                sets = sets or {},
+                sets = sets or {}
             }
         end
 
         local onEdited = nil
 
         local function fireEvent(name, ...)
-            local args = { ... }
+            local args = {...}
             local event = events[name]
             if event then
                 for i, cmd in pairs(event.commands) do
@@ -2202,7 +2218,8 @@ profile("Inf Yield", function()
                             if cmdSet == 0 then
                                 metCondition = metCondition and (tostring(Players.LocalPlayer) == argVal)
                             elseif cmdSet ~= 1 then
-                                metCondition = metCondition and table.find(getPlayer(cmdSet, Players.LocalPlayer), argVal)
+                                metCondition = metCondition and
+                                                   table.find(getPlayer(cmdSet, Players.LocalPlayer), argVal)
                             end
                         elseif condType == "String" then
                             if cmdSet ~= 0 then
@@ -2232,931 +2249,653 @@ profile("Inf Yield", function()
             end
         end
 
-        local main = create({
-            {
-                1,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "EventEditor",
-                    Position = UDim2.new(0.5, -175, 0, -500),
-                    Size = UDim2.new(0, 350, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                2,
-                "Frame",
-                {
-                    BackgroundColor3 = currentShade2,
-                    BorderSizePixel = 0,
-                    Name = "TopBar",
-                    Parent = { 1 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                3,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Title",
-                    Parent = { 2 },
-                    Position = UDim2.new(0, 0, 0, 0),
-                    Size = UDim2.new(1, 0, 0.95, 0),
-                    Text = "Event Editor",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = Enum.TextXAlignment.Center,
-                    ZIndex = 10,
-                },
-            },
-            {
-                4,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Close",
-                    Parent = { 2 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                5,
-                "ImageLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Image = "rbxassetid://5054663650",
-                    Parent = { 4 },
-                    Position = UDim2.new(0, 5, 0, 5),
-                    Size = UDim2.new(0, 10, 0, 10),
-                    ZIndex = 10,
-                },
-            },
-            {
-                6,
-                "Frame",
-                {
-                    BackgroundColor3 = currentShade1,
-                    BorderSizePixel = 0,
-                    Name = "Content",
-                    Parent = { 1 },
-                    Position = UDim2.new(0, 0, 0, 20),
-                    Size = UDim2.new(1, 0, 0, 202),
-                    ZIndex = 10,
-                },
-            },
-            {
-                7,
-                "ScrollingFrame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
-                    CanvasSize = UDim2.new(0, 0, 0, 100),
-                    Name = "List",
-                    Parent = { 6 },
-                    Position = UDim2.new(0, 5, 0, 5),
-                    ScrollBarImageColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    ScrollBarThickness = 8,
-                    Size = UDim2.new(1, -10, 1, -10),
-                    TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
-                    ZIndex = 10,
-                },
-            },
-            {
-                8,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Holder",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    ZIndex = 10,
-                },
-            },
-            { 9, "UIListLayout", { Parent = { 8 }, SortOrder = 2 } },
-            {
-                10,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.3137255012989, 0.3137255012989, 0.3137255012989),
-                    BorderSizePixel = 0,
-                    ClipsDescendants = true,
-                    Name = "Settings",
-                    Parent = { 6 },
-                    Position = UDim2.new(1, 0, 0, 0),
-                    Size = UDim2.new(0, 150, 1, 0),
-                    ZIndex = 10,
-                },
-            },
-            {
-                11,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    Name = "Slider",
-                    Parent = { 10 },
-                    Position = UDim2.new(0, -150, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    ZIndex = 10,
-                },
-            },
-            {
-                12,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.23529413342476, 0.23529413342476, 0.23529413342476),
-                    BorderColor3 = Color3.new(0.3137255012989, 0.3137255012989, 0.3137255012989),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 11 },
-                    Size = UDim2.new(0, 1, 1, 0),
-                    ZIndex = 10,
-                },
-            },
-            {
-                13,
-                "ScrollingFrame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
-                    CanvasSize = UDim2.new(0, 0, 0, 100),
-                    Name = "List",
-                    Parent = { 11 },
-                    Position = UDim2.new(0, 0, 0, 25),
-                    ScrollBarImageColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    ScrollBarThickness = 8,
-                    Size = UDim2.new(1, 0, 1, -25),
-                    TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
-                    ZIndex = 10,
-                },
-            },
-            {
-                14,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Holder",
-                    Parent = { 13 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    ZIndex = 10,
-                },
-            },
-            { 15, "UIListLayout", { Parent = { 14 }, SortOrder = 2 } },
-            {
-                16,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Title",
-                    Parent = { 11 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    Text = "Event Settings",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                17,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    Font = 3,
-                    Name = "Close",
-                    BorderSizePixel = 0,
-                    Parent = { 11 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    Text = "<",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 18,
-                    ZIndex = 10,
-                },
-            },
-            { 18, "Folder", { Name = "Templates", Parent = { 10 } } },
-            {
-                19,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    Name = "Players",
-                    Parent = { 18 },
-                    Position = UDim2.new(0, 0, 0, 25),
-                    Size = UDim2.new(1, 0, 0, 86),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                20,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Title",
-                    Parent = { 19 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    Text = "Choose Players",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                21,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Any",
-                    Parent = { 19 },
-                    Position = UDim2.new(0, 5, 0, 42),
-                    Size = UDim2.new(1, -10, 0, 20),
-                    Text = "Any Player",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                22,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "Button",
-                    Parent = { 21 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                23,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 22 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                24,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Me",
-                    Parent = { 19 },
-                    Position = UDim2.new(0, 5, 0, 20),
-                    Size = UDim2.new(1, -10, 0, 20),
-                    Text = "Me Only",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                25,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "Button",
-                    Parent = { 24 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                26,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 25 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                27,
-                "TextBox",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    ClearTextOnFocus = false,
-                    Font = 3,
-                    Name = "Custom",
-                    Parent = { 19 },
-                    PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
-                    PlaceholderText = "Custom Player Set",
-                    Position = UDim2.new(0, 5, 0, 64),
-                    Size = UDim2.new(1, -35, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                28,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "CustomButton",
-                    Parent = { 19 },
-                    Position = UDim2.new(1, -25, 0, 64),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                29,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 28 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                30,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    Name = "Strings",
-                    Parent = { 18 },
-                    Position = UDim2.new(0, 0, 0, 25),
-                    Size = UDim2.new(1, 0, 0, 64),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                31,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Title",
-                    Parent = { 30 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    Text = "Choose String",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                32,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Any",
-                    Parent = { 30 },
-                    Position = UDim2.new(0, 5, 0, 20),
-                    Size = UDim2.new(1, -10, 0, 20),
-                    Text = "Any String",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                33,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "Button",
-                    Parent = { 32 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                34,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 33 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                54,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    Name = "Numbers",
-                    Parent = { 18 },
-                    Position = UDim2.new(0, 0, 0, 25),
-                    Size = UDim2.new(1, 0, 0, 64),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                55,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Title",
-                    Parent = { 54 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    Text = "Choose String",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                56,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Any",
-                    Parent = { 54 },
-                    Position = UDim2.new(0, 5, 0, 20),
-                    Size = UDim2.new(1, -10, 0, 20),
-                    Text = "Any Number",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                57,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "Button",
-                    Parent = { 56 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                58,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 57 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                59,
-                "TextBox",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    ClearTextOnFocus = false,
-                    Font = 3,
-                    Name = "Custom",
-                    Parent = { 54 },
-                    PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
-                    PlaceholderText = "Number",
-                    Position = UDim2.new(0, 5, 0, 42),
-                    Size = UDim2.new(1, -35, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                60,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "CustomButton",
-                    Parent = { 54 },
-                    Position = UDim2.new(1, -25, 0, 42),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                61,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 60 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                35,
-                "TextBox",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    ClearTextOnFocus = false,
-                    Font = 3,
-                    Name = "Custom",
-                    Parent = { 30 },
-                    PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
-                    PlaceholderText = "Match String",
-                    Position = UDim2.new(0, 5, 0, 42),
-                    Size = UDim2.new(1, -35, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                36,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    BorderSizePixel = 0,
-                    Name = "CustomButton",
-                    Parent = { 30 },
-                    Position = UDim2.new(1, -25, 0, 42),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                37,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "On",
-                    Parent = { 36 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    Text = "",
-                    TextColor3 = Color3.new(0, 0, 0),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                38,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    Name = "DelayEditor",
-                    Parent = { 18 },
-                    Position = UDim2.new(0, 0, 0, 25),
-                    Size = UDim2.new(1, 0, 0, 24),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                39,
-                "TextBox",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Secs",
-                    Parent = { 38 },
-                    PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
-                    Position = UDim2.new(0, 60, 0, 2),
-                    Size = UDim2.new(1, -65, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                40,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Label",
-                    Parent = { 39 },
-                    Position = UDim2.new(0, -55, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "Delay (s):",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                41,
-                "Frame",
-                {
-                    BackgroundColor3 = currentShade1,
-                    BorderSizePixel = 0,
-                    ClipsDescendants = true,
-                    Name = "EventTemplate",
-                    Parent = { 6 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                42,
-                "TextButton",
-                {
-                    BackgroundColor3 = currentText1,
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Expand",
-                    Parent = { 41 },
-                    Size = UDim2.new(0, 20, 0, 20),
-                    Text = ">",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 18,
-                    ZIndex = 10,
-                },
-            },
-            {
-                43,
-                "TextLabel",
-                {
-                    BackgroundColor3 = currentText1,
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "EventName",
-                    Parent = { 41 },
-                    Position = UDim2.new(0, 25, 0, 0),
-                    Size = UDim2.new(1, -25, 0, 20),
-                    Text = "OnSpawn",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                44,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
-                    BorderSizePixel = 0,
-                    BackgroundTransparency = 1,
-                    ClipsDescendants = true,
-                    Name = "Cmds",
-                    Parent = { 41 },
-                    Position = UDim2.new(0, 0, 0, 20),
-                    Size = UDim2.new(1, 0, 1, -20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                45,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BorderColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    Name = "Add",
-                    Parent = { 44 },
-                    Position = UDim2.new(0, 0, 1, -20),
-                    Size = UDim2.new(1, 0, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                46,
-                "TextBox",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    ClearTextOnFocus = false,
-                    Font = 3,
-                    Parent = { 45 },
-                    PlaceholderColor3 = Color3.new(0.7843137383461, 0.7843137383461, 0.7843137383461),
-                    PlaceholderText = "Add new command",
-                    Position = UDim2.new(0, 5, 0, 0),
-                    Size = UDim2.new(1, -10, 1, 0),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                47,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Holder",
-                    Parent = { 44 },
-                    Size = UDim2.new(1, 0, 1, -20),
-                    ZIndex = 10,
-                },
-            },
-            { 48, "UIListLayout", { Parent = { 47 }, SortOrder = 2 } },
-            {
-                49,
-                "Frame",
-                {
-                    currentShade1,
-                    BorderSizePixel = 0,
-                    ClipsDescendants = true,
-                    Name = "CmdTemplate",
-                    Parent = { 6 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                50,
-                "TextBox",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    ClearTextOnFocus = false,
-                    Font = 3,
-                    Parent = { 49 },
-                    PlaceholderColor3 = Color3.new(1, 1, 1),
-                    Position = UDim2.new(0, 5, 0, 0),
-                    Size = UDim2.new(1, -45, 0, 20),
-                    Text = "a\\b\\c\\d",
-                    TextColor3 = currentText1,
-                    TextSize = 14,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                51,
-                "TextButton",
-                {
-                    BackgroundColor3 = currentShade1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Delete",
-                    Parent = { 49 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    Text = "X",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 18,
-                    ZIndex = 10,
-                },
-            },
-            {
-                52,
-                "TextButton",
-                {
-                    BackgroundColor3 = currentShade1,
-                    BorderSizePixel = 0,
-                    Font = 3,
-                    Name = "Settings",
-                    Parent = { 49 },
-                    Position = UDim2.new(1, -40, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 18,
-                    ZIndex = 10,
-                },
-            },
-            {
-                53,
-                "ImageLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Image = "rbxassetid://1204397029",
-                    Parent = { 52 },
-                    Position = UDim2.new(0, 2, 0, 2),
-                    Size = UDim2.new(0, 16, 0, 16),
-                    ZIndex = 10,
-                },
-            },
-        })
+        local main = create({{1, "Frame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "EventEditor",
+            Position = UDim2.new(0.5, -175, 0, -500),
+            Size = UDim2.new(0, 350, 0, 20),
+            ZIndex = 10
+        }}, {2, "Frame", {
+            BackgroundColor3 = currentShade2,
+            BorderSizePixel = 0,
+            Name = "TopBar",
+            Parent = {1},
+            Size = UDim2.new(1, 0, 0, 20),
+            ZIndex = 10
+        }}, {3, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Title",
+            Parent = {2},
+            Position = UDim2.new(0, 0, 0, 0),
+            Size = UDim2.new(1, 0, 0.95, 0),
+            Text = "Event Editor",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = Enum.TextXAlignment.Center,
+            ZIndex = 10
+        }}, {4, "TextButton", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Close",
+            Parent = {2},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {5, "ImageLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://5054663650",
+            Parent = {4},
+            Position = UDim2.new(0, 5, 0, 5),
+            Size = UDim2.new(0, 10, 0, 10),
+            ZIndex = 10
+        }}, {6, "Frame", {
+            BackgroundColor3 = currentShade1,
+            BorderSizePixel = 0,
+            Name = "Content",
+            Parent = {1},
+            Position = UDim2.new(0, 0, 0, 20),
+            Size = UDim2.new(1, 0, 0, 202),
+            ZIndex = 10
+        }}, {7, "ScrollingFrame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
+            CanvasSize = UDim2.new(0, 0, 0, 100),
+            Name = "List",
+            Parent = {6},
+            Position = UDim2.new(0, 5, 0, 5),
+            ScrollBarImageColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            ScrollBarThickness = 8,
+            Size = UDim2.new(1, -10, 1, -10),
+            TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
+            ZIndex = 10
+        }}, {8, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Holder",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 1, 0),
+            ZIndex = 10
+        }}, {9, "UIListLayout", {
+            Parent = {8},
+            SortOrder = 2
+        }}, {10, "Frame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.3137255012989, 0.3137255012989, 0.3137255012989),
+            BorderSizePixel = 0,
+            ClipsDescendants = true,
+            Name = "Settings",
+            Parent = {6},
+            Position = UDim2.new(1, 0, 0, 0),
+            Size = UDim2.new(0, 150, 1, 0),
+            ZIndex = 10
+        }}, {11, "Frame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            Name = "Slider",
+            Parent = {10},
+            Position = UDim2.new(0, -150, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            ZIndex = 10
+        }}, {12, "Frame", {
+            BackgroundColor3 = Color3.new(0.23529413342476, 0.23529413342476, 0.23529413342476),
+            BorderColor3 = Color3.new(0.3137255012989, 0.3137255012989, 0.3137255012989),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {11},
+            Size = UDim2.new(0, 1, 1, 0),
+            ZIndex = 10
+        }}, {13, "ScrollingFrame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
+            CanvasSize = UDim2.new(0, 0, 0, 100),
+            Name = "List",
+            Parent = {11},
+            Position = UDim2.new(0, 0, 0, 25),
+            ScrollBarImageColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            ScrollBarThickness = 8,
+            Size = UDim2.new(1, 0, 1, -25),
+            TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
+            ZIndex = 10
+        }}, {14, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Holder",
+            Parent = {13},
+            Size = UDim2.new(1, 0, 1, 0),
+            ZIndex = 10
+        }}, {15, "UIListLayout", {
+            Parent = {14},
+            SortOrder = 2
+        }}, {16, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Title",
+            Parent = {11},
+            Size = UDim2.new(1, 0, 0, 20),
+            Text = "Event Settings",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {17, "TextButton", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            Font = 3,
+            Name = "Close",
+            BorderSizePixel = 0,
+            Parent = {11},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            Text = "<",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 18,
+            ZIndex = 10
+        }}, {18, "Folder", {
+            Name = "Templates",
+            Parent = {10}
+        }}, {19, "Frame", {
+            BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            Name = "Players",
+            Parent = {18},
+            Position = UDim2.new(0, 0, 0, 25),
+            Size = UDim2.new(1, 0, 0, 86),
+            Visible = false,
+            ZIndex = 10
+        }}, {20, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Title",
+            Parent = {19},
+            Size = UDim2.new(1, 0, 0, 20),
+            Text = "Choose Players",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {21, "TextLabel", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Any",
+            Parent = {19},
+            Position = UDim2.new(0, 5, 0, 42),
+            Size = UDim2.new(1, -10, 0, 20),
+            Text = "Any Player",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {22, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "Button",
+            Parent = {21},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {23, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {22},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {24, "TextLabel", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Me",
+            Parent = {19},
+            Position = UDim2.new(0, 5, 0, 20),
+            Size = UDim2.new(1, -10, 0, 20),
+            Text = "Me Only",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {25, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "Button",
+            Parent = {24},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {26, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {25},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {27, "TextBox", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            ClearTextOnFocus = false,
+            Font = 3,
+            Name = "Custom",
+            Parent = {19},
+            PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
+            PlaceholderText = "Custom Player Set",
+            Position = UDim2.new(0, 5, 0, 64),
+            Size = UDim2.new(1, -35, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {28, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "CustomButton",
+            Parent = {19},
+            Position = UDim2.new(1, -25, 0, 64),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {29, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {28},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {30, "Frame", {
+            BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            Name = "Strings",
+            Parent = {18},
+            Position = UDim2.new(0, 0, 0, 25),
+            Size = UDim2.new(1, 0, 0, 64),
+            Visible = false,
+            ZIndex = 10
+        }}, {31, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Title",
+            Parent = {30},
+            Size = UDim2.new(1, 0, 0, 20),
+            Text = "Choose String",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {32, "TextLabel", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Any",
+            Parent = {30},
+            Position = UDim2.new(0, 5, 0, 20),
+            Size = UDim2.new(1, -10, 0, 20),
+            Text = "Any String",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {33, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "Button",
+            Parent = {32},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {34, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {33},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {54, "Frame", {
+            BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            Name = "Numbers",
+            Parent = {18},
+            Position = UDim2.new(0, 0, 0, 25),
+            Size = UDim2.new(1, 0, 0, 64),
+            Visible = false,
+            ZIndex = 10
+        }}, {55, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Title",
+            Parent = {54},
+            Size = UDim2.new(1, 0, 0, 20),
+            Text = "Choose String",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {56, "TextLabel", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Any",
+            Parent = {54},
+            Position = UDim2.new(0, 5, 0, 20),
+            Size = UDim2.new(1, -10, 0, 20),
+            Text = "Any Number",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {57, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "Button",
+            Parent = {56},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {58, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {57},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {59, "TextBox", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            ClearTextOnFocus = false,
+            Font = 3,
+            Name = "Custom",
+            Parent = {54},
+            PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
+            PlaceholderText = "Number",
+            Position = UDim2.new(0, 5, 0, 42),
+            Size = UDim2.new(1, -35, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {60, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "CustomButton",
+            Parent = {54},
+            Position = UDim2.new(1, -25, 0, 42),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {61, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {60},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {35, "TextBox", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            ClearTextOnFocus = false,
+            Font = 3,
+            Name = "Custom",
+            Parent = {30},
+            PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
+            PlaceholderText = "Match String",
+            Position = UDim2.new(0, 5, 0, 42),
+            Size = UDim2.new(1, -35, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {36, "Frame", {
+            BackgroundColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            BorderSizePixel = 0,
+            Name = "CustomButton",
+            Parent = {30},
+            Position = UDim2.new(1, -25, 0, 42),
+            Size = UDim2.new(0, 20, 0, 20),
+            ZIndex = 10
+        }}, {37, "TextButton", {
+            BackgroundColor3 = Color3.new(0.58823531866074, 0.58823531866074, 0.59215688705444),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "On",
+            Parent = {36},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            Text = "",
+            TextColor3 = Color3.new(0, 0, 0),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {38, "Frame", {
+            BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            Name = "DelayEditor",
+            Parent = {18},
+            Position = UDim2.new(0, 0, 0, 25),
+            Size = UDim2.new(1, 0, 0, 24),
+            Visible = false,
+            ZIndex = 10
+        }}, {39, "TextBox", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Secs",
+            Parent = {38},
+            PlaceholderColor3 = Color3.new(0.47058826684952, 0.47058826684952, 0.47058826684952),
+            Position = UDim2.new(0, 60, 0, 2),
+            Size = UDim2.new(1, -65, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {40, "TextLabel", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Label",
+            Parent = {39},
+            Position = UDim2.new(0, -55, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "Delay (s):",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {41, "Frame", {
+            BackgroundColor3 = currentShade1,
+            BorderSizePixel = 0,
+            ClipsDescendants = true,
+            Name = "EventTemplate",
+            Parent = {6},
+            Size = UDim2.new(1, 0, 0, 20),
+            Visible = false,
+            ZIndex = 10
+        }}, {42, "TextButton", {
+            BackgroundColor3 = currentText1,
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Expand",
+            Parent = {41},
+            Size = UDim2.new(0, 20, 0, 20),
+            Text = ">",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 18,
+            ZIndex = 10
+        }}, {43, "TextLabel", {
+            BackgroundColor3 = currentText1,
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "EventName",
+            Parent = {41},
+            Position = UDim2.new(0, 25, 0, 0),
+            Size = UDim2.new(1, -25, 0, 20),
+            Text = "OnSpawn",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {44, "Frame", {
+            BackgroundColor3 = Color3.new(0.19607844948769, 0.19607844948769, 0.19607844948769),
+            BorderSizePixel = 0,
+            BackgroundTransparency = 1,
+            ClipsDescendants = true,
+            Name = "Cmds",
+            Parent = {41},
+            Position = UDim2.new(0, 0, 0, 20),
+            Size = UDim2.new(1, 0, 1, -20),
+            ZIndex = 10
+        }}, {45, "Frame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BorderColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            Name = "Add",
+            Parent = {44},
+            Position = UDim2.new(0, 0, 1, -20),
+            Size = UDim2.new(1, 0, 0, 20),
+            ZIndex = 10
+        }}, {46, "TextBox", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            ClearTextOnFocus = false,
+            Font = 3,
+            Parent = {45},
+            PlaceholderColor3 = Color3.new(0.7843137383461, 0.7843137383461, 0.7843137383461),
+            PlaceholderText = "Add new command",
+            Position = UDim2.new(0, 5, 0, 0),
+            Size = UDim2.new(1, -10, 1, 0),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {47, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Holder",
+            Parent = {44},
+            Size = UDim2.new(1, 0, 1, -20),
+            ZIndex = 10
+        }}, {48, "UIListLayout", {
+            Parent = {47},
+            SortOrder = 2
+        }}, {49, "Frame", {
+            currentShade1,
+            BorderSizePixel = 0,
+            ClipsDescendants = true,
+            Name = "CmdTemplate",
+            Parent = {6},
+            Size = UDim2.new(1, 0, 0, 20),
+            Visible = false,
+            ZIndex = 10
+        }}, {50, "TextBox", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            ClearTextOnFocus = false,
+            Font = 3,
+            Parent = {49},
+            PlaceholderColor3 = Color3.new(1, 1, 1),
+            Position = UDim2.new(0, 5, 0, 0),
+            Size = UDim2.new(1, -45, 0, 20),
+            Text = "a\\b\\c\\d",
+            TextColor3 = currentText1,
+            TextSize = 14,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {51, "TextButton", {
+            BackgroundColor3 = currentShade1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Delete",
+            Parent = {49},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            Text = "X",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 18,
+            ZIndex = 10
+        }}, {52, "TextButton", {
+            BackgroundColor3 = currentShade1,
+            BorderSizePixel = 0,
+            Font = 3,
+            Name = "Settings",
+            Parent = {49},
+            Position = UDim2.new(1, -40, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 18,
+            ZIndex = 10
+        }}, {53, "ImageLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://1204397029",
+            Parent = {52},
+            Position = UDim2.new(0, 2, 0, 2),
+            Size = UDim2.new(0, 16, 0, 16),
+            ZIndex = 10
+        }}})
         main.Name = randomString()
         local mainFrame = main:WaitForChild("Content")
         local eventList = mainFrame:WaitForChild("List")
@@ -3210,7 +2949,8 @@ profile("Inf Yield", function()
         local currentlyEditingCmd = nil
 
         settingsFrame:WaitForChild("Close").MouseButton1Click:Connect(function()
-            settingsFrame:TweenPosition(UDim2.new(0, -150, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
+            settingsFrame:TweenPosition(UDim2.new(0, -150, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart,
+                0.25, true)
         end)
 
         local function resizeList()
@@ -3225,7 +2965,9 @@ profile("Inf Yield", function()
                 end
             end
 
-            TweenService:Create(eventList, tweenInf, { CanvasSize = UDim2.new(0, 0, 0, size) }):Play()
+            TweenService:Create(eventList, tweenInf, {
+                CanvasSize = UDim2.new(0, 0, 0, size)
+            }):Play()
 
             if size > eventList.AbsoluteSize.Y then
                 eventListHolder.Size = UDim2.new(1, -8, 1, 0)
@@ -3297,7 +3039,7 @@ profile("Inf Yield", function()
                 end,
                 IsEnabled = function()
                     return enabled
-                end,
+                end
             }
         end
 
@@ -3507,7 +3249,8 @@ profile("Inf Yield", function()
                 end
             end
             resizeSettingsList()
-            settingsFrame:TweenPosition(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
+            settingsFrame:TweenPosition(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25,
+                true)
         end
 
         local function defaultSettings(ev)
@@ -3545,7 +3288,9 @@ profile("Inf Yield", function()
                 local expanded = false
                 eventF.Expand.MouseButton1Down:Connect(function()
                     expanded = not expanded
-                    eventF:TweenSize(UDim2.new(1, 0, 0, 20 + (expanded and 20 * #eventF.Cmds.Holder:GetChildren() or 0)), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
+                    eventF:TweenSize(
+                        UDim2.new(1, 0, 0, 20 + (expanded and 20 * #eventF.Cmds.Holder:GetChildren() or 0)),
+                        Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
                     eventF.Expand.Rotation = expanded and 90 or 0
                     resizeList()
                 end)
@@ -3570,7 +3315,7 @@ profile("Inf Yield", function()
                         table.insert(shade2, cmdF.Settings)
 
                         cmdTextBox.FocusLost:Connect(function()
-                            event.commands[i] = { cmdTextBox.Text, cmd[2], cmd[3] }
+                            event.commands[i] = {cmdTextBox.Text, cmd[2], cmd[3]}
                             if onEdited then
                                 onEdited()
                             end
@@ -3586,7 +3331,8 @@ profile("Inf Yield", function()
                             resizeList()
 
                             if currentlyEditingCmd == cmd then
-                                settingsFrame:TweenPosition(UDim2.new(0, -150, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
+                                settingsFrame:TweenPosition(UDim2.new(0, -150, 0, 0), Enum.EasingDirection.Out,
+                                    Enum.EasingStyle.Quart, 0.25, true)
                             end
                             if onEdited then
                                 onEdited()
@@ -3596,14 +3342,16 @@ profile("Inf Yield", function()
                         cmdF.Parent = eventF.Cmds.Holder
                     end
 
-                    eventF:TweenSize(UDim2.new(1, 0, 0, 20 + (expanded and 20 * #eventF.Cmds.Holder:GetChildren() or 0)), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
+                    eventF:TweenSize(
+                        UDim2.new(1, 0, 0, 20 + (expanded and 20 * #eventF.Cmds.Holder:GetChildren() or 0)),
+                        Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.25, true)
                 end
 
                 local newBox = eventF.Cmds.Add.TextBox
                 ViewportTextBox.convert(newBox)
                 newBox.FocusLost:Connect(function(enter)
                     if enter then
-                        event.commands[#event.commands + 1] = { newBox.Text, defaultSettings(event), 0 }
+                        event.commands[#event.commands + 1] = {newBox.Text, defaultSettings(event), 0}
                         newBox.Text = ""
 
                         refreshCommands()
@@ -3614,7 +3362,7 @@ profile("Inf Yield", function()
                     end
                 end)
 
-                --eventF:GetPropertyChangedSignal("AbsoluteSize"):Connect(resizeList)
+                -- eventF:GetPropertyChangedSignal("AbsoluteSize"):Connect(resizeList)
 
                 eventF.Parent = eventListHolder
 
@@ -3665,1931 +3413,1364 @@ profile("Inf Yield", function()
             LoadData = loadData,
             AddCmd = addCmd,
             Frame = main,
-            SetOnEdited = setOnEdited,
+            SetOnEdited = setOnEdited
         }
     end)()
 
     reference = (function()
-        local main = create({
-            {
-                1,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    Name = "Main",
-                    Position = UDim2.new(0.5, -250, 0, -500),
-                    Size = UDim2.new(0, 500, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                2,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "TopBar",
-                    Parent = { 1 },
-                    Size = UDim2.new(1, 0, 0, 20),
-                    ZIndex = 10,
-                },
-            },
-            {
-                3,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Title",
-                    Parent = { 2 },
-                    Size = UDim2.new(1, 0, 0.94999998807907, 0),
-                    Text = "Reference",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                4,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Close",
-                    Parent = { 2 },
-                    Position = UDim2.new(1, -20, 0, 0),
-                    Size = UDim2.new(0, 20, 0, 20),
-                    Text = "",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    ZIndex = 10,
-                },
-            },
-            {
-                5,
-                "ImageLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Image = "rbxassetid://5054663650",
-                    Parent = { 4 },
-                    Position = UDim2.new(0, 5, 0, 5),
-                    Size = UDim2.new(0, 10, 0, 10),
-                    ZIndex = 10,
-                },
-            },
-            {
-                6,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BorderSizePixel = 0,
-                    Name = "Content",
-                    Parent = { 1 },
-                    Position = UDim2.new(0, 0, 0, 20),
-                    Size = UDim2.new(1, 0, 0, 300),
-                    ZIndex = 10,
-                },
-            },
-            {
-                7,
-                "ScrollingFrame",
-                {
-                    BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
-                    BackgroundTransparency = 1,
-                    BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
-                    BorderSizePixel = 0,
-                    BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
-                    CanvasSize = UDim2.new(0, 0, 0, 1313),
-                    Name = "List",
-                    Parent = { 6 },
-                    ScrollBarImageColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
-                    ScrollBarThickness = 8,
-                    Size = UDim2.new(1, 0, 1, 0),
-                    TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
-                    VerticalScrollBarInset = 2,
-                    ZIndex = 10,
-                },
-            },
-            { 8, "UIListLayout", { Parent = { 7 }, SortOrder = 2 } },
-            {
-                9,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 429),
-                    ZIndex = 10,
-                },
-            },
-            {
-                10,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 9 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Special Player Cases",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                11,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 9 },
-                    Position = UDim2.new(0, 8, 0, 25),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "These keywords can be used to quickly select groups of players in commands:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                12,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 9 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                13,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Cases",
-                    Parent = { 9 },
-                    Position = UDim2.new(0, 8, 0, 55),
-                    Size = UDim2.new(1, -16, 0, 342),
-                    ZIndex = 10,
-                },
-            },
-            { 14, "UIListLayout", { Parent = { 13 }, SortOrder = 2 } },
-            {
-                15,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    LayoutOrder = -4,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                16,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 15 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "all",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                17,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 15 },
-                    Position = UDim2.new(0, 15, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- includes everyone",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                18,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    LayoutOrder = -3,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                19,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 18 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "others",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                20,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 18 },
-                    Position = UDim2.new(0, 37, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- includes everyone except you",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                21,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    LayoutOrder = -2,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                22,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 21 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "me",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                23,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 21 },
-                    Position = UDim2.new(0, 19, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- includes your player only",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                24,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                25,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 24 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "#[number]",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                26,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 24 },
-                    Position = UDim2.new(0, 59, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- gets a specified amount of random players",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                27,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                28,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 27 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "random",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                29,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 27 },
-                    Position = UDim2.new(0, 44, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- affects a random player",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                30,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                31,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 30 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "%[team name]",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                32,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 30 },
-                    Position = UDim2.new(0, 78, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- includes everyone on a given team",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                33,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                34,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 33 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "allies / team",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                35,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 33 },
-                    Position = UDim2.new(0, 63, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- players who are on your team",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                36,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                37,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 36 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "enemies / nonteam",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                38,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 36 },
-                    Position = UDim2.new(0, 101, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- players who are not on your team",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                39,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                40,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 39 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "friends",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                41,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 39 },
-                    Position = UDim2.new(0, 40, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- anyone who is friends with you",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                42,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                43,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 42 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "nonfriends",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                44,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 42 },
-                    Position = UDim2.new(0, 61, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- anyone who is not friends with you",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                45,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                46,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 45 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "guests",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                47,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 45 },
-                    Position = UDim2.new(0, 36, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- guest players (obsolete)",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                48,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                49,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 48 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "bacons",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                50,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 48 },
-                    Position = UDim2.new(0, 40, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = '- anyone with the "bacon" or pal hair',
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                51,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                52,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 51 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "age[number]",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                53,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 51 },
-                    Position = UDim2.new(0, 71, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- includes anyone below or at the given age",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                54,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                55,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 54 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "rad[number]",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                56,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 54 },
-                    Position = UDim2.new(0, 70, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- includes anyone within the given radius",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                57,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                58,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 57 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "nearest",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                59,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 57 },
-                    Position = UDim2.new(0, 43, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- gets the closest player to you",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                60,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                61,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 60 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "farthest",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                62,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 60 },
-                    Position = UDim2.new(0, 46, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- gets the farthest player from you",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                63,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                64,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 63 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "group[ID]",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                65,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 63 },
-                    Position = UDim2.new(0, 55, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- gets players who are in a certain group",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                66,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                67,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 66 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "alive",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                68,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 66 },
-                    Position = UDim2.new(0, 27, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- gets players who are alive",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                69,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                70,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 69 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "dead",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                71,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 69 },
-                    Position = UDim2.new(0, 29, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- gets players who are dead",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                72,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    LayoutOrder = -1,
-                    Name = "Case",
-                    Parent = { 13 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, 0, 0, 18),
-                    ZIndex = 10,
-                },
-            },
-            {
-                73,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "CaseName",
-                    Parent = { 72 },
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "@username",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                74,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "CaseDesc",
-                    Parent = { 72 },
-                    Position = UDim2.new(0, 66, 0, 0),
-                    Size = UDim2.new(1, 0, 1, 0),
-                    Text = "- searches for players by username only (ignores displaynames)",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                75,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 180),
-                    ZIndex = 10,
-                },
-            },
-            {
-                76,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Various Operators",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                77,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                78,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Use commas to separate multiple expressions:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                79,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 75),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Use - to exclude, and + to include players in your expression:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                80,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 91),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = ";locate %blue-friends (gets players in blue team who aren't your friends)",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                81,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 46),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = ";locate noob,noob2,bob",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                82,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 120),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Put ! before a command to run it with the last arguments it was ran with:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                83,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 75 },
-                    Position = UDim2.new(0, 8, 0, 136),
-                    Size = UDim2.new(1, -8, 0, 32),
-                    Text = "After running ;offset 0 100 0,  you can run !offset anytime to repeat that command with the same arguments that were used to run it last time",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                84,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 154),
-                    ZIndex = 10,
-                },
-            },
-            {
-                85,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 84 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Command Looping",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                86,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 84 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Form: [How many times it loops]^[delay (optional)]^[command]",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 15,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                87,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 84 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                88,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 84 },
-                    Position = UDim2.new(0, 8, 0, 50),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Use the 'breakloops' command to stop all running loops.",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 15,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                89,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 84 },
-                    Position = UDim2.new(0, 8, 0, 80),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Examples:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                90,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 84 },
-                    Position = UDim2.new(0, 8, 0, 98),
-                    Size = UDim2.new(1, -8, 0, 42),
-                    Text = ";5^btools - gives you 5 sets of btools\n;10^3^drophats - drops your hats every 3 seconds 10 times\n;inf^0.1^animspeed 100 - infinitely loops your animation speed to 100",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                91,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 120),
-                    ZIndex = 10,
-                },
-            },
-            {
-                92,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 91 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Execute Multiple Commands at Once",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                93,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 91 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = 'You can execute multiple commands at once using "\\"',
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                94,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 91 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                95,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 91 },
-                    Position = UDim2.new(0, 8, 0, 60),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Examples:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                96,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 91 },
-                    Position = UDim2.new(0, 8, 0, 78),
-                    Size = UDim2.new(1, -8, 0, 32),
-                    Text = ";drophats\\respawn - drops your hats and respawns you\n;enable inventory\\enable playerlist\\refresh - enables those coregui items and refreshes you",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                97,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 75),
-                    ZIndex = 10,
-                },
-            },
-            {
-                98,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 97 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Browse Command History",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                99,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 97 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 32),
-                    Text = "While focused on the command bar, you can use the up and down arrow keys to browse recently used commands",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                100,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 97 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                101,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 75),
-                    ZIndex = 10,
-                },
-            },
-            {
-                102,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 101 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Autocomplete in the Command Bar",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                103,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 101 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 32),
-                    Text = "While focused on the command bar, you can use the tab key to insert the top suggested command into the command bar.",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                104,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 101 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                105,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 175),
-                    ZIndex = 10,
-                },
-            },
-            {
-                106,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 105 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Using Event Binds",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                107,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 105 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 32),
-                    Text = "Use event binds to set up commands that get executed when certain events happen. You can edit the conditions for an event command to run (such as which player triggers it).",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                108,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 105 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    ZIndex = 10,
-                },
-            },
-            {
-                109,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 105 },
-                    Position = UDim2.new(0, 8, 0, 70),
-                    Size = UDim2.new(1, -8, 0, 48),
-                    Text = "Some events may send arguments; you can use them in your event command by using $ followed by the argument number ($1, $2, etc). You can find out the order and types of these arguments by looking at the settings of the event command.",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                110,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Text",
-                    Parent = { 105 },
-                    Position = UDim2.new(0, 8, 0, 130),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Example:",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                111,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 105 },
-                    Position = UDim2.new(0, 8, 0, 148),
-                    Size = UDim2.new(1, -8, 0, 16),
-                    Text = "Setting up 'goto $1' on the OnChatted event will teleport you to any player that chats.",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    TextYAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                112,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Name = "Section",
-                    Parent = { 7 },
-                    Size = UDim2.new(1, 0, 0, 105),
-                    ZIndex = 10,
-                },
-            },
-            {
-                113,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 4,
-                    Name = "Header",
-                    Parent = { 112 },
-                    Position = UDim2.new(0, 8, 0, 5),
-                    Size = UDim2.new(1, -8, 0, 20),
-                    Text = "Get Further Help",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 20,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                114,
-                "TextLabel",
-                {
-                    BackgroundColor3 = Color3.new(1, 1, 1),
-                    BackgroundTransparency = 1,
-                    Font = 3,
-                    Name = "Text",
-                    Parent = { 112 },
-                    Position = UDim2.new(0, 8, 0, 30),
-                    Size = UDim2.new(1, -8, 0, 32),
-                    Text = "You can join the Discord server to get support with IY,  and read up on more documentation such as the Plugin API.",
-                    TextColor3 = Color3.new(1, 1, 1),
-                    TextSize = 14,
-                    TextWrapped = true,
-                    TextXAlignment = 0,
-                    ZIndex = 10,
-                },
-            },
-            {
-                115,
-                "Frame",
-                {
-                    BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    BorderSizePixel = 0,
-                    Name = "Line",
-                    Parent = { 112 },
-                    Position = UDim2.new(0, 10, 1, -1),
-                    Size = UDim2.new(1, -20, 0, 1),
-                    Visible = false,
-                    ZIndex = 10,
-                },
-            },
-            {
-                116,
-                "TextButton",
-                {
-                    BackgroundColor3 = Color3.new(0.48627451062202, 0.61960786581039, 0.85098040103912),
-                    BorderColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    Font = 4,
-                    Name = "InviteButton",
-                    Parent = { 112 },
-                    Position = UDim2.new(0, 5, 0, 75),
-                    Size = UDim2.new(1, -10, 0, 25),
-                    Text = "Copy Discord Invite Link (https://discord.gg/78ZuWSq)",
-                    TextColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
-                    TextSize = 16,
-                    ZIndex = 10,
-                },
-            },
-        })
+        local main = create({{1, "Frame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            Name = "Main",
+            Position = UDim2.new(0.5, -250, 0, -500),
+            Size = UDim2.new(0, 500, 0, 20),
+            ZIndex = 10
+        }}, {2, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "TopBar",
+            Parent = {1},
+            Size = UDim2.new(1, 0, 0, 20),
+            ZIndex = 10
+        }}, {3, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Title",
+            Parent = {2},
+            Size = UDim2.new(1, 0, 0.94999998807907, 0),
+            Text = "Reference",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {4, "TextButton", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Close",
+            Parent = {2},
+            Position = UDim2.new(1, -20, 0, 0),
+            Size = UDim2.new(0, 20, 0, 20),
+            Text = "",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            ZIndex = 10
+        }}, {5, "ImageLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Image = "rbxassetid://5054663650",
+            Parent = {4},
+            Position = UDim2.new(0, 5, 0, 5),
+            Size = UDim2.new(0, 10, 0, 10),
+            ZIndex = 10
+        }}, {6, "Frame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BorderSizePixel = 0,
+            Name = "Content",
+            Parent = {1},
+            Position = UDim2.new(0, 0, 0, 20),
+            Size = UDim2.new(1, 0, 0, 300),
+            ZIndex = 10
+        }}, {7, "ScrollingFrame", {
+            BackgroundColor3 = Color3.new(0.14117647707462, 0.14117647707462, 0.14509804546833),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.new(0.15686275064945, 0.15686275064945, 0.15686275064945),
+            BorderSizePixel = 0,
+            BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
+            CanvasSize = UDim2.new(0, 0, 0, 1313),
+            Name = "List",
+            Parent = {6},
+            ScrollBarImageColor3 = Color3.new(0.30588236451149, 0.30588236451149, 0.3098039329052),
+            ScrollBarThickness = 8,
+            Size = UDim2.new(1, 0, 1, 0),
+            TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
+            VerticalScrollBarInset = 2,
+            ZIndex = 10
+        }}, {8, "UIListLayout", {
+            Parent = {7},
+            SortOrder = 2
+        }}, {9, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 429),
+            ZIndex = 10
+        }}, {10, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {9},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Special Player Cases",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {11, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {9},
+            Position = UDim2.new(0, 8, 0, 25),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "These keywords can be used to quickly select groups of players in commands:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {12, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {9},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {13, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Cases",
+            Parent = {9},
+            Position = UDim2.new(0, 8, 0, 55),
+            Size = UDim2.new(1, -16, 0, 342),
+            ZIndex = 10
+        }}, {14, "UIListLayout", {
+            Parent = {13},
+            SortOrder = 2
+        }}, {15, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            LayoutOrder = -4,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {16, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {15},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "all",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {17, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {15},
+            Position = UDim2.new(0, 15, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- includes everyone",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {18, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            LayoutOrder = -3,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {19, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {18},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "others",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {20, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {18},
+            Position = UDim2.new(0, 37, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- includes everyone except you",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {21, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            LayoutOrder = -2,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {22, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {21},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "me",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {23, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {21},
+            Position = UDim2.new(0, 19, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- includes your player only",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {24, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {25, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {24},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "#[number]",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {26, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {24},
+            Position = UDim2.new(0, 59, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- gets a specified amount of random players",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {27, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {28, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {27},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "random",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {29, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {27},
+            Position = UDim2.new(0, 44, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- affects a random player",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {30, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {31, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {30},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "%[team name]",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {32, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {30},
+            Position = UDim2.new(0, 78, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- includes everyone on a given team",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {33, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {34, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {33},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "allies / team",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {35, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {33},
+            Position = UDim2.new(0, 63, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- players who are on your team",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {36, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {37, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {36},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "enemies / nonteam",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {38, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {36},
+            Position = UDim2.new(0, 101, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- players who are not on your team",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {39, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {40, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {39},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "friends",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {41, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {39},
+            Position = UDim2.new(0, 40, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- anyone who is friends with you",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {42, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {43, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {42},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "nonfriends",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {44, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {42},
+            Position = UDim2.new(0, 61, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- anyone who is not friends with you",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {45, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {46, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {45},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "guests",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {47, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {45},
+            Position = UDim2.new(0, 36, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- guest players (obsolete)",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {48, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {49, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {48},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "bacons",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {50, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {48},
+            Position = UDim2.new(0, 40, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = '- anyone with the "bacon" or pal hair',
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {51, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {52, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {51},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "age[number]",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {53, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {51},
+            Position = UDim2.new(0, 71, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- includes anyone below or at the given age",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {54, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {55, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {54},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "rad[number]",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {56, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {54},
+            Position = UDim2.new(0, 70, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- includes anyone within the given radius",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {57, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {58, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {57},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "nearest",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {59, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {57},
+            Position = UDim2.new(0, 43, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- gets the closest player to you",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {60, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {61, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {60},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "farthest",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {62, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {60},
+            Position = UDim2.new(0, 46, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- gets the farthest player from you",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {63, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {64, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {63},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "group[ID]",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {65, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {63},
+            Position = UDim2.new(0, 55, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- gets players who are in a certain group",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {66, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {67, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {66},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "alive",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {68, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {66},
+            Position = UDim2.new(0, 27, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- gets players who are alive",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {69, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {70, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {69},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "dead",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {71, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {69},
+            Position = UDim2.new(0, 29, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- gets players who are dead",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {72, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            LayoutOrder = -1,
+            Name = "Case",
+            Parent = {13},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, 0, 0, 18),
+            ZIndex = 10
+        }}, {73, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "CaseName",
+            Parent = {72},
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "@username",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {74, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "CaseDesc",
+            Parent = {72},
+            Position = UDim2.new(0, 66, 0, 0),
+            Size = UDim2.new(1, 0, 1, 0),
+            Text = "- searches for players by username only (ignores displaynames)",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {75, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 180),
+            ZIndex = 10
+        }}, {76, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Various Operators",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {77, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {75},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {78, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Use commas to separate multiple expressions:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {79, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 75),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Use - to exclude, and + to include players in your expression:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {80, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 91),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = ";locate %blue-friends (gets players in blue team who aren't your friends)",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {81, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 46),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = ";locate noob,noob2,bob",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {82, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 120),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Put ! before a command to run it with the last arguments it was ran with:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {83, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {75},
+            Position = UDim2.new(0, 8, 0, 136),
+            Size = UDim2.new(1, -8, 0, 32),
+            Text = "After running ;offset 0 100 0,  you can run !offset anytime to repeat that command with the same arguments that were used to run it last time",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {84, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 154),
+            ZIndex = 10
+        }}, {85, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {84},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Command Looping",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {86, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {84},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Form: [How many times it loops]^[delay (optional)]^[command]",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 15,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {87, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {84},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {88, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {84},
+            Position = UDim2.new(0, 8, 0, 50),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Use the 'breakloops' command to stop all running loops.",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 15,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {89, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {84},
+            Position = UDim2.new(0, 8, 0, 80),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Examples:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {90, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {84},
+            Position = UDim2.new(0, 8, 0, 98),
+            Size = UDim2.new(1, -8, 0, 42),
+            Text = ";5^btools - gives you 5 sets of btools\n;10^3^drophats - drops your hats every 3 seconds 10 times\n;inf^0.1^animspeed 100 - infinitely loops your animation speed to 100",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {91, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 120),
+            ZIndex = 10
+        }}, {92, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {91},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Execute Multiple Commands at Once",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {93, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {91},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = 'You can execute multiple commands at once using "\\"',
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {94, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {91},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {95, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {91},
+            Position = UDim2.new(0, 8, 0, 60),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Examples:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {96, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {91},
+            Position = UDim2.new(0, 8, 0, 78),
+            Size = UDim2.new(1, -8, 0, 32),
+            Text = ";drophats\\respawn - drops your hats and respawns you\n;enable inventory\\enable playerlist\\refresh - enables those coregui items and refreshes you",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {97, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 75),
+            ZIndex = 10
+        }}, {98, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {97},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Browse Command History",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {99, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {97},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 32),
+            Text = "While focused on the command bar, you can use the up and down arrow keys to browse recently used commands",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {100, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {97},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {101, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 75),
+            ZIndex = 10
+        }}, {102, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {101},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Autocomplete in the Command Bar",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {103, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {101},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 32),
+            Text = "While focused on the command bar, you can use the tab key to insert the top suggested command into the command bar.",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {104, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {101},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {105, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 175),
+            ZIndex = 10
+        }}, {106, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {105},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Using Event Binds",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {107, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {105},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 32),
+            Text = "Use event binds to set up commands that get executed when certain events happen. You can edit the conditions for an event command to run (such as which player triggers it).",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {108, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {105},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            ZIndex = 10
+        }}, {109, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {105},
+            Position = UDim2.new(0, 8, 0, 70),
+            Size = UDim2.new(1, -8, 0, 48),
+            Text = "Some events may send arguments; you can use them in your event command by using $ followed by the argument number ($1, $2, etc). You can find out the order and types of these arguments by looking at the settings of the event command.",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {110, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Text",
+            Parent = {105},
+            Position = UDim2.new(0, 8, 0, 130),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Example:",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {111, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {105},
+            Position = UDim2.new(0, 8, 0, 148),
+            Size = UDim2.new(1, -8, 0, 16),
+            Text = "Setting up 'goto $1' on the OnChatted event will teleport you to any player that chats.",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            TextYAlignment = 0,
+            ZIndex = 10
+        }}, {112, "Frame", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Name = "Section",
+            Parent = {7},
+            Size = UDim2.new(1, 0, 0, 105),
+            ZIndex = 10
+        }}, {113, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 4,
+            Name = "Header",
+            Parent = {112},
+            Position = UDim2.new(0, 8, 0, 5),
+            Size = UDim2.new(1, -8, 0, 20),
+            Text = "Get Further Help",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 20,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {114, "TextLabel", {
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            BackgroundTransparency = 1,
+            Font = 3,
+            Name = "Text",
+            Parent = {112},
+            Position = UDim2.new(0, 8, 0, 30),
+            Size = UDim2.new(1, -8, 0, 32),
+            Text = "You can join the Discord server to get support with IY,  and read up on more documentation such as the Plugin API.",
+            TextColor3 = Color3.new(1, 1, 1),
+            TextSize = 14,
+            TextWrapped = true,
+            TextXAlignment = 0,
+            ZIndex = 10
+        }}, {115, "Frame", {
+            BackgroundColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            BorderSizePixel = 0,
+            Name = "Line",
+            Parent = {112},
+            Position = UDim2.new(0, 10, 1, -1),
+            Size = UDim2.new(1, -20, 0, 1),
+            Visible = false,
+            ZIndex = 10
+        }}, {116, "TextButton", {
+            BackgroundColor3 = Color3.new(0.48627451062202, 0.61960786581039, 0.85098040103912),
+            BorderColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            Font = 4,
+            Name = "InviteButton",
+            Parent = {112},
+            Position = UDim2.new(0, 5, 0, 75),
+            Size = UDim2.new(1, -10, 0, 25),
+            Text = "Copy Discord Invite Link (https://discord.gg/78ZuWSq)",
+            TextColor3 = Color3.new(0.1803921610117, 0.1803921610117, 0.1843137294054),
+            TextSize = 16,
+            ZIndex = 10
+        }}})
         for i, v in pairs(main.Content.List:GetDescendants()) do
             if v:IsA("TextLabel") then
                 table.insert(text1, v)
@@ -5645,13 +4826,13 @@ profile("Inf Yield", function()
         binds = {},
         WayPoints = {},
         PluginsTable = {},
-        currentShade1 = { currentShade1.R, currentShade1.G, currentShade1.B },
-        currentShade2 = { currentShade2.R, currentShade2.G, currentShade2.B },
-        currentShade3 = { currentShade3.R, currentShade3.G, currentShade3.B },
-        currentText1 = { currentText1.R, currentText1.G, currentText1.B },
-        currentText2 = { currentText2.R, currentText2.G, currentText2.B },
-        currentScroll = { currentScroll.R, currentScroll.G, currentScroll.B },
-        eventBinds = eventEditor.SaveData(),
+        currentShade1 = {currentShade1.R, currentShade1.G, currentShade1.B},
+        currentShade2 = {currentShade2.R, currentShade2.G, currentShade2.B},
+        currentShade3 = {currentShade3.R, currentShade3.G, currentShade3.B},
+        currentText1 = {currentText1.R, currentText1.G, currentText1.B},
+        currentText2 = {currentText2.R, currentText2.G, currentText2.B},
+        currentScroll = {currentScroll.R, currentScroll.G, currentScroll.B},
+        eventBinds = eventEditor.SaveData()
     }
 
     defaults = HttpService:JSONEncode(defaultsettings)
@@ -5819,13 +5000,16 @@ profile("Inf Yield", function()
                             PluginsTable = {}
                         end
                         if vtype(json.currentShade1, "table") then
-                            currentShade1 = Color3.new(json.currentShade1[1], json.currentShade1[2], json.currentShade1[3])
+                            currentShade1 = Color3.new(json.currentShade1[1], json.currentShade1[2],
+                                json.currentShade1[3])
                         end
                         if vtype(json.currentShade2, "table") then
-                            currentShade2 = Color3.new(json.currentShade2[1], json.currentShade2[2], json.currentShade2[3])
+                            currentShade2 = Color3.new(json.currentShade2[1], json.currentShade2[2],
+                                json.currentShade2[3])
                         end
                         if vtype(json.currentShade3, "table") then
-                            currentShade3 = Color3.new(json.currentShade3[1], json.currentShade3[2], json.currentShade3[3])
+                            currentShade3 = Color3.new(json.currentShade3[1], json.currentShade3[2],
+                                json.currentShade3[3])
                         end
                         if vtype(json.currentText1, "table") then
                             currentText1 = Color3.new(json.currentText1[1], json.currentText1[2], json.currentText1[3])
@@ -5834,7 +5018,8 @@ profile("Inf Yield", function()
                             currentText2 = Color3.new(json.currentText2[1], json.currentText2[2], json.currentText2[3])
                         end
                         if vtype(json.currentScroll, "table") then
-                            currentScroll = Color3.new(json.currentScroll[1], json.currentScroll[2], json.currentScroll[3])
+                            currentScroll = Color3.new(json.currentScroll[1], json.currentScroll[2],
+                                json.currentScroll[3])
                         end
                         if vtype(json.eventBinds, "string") then
                             loadedEventData = json.eventBinds
@@ -5857,7 +5042,8 @@ profile("Inf Yield", function()
                     else
                         nosaves = true
                         useFactorySettings()
-                        createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
+                        createPopup(
+                            "There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
                     end
                 end
             else
@@ -5869,14 +5055,16 @@ profile("Inf Yield", function()
                 else
                     nosaves = true
                     useFactorySettings()
-                    createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
+                    createPopup(
+                        "There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
                 end
             end
         else
             if jsonAttempts >= 10 then
                 nosaves = true
                 useFactorySettings()
-                createPopup("Sorry, we have attempted to parse your save file, but it is unreadable!\n\nInfinite Yield is now using factory settings until your exploit's file system works.\n\nYour save file has not been deleted.")
+                createPopup(
+                    "Sorry, we have attempted to parse your save file, but it is unreadable!\n\nInfinite Yield is now using factory settings until your exploit's file system works.\n\nYour save file has not been deleted.")
             else
                 nosaves = true
                 useFactorySettings()
@@ -5900,13 +5088,13 @@ profile("Inf Yield", function()
                 binds = binds or {},
                 WayPoints = AllWaypoints,
                 PluginsTable = PluginsTable,
-                currentShade1 = { currentShade1.R, currentShade1.G, currentShade1.B },
-                currentShade2 = { currentShade2.R, currentShade2.G, currentShade2.B },
-                currentShade3 = { currentShade3.R, currentShade3.G, currentShade3.B },
-                currentText1 = { currentText1.R, currentText1.G, currentText1.B },
-                currentText2 = { currentText2.R, currentText2.G, currentText2.B },
-                currentScroll = { currentScroll.R, currentScroll.G, currentScroll.B },
-                eventBinds = eventEditor.SaveData(),
+                currentShade1 = {currentShade1.R, currentShade1.G, currentShade1.B},
+                currentShade2 = {currentShade2.R, currentShade2.G, currentShade2.B},
+                currentShade3 = {currentShade3.R, currentShade3.G, currentShade3.B},
+                currentText1 = {currentText1.R, currentText1.G, currentText1.B},
+                currentText2 = {currentText2.R, currentText2.G, currentText2.B},
+                currentScroll = {currentScroll.R, currentScroll.G, currentScroll.B},
+                eventBinds = eventEditor.SaveData()
             }
             writefileCooldown("IY_FE.iy", HttpService:JSONEncode(update))
         end
@@ -5922,8 +5110,8 @@ profile("Inf Yield", function()
             if not AllWaypoints[i].GAME or AllWaypoints[i].GAME == PlaceId then
                 WayPoints[#WayPoints + 1] = {
                     NAME = AllWaypoints[i].NAME,
-                    COORD = { AllWaypoints[i].COORD[1], AllWaypoints[i].COORD[2], AllWaypoints[i].COORD[3] },
-                    GAME = AllWaypoints[i].GAME,
+                    COORD = {AllWaypoints[i].COORD[1], AllWaypoints[i].COORD[2], AllWaypoints[i].COORD[3]},
+                    GAME = AllWaypoints[i].GAME
                 }
             end
         end
@@ -5976,7 +5164,8 @@ profile("Inf Yield", function()
     local minimizeNum = -20
     function minimizeHolder()
         if StayOpen == false then
-            Holder:TweenPosition(UDim2.new(1, Holder.Position.X.Offset, 1, minimizeNum), "InOut", "Quart", 0.5, true, nil)
+            Holder:TweenPosition(UDim2.new(1, Holder.Position.X.Offset, 1, minimizeNum), "InOut", "Quart", 0.5, true,
+                nil)
         end
     end
 
@@ -6005,7 +5194,8 @@ profile("Inf Yield", function()
                     Title_2.BackgroundTransparency = 0
                 end)
             end)
-            Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, 0), "InOut", "Quart", 0.5, true, nil)
+            Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, 0), "InOut", "Quart", 0.5, true,
+                nil)
             task.wait(0.6)
             local closepressed = false
             if text2 then
@@ -6015,9 +5205,11 @@ profile("Inf Yield", function()
                 Title_2.Text = "Notification"
                 Text_2.Text = text
             end
-            Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, -100), "InOut", "Quart", 0.5, true, nil)
+            Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, -100), "InOut", "Quart", 0.5,
+                true, nil)
             CloseButton.MouseButton1Click:Connect(function()
-                Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, 0), "InOut", "Quart", 0.5, true, nil)
+                Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, 0), "InOut", "Quart", 0.5,
+                    true, nil)
                 closepressed = true
                 pinNotification:Disconnect()
             end)
@@ -6029,7 +5221,8 @@ profile("Inf Yield", function()
             if LnotifyCount == notifyCount then
                 if closepressed == false and notificationPinned == false then
                     pinNotification:Disconnect()
-                    Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, 0), "InOut", "Quart", 0.5, true, nil)
+                    Notification:TweenPosition(UDim2.new(1, Notification.Position.X.Offset, 1, 0), "InOut", "Quart",
+                        0.5, true, nil)
                 end
                 notifyCount = 0
             end
@@ -6083,7 +5276,9 @@ profile("Inf Yield", function()
             scroll_2.CanvasSize = UDim2.new(0, 0, 0, alls + tl.TextBounds.Y)
             scroll_2.CanvasPosition = Vector2.new(0, scroll_2.CanvasPosition.Y + tl.TextBounds.Y)
             tl:TweenPosition(UDim2.new(0, 3, 0, alls), "In", "Quint", 0.5)
-            TweenService:Create(tl, TweenInfo.new(1.25, Enum.EasingStyle.Linear), { TextTransparency = 0 }):Play()
+            TweenService:Create(tl, TweenInfo.new(1.25, Enum.EasingStyle.Linear), {
+                TextTransparency = 0
+            }):Play()
         end
     end
 
@@ -6132,7 +5327,8 @@ profile("Inf Yield", function()
         ImageLabel_3.BackgroundTransparency = 1
         ImageLabel_3.BorderSizePixel = 0
         ImageLabel_3.Size = UDim2.new(0, 45, 1, 0)
-        ImageLabel_3.Image = Players:GetUserThumbnailAsync(ID, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size420x420)
+        ImageLabel_3.Image = Players:GetUserThumbnailAsync(ID, Enum.ThumbnailType.AvatarThumbnail,
+            Enum.ThumbnailSize.Size420x420)
         scroll_3.CanvasSize = UDim2.new(0, 0, 0, listlayout.AbsoluteContentSize.Y)
         scroll_3.CanvasPosition = Vector2.new(0, scroll_2.CanvasPosition.Y + infoFrame.AbsoluteSize.Y)
         task.wait()
@@ -6140,7 +5336,8 @@ profile("Inf Yield", function()
         local json = HttpService:JSONDecode(user)
         local date = json["created"]:sub(1, 10)
         local splitDates = string.split(date, "-")
-        info2.Text = string.gsub(info2.Text, "Loading...", splitDates[2] .. "/" .. splitDates[3] .. "/" .. splitDates[1])
+        info2.Text =
+            string.gsub(info2.Text, "Loading...", splitDates[2] .. "/" .. splitDates[3] .. "/" .. splitDates[1])
     end
 
     IYMouse.KeyDown:Connect(function(Key)
@@ -6268,56 +5465,41 @@ profile("Inf Yield", function()
                     local red, green, blue = 1, 1, 1
                     local chosenColor = Color3.new(0, 0, 0)
 
-                    local basicColors = {
-                        Color3.new(0, 0, 0),
-                        Color3.new(0.66666668653488, 0, 0),
-                        Color3.new(0, 0.33333334326744, 0),
-                        Color3.new(0.66666668653488, 0.33333334326744, 0),
-                        Color3.new(0, 0.66666668653488, 0),
-                        Color3.new(0.66666668653488, 0.66666668653488, 0),
-                        Color3.new(0, 1, 0),
-                        Color3.new(0.66666668653488, 1, 0),
-                        Color3.new(0, 0, 0.49803924560547),
-                        Color3.new(0.66666668653488, 0, 0.49803924560547),
-                        Color3.new(0, 0.33333334326744, 0.49803924560547),
-                        Color3.new(0.66666668653488, 0.33333334326744, 0.49803924560547),
-                        Color3.new(0, 0.66666668653488, 0.49803924560547),
-                        Color3.new(0.66666668653488, 0.66666668653488, 0.49803924560547),
-                        Color3.new(0, 1, 0.49803924560547),
-                        Color3.new(0.66666668653488, 1, 0.49803924560547),
-                        Color3.new(0, 0, 1),
-                        Color3.new(0.66666668653488, 0, 1),
-                        Color3.new(0, 0.33333334326744, 1),
-                        Color3.new(0.66666668653488, 0.33333334326744, 1),
-                        Color3.new(0, 0.66666668653488, 1),
-                        Color3.new(0.66666668653488, 0.66666668653488, 1),
-                        Color3.new(0, 1, 1),
-                        Color3.new(0.66666668653488, 1, 1),
-                        Color3.new(0.33333334326744, 0, 0),
-                        Color3.new(1, 0, 0),
-                        Color3.new(0.33333334326744, 0.33333334326744, 0),
-                        Color3.new(1, 0.33333334326744, 0),
-                        Color3.new(0.33333334326744, 0.66666668653488, 0),
-                        Color3.new(1, 0.66666668653488, 0),
-                        Color3.new(0.33333334326744, 1, 0),
-                        Color3.new(1, 1, 0),
-                        Color3.new(0.33333334326744, 0, 0.49803924560547),
-                        Color3.new(1, 0, 0.49803924560547),
-                        Color3.new(0.33333334326744, 0.33333334326744, 0.49803924560547),
-                        Color3.new(1, 0.33333334326744, 0.49803924560547),
-                        Color3.new(0.33333334326744, 0.66666668653488, 0.49803924560547),
-                        Color3.new(1, 0.66666668653488, 0.49803924560547),
-                        Color3.new(0.33333334326744, 1, 0.49803924560547),
-                        Color3.new(1, 1, 0.49803924560547),
-                        Color3.new(0.33333334326744, 0, 1),
-                        Color3.new(1, 0, 1),
-                        Color3.new(0.33333334326744, 0.33333334326744, 1),
-                        Color3.new(1, 0.33333334326744, 1),
-                        Color3.new(0.33333334326744, 0.66666668653488, 1),
-                        Color3.new(1, 0.66666668653488, 1),
-                        Color3.new(0.33333334326744, 1, 1),
-                        Color3.new(1, 1, 1),
-                    }
+                    local basicColors = {Color3.new(0, 0, 0), Color3.new(0.66666668653488, 0, 0),
+                                         Color3.new(0, 0.33333334326744, 0),
+                                         Color3.new(0.66666668653488, 0.33333334326744, 0),
+                                         Color3.new(0, 0.66666668653488, 0),
+                                         Color3.new(0.66666668653488, 0.66666668653488, 0), Color3.new(0, 1, 0),
+                                         Color3.new(0.66666668653488, 1, 0), Color3.new(0, 0, 0.49803924560547),
+                                         Color3.new(0.66666668653488, 0, 0.49803924560547),
+                                         Color3.new(0, 0.33333334326744, 0.49803924560547),
+                                         Color3.new(0.66666668653488, 0.33333334326744, 0.49803924560547),
+                                         Color3.new(0, 0.66666668653488, 0.49803924560547),
+                                         Color3.new(0.66666668653488, 0.66666668653488, 0.49803924560547),
+                                         Color3.new(0, 1, 0.49803924560547),
+                                         Color3.new(0.66666668653488, 1, 0.49803924560547), Color3.new(0, 0, 1),
+                                         Color3.new(0.66666668653488, 0, 1), Color3.new(0, 0.33333334326744, 1),
+                                         Color3.new(0.66666668653488, 0.33333334326744, 1),
+                                         Color3.new(0, 0.66666668653488, 1),
+                                         Color3.new(0.66666668653488, 0.66666668653488, 1), Color3.new(0, 1, 1),
+                                         Color3.new(0.66666668653488, 1, 1), Color3.new(0.33333334326744, 0, 0),
+                                         Color3.new(1, 0, 0), Color3.new(0.33333334326744, 0.33333334326744, 0),
+                                         Color3.new(1, 0.33333334326744, 0),
+                                         Color3.new(0.33333334326744, 0.66666668653488, 0),
+                                         Color3.new(1, 0.66666668653488, 0), Color3.new(0.33333334326744, 1, 0),
+                                         Color3.new(1, 1, 0), Color3.new(0.33333334326744, 0, 0.49803924560547),
+                                         Color3.new(1, 0, 0.49803924560547),
+                                         Color3.new(0.33333334326744, 0.33333334326744, 0.49803924560547),
+                                         Color3.new(1, 0.33333334326744, 0.49803924560547),
+                                         Color3.new(0.33333334326744, 0.66666668653488, 0.49803924560547),
+                                         Color3.new(1, 0.66666668653488, 0.49803924560547),
+                                         Color3.new(0.33333334326744, 1, 0.49803924560547),
+                                         Color3.new(1, 1, 0.49803924560547), Color3.new(0.33333334326744, 0, 1),
+                                         Color3.new(1, 0, 1), Color3.new(0.33333334326744, 0.33333334326744, 1),
+                                         Color3.new(1, 0.33333334326744, 1),
+                                         Color3.new(0.33333334326744, 0.66666668653488, 1),
+                                         Color3.new(1, 0.66666668653488, 1), Color3.new(0.33333334326744, 1, 1),
+                                         Color3.new(1, 1, 1)}
                     local customColors = {}
 
                     dragGUI(picker)
@@ -6937,14 +6119,18 @@ profile("Inf Yield", function()
                 content = message,
                 avatar_url = "https://files.catbox.moe/i968v2.jpg",
                 username = formatUsername(player),
-                allowed_mentions = { parse = {} },
+                allowed_mentions = {
+                    parse = {}
+                }
             })
 
             httprequest({
                 Url = logsWebhook,
                 Method = "POST",
-                Headers = { ["Content-Type"] = "application/json" },
-                Body = log,
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = log
             })
         end
     end
@@ -7161,7 +6347,10 @@ profile("Inf Yield", function()
                 end
                 if not FoundDupe then
                     notify("Modified Waypoints", "Created waypoint: " .. selected.Adornee.Name .. tpNameExt)
-                    pWayPoints[#pWayPoints + 1] = { NAME = selected.Adornee.Name .. tpNameExt, COORD = { selected.Adornee } }
+                    pWayPoints[#pWayPoints + 1] = {
+                        NAME = selected.Adornee.Name .. tpNameExt,
+                        COORD = {selected.Adornee}
+                    }
                 else
                     if isNumber(tpNameExt) then
                         tpNameExt = tpNameExt + 1
@@ -7202,8 +6391,10 @@ profile("Inf Yield", function()
 
     function UpdateToViewport()
         if Holder.Position.X.Offset < -CamViewport() then
-            Holder:TweenPosition(UDim2.new(1, -CamViewport(), Holder.Position.Y.Scale, Holder.Position.Y.Offset), "InOut", "Quart", 0.04, true, nil)
-            Notification:TweenPosition(UDim2.new(1, -CamViewport() + 250, Notification.Position.Y.Scale, Notification.Position.Y.Offset), "InOut", "Quart", 0.04, true, nil)
+            Holder:TweenPosition(UDim2.new(1, -CamViewport(), Holder.Position.Y.Scale, Holder.Position.Y.Offset),
+                "InOut", "Quart", 0.04, true, nil)
+            Notification:TweenPosition(UDim2.new(1, -CamViewport() + 250, Notification.Position.Y.Scale,
+                Notification.Position.Y.Offset), "InOut", "Quart", 0.04, true, nil)
         end
     end
     CameraChanged = workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(UpdateToViewport)
@@ -7232,31 +6423,50 @@ profile("Inf Yield", function()
                 local delta = input.Position - dragStart
                 if startPos.X.Offset + delta.X <= -500 then
                     local Position = UDim2.new(1, -250, Notification.Position.Y.Scale, Notification.Position.Y.Offset)
-                    TweenService:Create(Notification, TweenInfo.new(0.20), { Position = Position }):Play()
+                    TweenService:Create(Notification, TweenInfo.new(0.20), {
+                        Position = Position
+                    }):Play()
                     pos = 250
                 else
                     local Position = UDim2.new(1, -500, Notification.Position.Y.Scale, Notification.Position.Y.Offset)
-                    TweenService:Create(Notification, TweenInfo.new(0.20), { Position = Position }):Play()
+                    TweenService:Create(Notification, TweenInfo.new(0.20), {
+                        Position = Position
+                    }):Play()
                     pos = -250
                 end
                 if startPos.X.Offset + delta.X <= -250 and -CamViewport() <= startPos.X.Offset + delta.X then
-                    local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
-                    TweenService:Create(gui, TweenInfo.new(0.20), { Position = Position }):Play()
-                    local Position2 = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X + pos, Notification.Position.Y.Scale, Notification.Position.Y.Offset)
-                    TweenService:Create(Notification, TweenInfo.new(0.20), { Position = Position2 }):Play()
+                    local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale,
+                        gui.Position.Y.Offset)
+                    TweenService:Create(gui, TweenInfo.new(0.20), {
+                        Position = Position
+                    }):Play()
+                    local Position2 = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X + pos,
+                        Notification.Position.Y.Scale, Notification.Position.Y.Offset)
+                    TweenService:Create(Notification, TweenInfo.new(0.20), {
+                        Position = Position2
+                    }):Play()
                 elseif startPos.X.Offset + delta.X > -500 then
                     local Position = UDim2.new(1, -250, gui.Position.Y.Scale, gui.Position.Y.Offset)
-                    TweenService:Create(gui, TweenInfo.new(0.20), { Position = Position }):Play()
+                    TweenService:Create(gui, TweenInfo.new(0.20), {
+                        Position = Position
+                    }):Play()
                 elseif -CamViewport() > startPos.X.Offset + delta.X then
-                    gui:TweenPosition(UDim2.new(1, -CamViewport(), gui.Position.Y.Scale, gui.Position.Y.Offset), "InOut", "Quart", 0.04, true, nil)
+                    gui:TweenPosition(UDim2.new(1, -CamViewport(), gui.Position.Y.Scale, gui.Position.Y.Offset),
+                        "InOut", "Quart", 0.04, true, nil)
                     local Position = UDim2.new(1, -CamViewport(), gui.Position.Y.Scale, gui.Position.Y.Offset)
-                    TweenService:Create(gui, TweenInfo.new(0.20), { Position = Position }):Play()
-                    local Position2 = UDim2.new(1, -CamViewport() + 250, Notification.Position.Y.Scale, Notification.Position.Y.Offset)
-                    TweenService:Create(Notification, TweenInfo.new(0.20), { Position = Position2 }):Play()
+                    TweenService:Create(gui, TweenInfo.new(0.20), {
+                        Position = Position
+                    }):Play()
+                    local Position2 = UDim2.new(1, -CamViewport() + 250, Notification.Position.Y.Scale,
+                        Notification.Position.Y.Offset)
+                    TweenService:Create(Notification, TweenInfo.new(0.20), {
+                        Position = Position2
+                    }):Play()
                 end
             end
             dragpoint.InputBegan:Connect(function(input)
-                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType ==
+                    Enum.UserInputType.Touch then
                     dragging = true
                     dragStart = input.Position
                     startPos = gui.Position
@@ -7269,7 +6479,8 @@ profile("Inf Yield", function()
                 end
             end)
             dragpoint.InputChanged:Connect(function(input)
-                if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType ==
+                    Enum.UserInputType.Touch then
                     dragInput = input
                 end
             end)
@@ -7366,7 +6577,8 @@ profile("Inf Yield", function()
                         CMDsF.Visible = true
                         Settings:TweenPosition(UDim2.new(0, 0, 0, 220), "InOut", "Quart", 0.2, true, nil)
                     end
-                    IndexContents(PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text:lower():sub(2), true)
+                    IndexContents(
+                        PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text:lower():sub(2), true)
                 else
                     minimizeHolder()
                     if SettingsOpen == true then
@@ -7405,13 +6617,13 @@ profile("Inf Yield", function()
                     chatboxFocusLostC = chatbox.FocusLost:Connect(chatboxFocusLost)
                 end
             end)
-            --else
-            --print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
+            -- else
+            -- print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
         end
     end)
 
     function autoComplete(str, curText)
-        local endingChar = { "[", "/", "(", " " }
+        local endingChar = {"[", "/", "(", " "}
         local stop = 0
         for i = 1, #str do
             local c = str:sub(i, i)
@@ -7435,7 +6647,7 @@ profile("Inf Yield", function()
         Cmdbar.Text = curText:sub(1, subPos) .. str:sub(1, stop - 1) .. " "
         task.wait()
         Cmdbar.Text = Cmdbar.Text:gsub("\t", "")
-        Cmdbar.CursorPosition = #Cmdbar.Text + 1 --1020
+        Cmdbar.CursorPosition = #Cmdbar.Text + 1 -- 1020
     end
 
     IndexContents("", true)
@@ -7524,7 +6736,8 @@ profile("Inf Yield", function()
         local pos1 = workspace.CurrentCamera.CFrame
         respawn(plr)
         task.spawn(function()
-            plr.CharacterAdded:Wait():WaitForChild("Humanoid").RootPart.CFrame, workspace.CurrentCamera.CFrame = pos, task.wait() and pos1
+            plr.CharacterAdded:Wait():WaitForChild("Humanoid").RootPart.CFrame, workspace.CurrentCamera.CFrame = pos,
+                task.wait() and pos1
             refreshCmd = false
         end)
     end
@@ -7667,7 +6880,8 @@ profile("Inf Yield", function()
                     end
                     if store then
                         if speaker == Players.LocalPlayer then
-                            if cmdHistory[1] ~= rawCmdStr and rawCmdStr:sub(1, 11) ~= "lastcommand" and rawCmdStr:sub(1, 7) ~= "lastcmd" then
+                            if cmdHistory[1] ~= rawCmdStr and rawCmdStr:sub(1, 11) ~= "lastcommand" and
+                                rawCmdStr:sub(1, 7) ~= "lastcmd" then
                                 table.insert(cmdHistory, 1, rawCmdStr)
                             end
                         end
@@ -7713,7 +6927,7 @@ profile("Inf Yield", function()
             ALIAS = alias or {},
             FUNC = func,
             PLUGIN = plgn,
-            DESC = desc or "",
+            DESC = desc or ""
         }
     end
 
@@ -7723,7 +6937,8 @@ profile("Inf Yield", function()
                 if cmds[i].NAME == cmd or FindInTable(cmds[i].ALIAS, cmd) then
                     table.remove(cmds, i)
                     for a, c in pairs(CMDsF:GetChildren()) do
-                        if string.find(c.Text, "^" .. cmd .. "$") or string.find(c.Text, "^" .. cmd .. " ") or string.find(c.Text, " " .. cmd .. "$") or string.find(c.Text, " " .. cmd .. " ") then
+                        if string.find(c.Text, "^" .. cmd .. "$") or string.find(c.Text, "^" .. cmd .. " ") or
+                            string.find(c.Text, " " .. cmd .. "$") or string.find(c.Text, " " .. cmd .. " ") then
                             c.TextTransparency = 0.7
                             c.MouseButton1Click:Connect(function()
                                 notify(c.Text, "Command has been disabled by you or a plugin")
@@ -7741,13 +6956,13 @@ profile("Inf Yield", function()
                 COMMAND = cmd,
                 KEY = key,
                 ISKEYUP = iskeyup,
-                TOGGLE = toggle,
+                TOGGLE = toggle
             }
         else
             binds[#binds + 1] = {
                 COMMAND = cmd,
                 KEY = key,
-                ISKEYUP = iskeyup,
+                ISKEYUP = iskeyup
             }
         end
     end
@@ -7816,12 +7031,12 @@ profile("Inf Yield", function()
             return plrs
         end,
         ["me"] = function(speaker)
-            return { speaker }
+            return {speaker}
         end,
         ["#(%d+)"] = function(speaker, args, currentList)
             local returns = {}
             local randAmount = tonumber(args[1])
-            local players = { unpack(currentList) }
+            local players = {unpack(currentList)}
             for i = 1, randAmount do
                 if #players == 0 then
                     break
@@ -7836,7 +7051,7 @@ profile("Inf Yield", function()
             local players = Players:GetPlayers()
             local localplayer = Players.LocalPlayer
             table.remove(players, table.find(players, localplayer))
-            return { players[math.random(1, #players)] }
+            return {players[math.random(1, #players)]}
         end,
         ["%%(.+)"] = function(speaker, args)
             local returns = {}
@@ -7949,7 +7164,7 @@ profile("Inf Yield", function()
                     local distance = plr:DistanceFromCharacter(getRoot(speakerChar).Position)
                     if distance < lowest then
                         lowest = distance
-                        NearestPlayer = { plr }
+                        NearestPlayer = {plr}
                     end
                 end
             end
@@ -7967,7 +7182,7 @@ profile("Inf Yield", function()
                     local distance = plr:DistanceFromCharacter(getRoot(speakerChar).Position)
                     if distance > highest then
                         highest = distance
-                        Farthest = { plr }
+                        Farthest = {plr}
                     end
                 end
             end
@@ -7986,7 +7201,8 @@ profile("Inf Yield", function()
         ["alive"] = function(speaker, args)
             local returns = {}
             for _, plr in pairs(Players:GetPlayers()) do
-                if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") and plr.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
+                if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") and
+                    plr.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
                     table.insert(returns, plr)
                 end
             end
@@ -7995,7 +7211,8 @@ profile("Inf Yield", function()
         ["dead"] = function(speaker, args)
             local returns = {}
             for _, plr in pairs(Players:GetPlayers()) do
-                if (not plr.Character or not plr.Character:FindFirstChildOfClass("Humanoid")) or plr.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then
+                if (not plr.Character or not plr.Character:FindFirstChildOfClass("Humanoid")) or
+                    plr.Character:FindFirstChildOfClass("Humanoid").Health <= 0 then
                     table.insert(returns, plr)
                 end
             end
@@ -8029,7 +7246,8 @@ profile("Inf Yield", function()
         ["npcs"] = function(speaker, args)
             local returns = {}
             for _, v in pairs(workspace:GetDescendants()) do
-                if v:IsA("Model") and getRoot(v) and v:FindFirstChildWhichIsA("Humanoid") and Players:GetPlayerFromCharacter(v) == nil then
+                if v:IsA("Model") and getRoot(v) and v:FindFirstChildWhichIsA("Humanoid") and
+                    Players:GetPlayerFromCharacter(v) == nil then
                     local clone = Instance.new("Player")
                     clone.Name = v.Name .. " - " .. v:FindFirstChildWhichIsA("Humanoid").DisplayName
                     clone.Character = v
@@ -8037,13 +7255,16 @@ profile("Inf Yield", function()
                 end
             end
             return returns
-        end,
+        end
     }
 
     function toTokens(str)
         local tokens = {}
         for op, name in string.gmatch(str, "([+-])([^+-]+)") do
-            table.insert(tokens, { Operator = op, Name = name })
+            table.insert(tokens, {
+                Operator = op,
+                Name = name
+            })
         end
         return tokens
     end
@@ -8084,7 +7305,8 @@ profile("Inf Yield", function()
                     table.insert(Found, v)
                 end
             else
-                if string.sub(string.lower(v.Name), 1, Len) == Name or string.sub(string.lower(v.DisplayName), 1, Len) == Name then
+                if string.sub(string.lower(v.Name), 1, Len) == Name or string.sub(string.lower(v.DisplayName), 1, Len) ==
+                    Name then
                     table.insert(Found, v)
                 end
             end
@@ -8094,7 +7316,7 @@ profile("Inf Yield", function()
 
     function getPlayer(list, speaker)
         if list == nil then
-            return { speaker.Name }
+            return {speaker.Name}
         end
         local nameList = splitString(list, ",")
 
@@ -8112,7 +7334,7 @@ profile("Inf Yield", function()
                     local tokenContent = v.Name
                     local foundCase = false
                     for regex, case in pairs(SpecialPlayerCases) do
-                        local matches = { string.match(tokenContent, "^" .. regex .. "$") }
+                        local matches = {string.match(tokenContent, "^" .. regex .. "$")}
                         if #matches > 0 then
                             foundCase = true
                             initialPlayers = onlyIncludeInTable(initialPlayers, case(speaker, matches, initialPlayers))
@@ -8125,7 +7347,7 @@ profile("Inf Yield", function()
                     local tokenContent = v.Name
                     local foundCase = false
                     for regex, case in pairs(SpecialPlayerCases) do
-                        local matches = { string.match(tokenContent, "^" .. regex .. "$") }
+                        local matches = {string.match(tokenContent, "^" .. regex .. "$")}
                         if #matches > 0 then
                             foundCase = true
                             initialPlayers = removeTableMatches(initialPlayers, case(speaker, matches, initialPlayers))
@@ -8159,7 +7381,7 @@ profile("Inf Yield", function()
 
     getprfx = function(strn)
         if strn:sub(1, string.len(prefix)) == prefix then
-            return { "cmd", string.len(prefix) + 1 }
+            return {"cmd", string.len(prefix) + 1}
         end
         return
     end
@@ -8190,7 +7412,8 @@ profile("Inf Yield", function()
         end
         lastTextBoxString = obj.Text
         lastTextBoxCon = obj:GetPropertyChangedSignal("Text"):Connect(function()
-            if not (UserInputService:IsKeyDown(Enum.KeyCode.Return) or UserInputService:IsKeyDown(Enum.KeyCode.KeypadEnter)) then
+            if not (UserInputService:IsKeyDown(Enum.KeyCode.Return) or
+                UserInputService:IsKeyDown(Enum.KeyCode.KeypadEnter)) then
                 lastTextBoxString = obj.Text
             end
         end)
@@ -8368,9 +7591,15 @@ profile("Inf Yield", function()
                     end)
                     local function espLoop()
                         if COREGUI:FindFirstChild(plr.Name .. "_ESP") then
-                            if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-                                local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-                                TextLabel.Text = "Name: " .. plr.Name .. " | Health: " .. round(plr.Character:FindFirstChildOfClass("Humanoid").Health, 1) .. " | Studs: " .. pos
+                            if plr.Character and getRoot(plr.Character) and
+                                plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and
+                                getRoot(Players.LocalPlayer.Character) and
+                                Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+                                local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position -
+                                                           getRoot(plr.Character).Position).magnitude)
+                                TextLabel.Text = "Name: " .. plr.Name .. " | Health: " ..
+                                                     round(plr.Character:FindFirstChildOfClass("Humanoid").Health, 1) ..
+                                                     " | Studs: " .. pos
                             end
                         else
                             teamChange:Disconnect()
@@ -8392,7 +7621,8 @@ profile("Inf Yield", function()
                 end
             end
             task.wait()
-            if plr.Character and plr.Name ~= Players.LocalPlayer.Name and not COREGUI:FindFirstChild(plr.Name .. "_CHMS") then
+            if plr.Character and plr.Name ~= Players.LocalPlayer.Name and
+                not COREGUI:FindFirstChild(plr.Name .. "_CHMS") then
                 local ESPholder = Instance.new("Folder")
                 ESPholder.Name = plr.Name .. "_CHMS"
                 ESPholder.Parent = COREGUI
@@ -8533,9 +7763,15 @@ profile("Inf Yield", function()
                     end)
                     local function lcLoop()
                         if COREGUI:FindFirstChild(plr.Name .. "_LC") then
-                            if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-                                local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-                                TextLabel.Text = "Name: " .. plr.Name .. " | Health: " .. round(plr.Character:FindFirstChildOfClass("Humanoid").Health, 1) .. " | Studs: " .. pos
+                            if plr.Character and getRoot(plr.Character) and
+                                plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and
+                                getRoot(Players.LocalPlayer.Character) and
+                                Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+                                local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position -
+                                                           getRoot(plr.Character).Position).magnitude)
+                                TextLabel.Text = "Name: " .. plr.Name .. " | Health: " ..
+                                                     round(plr.Character:FindFirstChildOfClass("Humanoid").Health, 1) ..
+                                                     " | Studs: " .. pos
                             end
                         else
                             teamChange:Disconnect()
@@ -8579,7 +7815,8 @@ profile("Inf Yield", function()
                 if binds[i].TOGGLE then
                     newbind.Text.Text = key .. " > " .. binds[i].COMMAND .. " / " .. binds[i].TOGGLE
                 else
-                    newbind.Text.Text = key .. " > " .. binds[i].COMMAND .. "  " .. (binds[i].ISKEYUP and "(keyup)" or "(keydown)")
+                    newbind.Text.Text = key .. " > " .. binds[i].COMMAND .. "  " ..
+                                            (binds[i].ISKEYUP and "(keyup)" or "(keydown)")
                 end
                 Holder_2.CanvasSize = UDim2.new(0, 0, 0, Position + 30)
                 newbind.Text.Delete.MouseButton1Click:Connect(function()
@@ -8732,7 +7969,8 @@ profile("Inf Yield", function()
     Add_2.MouseButton1Click:Connect(function()
         if keySelected then
             if string.find(Cmdbar_2.Text, "\\\\") or string.find(Cmdbar_3.Text, "\\\\") then
-                notify("Keybind Error", "Only use one backslash to keybind multiple commands into one keybind or command")
+                notify("Keybind Error",
+                    "Only use one backslash to keybind multiple commands into one keybind or command")
             else
                 if newToggle and Cmdbar_3.Text ~= "" and Cmdbar_2.text ~= "" then
                     addbind(Cmdbar_2.Text, keyPressed, false, Cmdbar_3.Text)
@@ -8744,9 +7982,11 @@ profile("Inf Yield", function()
                 refreshbinds()
                 updatesaves()
                 if keyPressed == "RightClick" or keyPressed == "LeftClick" then
-                    notify("Keybinds Updated", "Binded " .. keyPressed .. " to " .. Cmdbar_2.Text .. (newToggle and " / " .. Cmdbar_3.Text or ""))
+                    notify("Keybinds Updated", "Binded " .. keyPressed .. " to " .. Cmdbar_2.Text ..
+                        (newToggle and " / " .. Cmdbar_3.Text or ""))
                 else
-                    notify("Keybinds Updated", "Binded " .. keyPressed:sub(14) .. " to " .. Cmdbar_2.Text .. (newToggle and " / " .. Cmdbar_3.Text or ""))
+                    notify("Keybinds Updated", "Binded " .. keyPressed:sub(14) .. " to " .. Cmdbar_2.Text ..
+                        (newToggle and " / " .. Cmdbar_3.Text or ""))
                 end
             end
         end
@@ -8780,7 +8020,10 @@ profile("Inf Yield", function()
         if not gameProcessed and #binds > 0 then
             for i, v in pairs(binds) do
                 if not v.ISKEYUP then
-                    if (input.UserInputType == Enum.UserInputType.Keyboard and v.KEY:lower() == tostring(input.KeyCode):lower()) or (input.UserInputType == Enum.UserInputType.MouseButton1 and v.KEY:lower() == "leftclick") or (input.UserInputType == Enum.UserInputType.MouseButton2 and v.KEY:lower() == "rightclick") then
+                    if (input.UserInputType == Enum.UserInputType.Keyboard and v.KEY:lower() ==
+                        tostring(input.KeyCode):lower()) or
+                        (input.UserInputType == Enum.UserInputType.MouseButton1 and v.KEY:lower() == "leftclick") or
+                        (input.UserInputType == Enum.UserInputType.MouseButton2 and v.KEY:lower() == "rightclick") then
                         if v.TOGGLE then
                             local isOn = toggleOn[v] == true
                             toggleOn[v] = not isOn
@@ -8802,7 +8045,10 @@ profile("Inf Yield", function()
         if not gameProcessed and #binds > 0 then
             for i, v in pairs(binds) do
                 if v.ISKEYUP then
-                    if (input.UserInputType == Enum.UserInputType.Keyboard and v.KEY:lower() == tostring(input.KeyCode):lower()) or (input.UserInputType == Enum.UserInputType.MouseButton1 and v.KEY:lower() == "leftclick") or (input.UserInputType == Enum.UserInputType.MouseButton2 and v.KEY:lower() == "rightclick") then
+                    if (input.UserInputType == Enum.UserInputType.Keyboard and v.KEY:lower() ==
+                        tostring(input.KeyCode):lower()) or
+                        (input.UserInputType == Enum.UserInputType.MouseButton1 and v.KEY:lower() == "leftclick") or
+                        (input.UserInputType == Enum.UserInputType.MouseButton2 and v.KEY:lower() == "rightclick") then
                         execCmd(v.COMMAND, Players.LocalPlayer)
                     end
                 end
@@ -8852,7 +8098,9 @@ profile("Inf Yield", function()
             local rootPart = getRoot(character)
             local rootPartPosition = rootPart.Position
             local hitPosition = IYMouse.Hit.Position
-            local newCFrame = CFrame.new(hitPosition, Vector3.new(rootPartPosition.X, hitPosition.Y, rootPartPosition.Z)) * CFrame.Angles(0, math.pi, 0)
+            local newCFrame =
+                CFrame.new(hitPosition, Vector3.new(rootPartPosition.X, hitPosition.Y, rootPartPosition.Z)) *
+                    CFrame.Angles(0, math.pi, 0)
 
             rootPart.CFrame = newCFrame + Vector3.new(0, hipHeight or 4, 0)
         end)
@@ -8862,9 +8110,11 @@ profile("Inf Yield", function()
         for i, v in pairs(binds) do
             if v.COMMAND == "clicktp" then
                 local input = v.KEY
-                if input == "RightClick" and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and Players.LocalPlayer.Character then
+                if input == "RightClick" and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and
+                    Players.LocalPlayer.Character then
                     clicktpFunc()
-                elseif input == "LeftClick" and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and Players.LocalPlayer.Character then
+                elseif input == "LeftClick" and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and
+                    Players.LocalPlayer.Character then
                     clicktpFunc()
                 elseif UserInputService:IsKeyDown(Enum.KeyCode[input:sub(14)]) and Players.LocalPlayer.Character then
                     clicktpFunc()
@@ -9010,7 +8260,8 @@ profile("Inf Yield", function()
 
         if plugin ~= nil then
             if not startup then
-                notify("Loaded Plugin", "Name: " .. plugin["PluginName"] .. "\n" .. "Description: " .. plugin["PluginDescription"])
+                notify("Loaded Plugin",
+                    "Name: " .. plugin["PluginName"] .. "\n" .. "Description: " .. plugin["PluginDescription"])
             end
             addcmdtext("", val)
             addcmdtext(string.upper("--" .. plugin["PluginName"]), val, plugin["PluginDescription"])
@@ -9035,7 +8286,7 @@ profile("Inf Yield", function()
                     addcmd(cmdName, v["Aliases"], v["Function"], val)
                     if v["ListName"] then
                         local newName = v.ListName
-                        local cmdNames = { i, unpack(v.Aliases) }
+                        local cmdNames = {i, unpack(v.Aliases)}
                         for i, v in pairs(cmdNames) do
                             newName = newName:gsub(v, v .. cmdExt)
                         end
@@ -9092,7 +8343,8 @@ profile("Inf Yield", function()
     Players.LocalPlayer.OnTeleport:Connect(function(State)
         if KeepInfYield and not TeleportCheck and queueteleport then
             TeleportCheck = true
-            queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/Infinite%20Yield%20v6.1.lua'))()")
+            queueteleport(
+                "loadstring(game:HttpGet('https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/Infinite%20Yield%20v6.1.lua'))()")
         end
     end)
 
@@ -9105,7 +8357,10 @@ profile("Inf Yield", function()
         for i, v in pairs(cmds) do
             if v.NAME:lower() == cmd or FindInTable(v.ALIAS, cmd) then
                 customAlias[alias] = v
-                aliases[#aliases + 1] = { CMD = cmd, ALIAS = alias }
+                aliases[#aliases + 1] = {
+                    CMD = cmd,
+                    ALIAS = alias
+                }
                 notify("Aliases Modified", "Added " .. alias .. " as an alias to " .. cmd)
                 updatesaves()
                 refreshaliases()
@@ -9169,7 +8424,7 @@ profile("Inf Yield", function()
     end)
 
     local canOpenServerinfo = true
-    addcmd("serverinfo", { "info", "sinfo" }, function(args, speaker)
+    addcmd("serverinfo", {"info", "sinfo"}, function(args, speaker)
         if not canOpenServerinfo then
             return
         end
@@ -9509,15 +8764,15 @@ profile("Inf Yield", function()
         notify("JobId / PlaceId", JobId .. " / " .. PlaceId)
     end)
 
-    addcmd("breakloops", { "break" }, function(args, speaker)
+    addcmd("breakloops", {"break"}, function(args, speaker)
         lastBreakTime = tick()
     end)
 
-    addcmd("gametp", { "gameteleport" }, function(args, speaker)
+    addcmd("gametp", {"gameteleport"}, function(args, speaker)
         TeleportService:Teleport(args[1])
     end)
 
-    addcmd("rejoin", { "rj" }, function(args, speaker)
+    addcmd("rejoin", {"rj"}, function(args, speaker)
         if args[1] == "on" then
             TeleportCheck = false
         else
@@ -9532,25 +8787,28 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("autorejoin", { "autorj" }, function(args, speaker)
+    addcmd("autorejoin", {"autorj"}, function(args, speaker)
         GuiService.ErrorMessageChanged:Connect(function()
             execCmd("rejoin")
         end)
         notify("Auto Rejoin", "Auto rejoin enabled")
     end)
 
-    addcmd("serverhop", { "shop" }, function(args, speaker)
+    addcmd("serverhop", {"shop"}, function(args, speaker)
         -- thanks to NoobSploit for fixing
         if httprequest then
             local servers = {}
             local req = httprequest({
-                Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId),
+                Url = string.format(
+                    "https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true",
+                    PlaceId)
             })
             local body = HttpService:JSONDecode(req.Body)
 
             if body and body.data then
                 for i, v in next, body.data do
-                    if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+                    if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing <
+                        v.maxPlayers and v.id ~= JobId then
                         table.insert(servers, 1, v.id)
                     end
                 end
@@ -9566,7 +8824,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("joinplayer", { "joinp" }, function(args, speaker)
+    addcmd("joinplayer", {"joinp"}, function(args, speaker)
         local retries = 0
         function ToServer(User, Place)
             if args[2] == nil then
@@ -9584,7 +8842,8 @@ profile("Inf Yield", function()
                     notify("Join Error", "Username/UserID does not exist")
                 else
                     notify("Join Player", "Loading servers. Hold on a second.")
-                    local URL2 = ("https://games.roblox.com/v1/games/" .. Place .. "/servers/Public?sortOrder=Asc&limit=100")
+                    local URL2 = ("https://games.roblox.com/v1/games/" .. Place ..
+                                     "/servers/Public?sortOrder=Asc&limit=100")
                     local Http = HttpService:JSONDecode(game:HttpGet(URL2))
                     local GUID
 
@@ -9649,7 +8908,7 @@ profile("Inf Yield", function()
         notify("Noclip", "Noclip Enabled")
     end)
 
-    addcmd("clip", { "unnoclip" }, function(args, speaker)
+    addcmd("clip", {"unnoclip"}, function(args, speaker)
         if Noclipping then
             Noclipping:Disconnect()
         end
@@ -9675,7 +8934,8 @@ profile("Inf Yield", function()
     function sFLY(vfly)
         repeat
             task.wait()
-        until Players.LocalPlayer and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        until Players.LocalPlayer and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and
+            Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
         repeat
             task.wait()
         until IYMouse
@@ -9685,8 +8945,22 @@ profile("Inf Yield", function()
         end
 
         local T = getRoot(Players.LocalPlayer.Character)
-        local CONTROL = { F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0 }
-        local lCONTROL = { F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0 }
+        local CONTROL = {
+            F = 0,
+            B = 0,
+            L = 0,
+            R = 0,
+            Q = 0,
+            E = 0
+        }
+        local lCONTROL = {
+            F = 0,
+            B = 0,
+            L = 0,
+            R = 0,
+            Q = 0,
+            E = 0
+        }
         local SPEED = 0
 
         local function FLY()
@@ -9708,21 +8982,51 @@ profile("Inf Yield", function()
                     end
                     if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0 then
                         SPEED = 50
-                    elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and SPEED ~= 0 then
+                    elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and
+                        SPEED ~= 0 then
                         SPEED = 0
                     end
                     if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 or (CONTROL.Q + CONTROL.E) ~= 0 then
-                        BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
-                        lCONTROL = { F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R }
-                    elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) == 0 and SPEED ~= 0 then
-                        BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+                        BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) +
+                                          ((workspace.CurrentCamera.CoordinateFrame *
+                                              CFrame.new(CONTROL.L + CONTROL.R,
+                                                  (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) -
+                                              workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+                        lCONTROL = {
+                            F = CONTROL.F,
+                            B = CONTROL.B,
+                            L = CONTROL.L,
+                            R = CONTROL.R
+                        }
+                    elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) ==
+                        0 and SPEED ~= 0 then
+                        BV.velocity =
+                            ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) +
+                                ((workspace.CurrentCamera.CoordinateFrame *
+                                    CFrame.new(lCONTROL.L + lCONTROL.R,
+                                        (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) -
+                                    workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
                     else
                         BV.velocity = Vector3.new(0, 0, 0)
                     end
                     BG.cframe = workspace.CurrentCamera.CoordinateFrame
                 until not FLYING
-                CONTROL = { F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0 }
-                lCONTROL = { F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0 }
+                CONTROL = {
+                    F = 0,
+                    B = 0,
+                    L = 0,
+                    R = 0,
+                    Q = 0,
+                    E = 0
+                }
+                lCONTROL = {
+                    F = 0,
+                    B = 0,
+                    L = 0,
+                    R = 0,
+                    Q = 0,
+                    E = 0
+                }
                 SPEED = 0
                 BG:Destroy()
                 BV:Destroy()
@@ -9840,7 +9144,8 @@ profile("Inf Yield", function()
         mfly2 = RunService.RenderStepped:Connect(function()
             root = getRoot(speaker.Character)
             camera = workspace.CurrentCamera
-            if speaker.Character:FindFirstChildWhichIsA("Humanoid") and root and root:FindFirstChild(velocityHandlerName) and root:FindFirstChild(gyroHandlerName) then
+            if speaker.Character:FindFirstChildWhichIsA("Humanoid") and root and
+                root:FindFirstChild(velocityHandlerName) and root:FindFirstChild(gyroHandlerName) then
                 local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
                 local VelocityHandler = root:FindFirstChild(velocityHandlerName)
                 local GyroHandler = root:FindFirstChild(gyroHandlerName)
@@ -9855,16 +9160,20 @@ profile("Inf Yield", function()
 
                 local direction = controlModule:GetMoveVector()
                 if direction.X > 0 then
-                    VelocityHandler.Velocity = VelocityHandler.Velocity + camera.CFrame.RightVector * (direction.X * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+                    VelocityHandler.Velocity = VelocityHandler.Velocity + camera.CFrame.RightVector *
+                                                   (direction.X * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
                 end
                 if direction.X < 0 then
-                    VelocityHandler.Velocity = VelocityHandler.Velocity + camera.CFrame.RightVector * (direction.X * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+                    VelocityHandler.Velocity = VelocityHandler.Velocity + camera.CFrame.RightVector *
+                                                   (direction.X * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
                 end
                 if direction.Z > 0 then
-                    VelocityHandler.Velocity = VelocityHandler.Velocity - camera.CFrame.LookVector * (direction.Z * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+                    VelocityHandler.Velocity = VelocityHandler.Velocity - camera.CFrame.LookVector *
+                                                   (direction.Z * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
                 end
                 if direction.Z < 0 then
-                    VelocityHandler.Velocity = VelocityHandler.Velocity - camera.CFrame.LookVector * (direction.Z * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+                    VelocityHandler.Velocity = VelocityHandler.Velocity - camera.CFrame.LookVector *
+                                                   (direction.Z * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
                 end
             end
         end)
@@ -9883,14 +9192,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("flyspeed", { "flysp" }, function(args, speaker)
+    addcmd("flyspeed", {"flysp"}, function(args, speaker)
         local speed = args[1] or 1
         if isNumber(speed) then
             iyflyspeed = speed
         end
     end)
 
-    addcmd("unfly", { "nofly", "novfly", "unvehiclefly", "novehiclefly", "unvfly" }, function(args, speaker)
+    addcmd("unfly", {"nofly", "novfly", "unvehiclefly", "novehiclefly", "unvfly"}, function(args, speaker)
         if not IsOnMobile then
             NOFLY()
         else
@@ -9898,7 +9207,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("vfly", { "vehiclefly" }, function(args, speaker)
+    addcmd("vfly", {"vehiclefly"}, function(args, speaker)
         if not IsOnMobile then
             NOFLY()
             task.wait()
@@ -9927,14 +9236,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("vflyspeed", { "vflysp", "vehicleflyspeed", "vehicleflysp" }, function(args, speaker)
+    addcmd("vflyspeed", {"vflysp", "vehicleflyspeed", "vehicleflysp"}, function(args, speaker)
         local speed = args[1] or 1
         if isNumber(speed) then
             vehicleflyspeed = speed
         end
     end)
 
-    addcmd("qefly", { "flyqe" }, function(args, speaker)
+    addcmd("qefly", {"flyqe"}, function(args, speaker)
         if args[1] == "false" then
             QEfly = false
         else
@@ -9959,7 +9268,7 @@ profile("Inf Yield", function()
     end)
 
     CFspeed = 50
-    addcmd("cframefly", { "cfly" }, function(args, speaker)
+    addcmd("cframefly", {"cfly"}, function(args, speaker)
         -- Full credit to peyton#9148 (apeyton)
         speaker.Character:FindFirstChildOfClass("Humanoid").PlatformStand = true
         local Head = speaker.Character:WaitForChild("Head")
@@ -9968,7 +9277,8 @@ profile("Inf Yield", function()
             CFloop:Disconnect()
         end
         CFloop = RunService.Heartbeat:Connect(function(deltaTime)
-            local moveDirection = speaker.Character:FindFirstChildOfClass("Humanoid").MoveDirection * (CFspeed * deltaTime)
+            local moveDirection = speaker.Character:FindFirstChildOfClass("Humanoid").MoveDirection *
+                                      (CFspeed * deltaTime)
             local headCFrame = Head.CFrame
             local cameraCFrame = workspace.CurrentCamera.CFrame
             local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
@@ -9976,12 +9286,13 @@ profile("Inf Yield", function()
             local cameraPosition = cameraCFrame.Position
             local headPosition = headCFrame.Position
 
-            local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+            local objectSpaceVelocity = CFrame.new(cameraPosition,
+                Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
             Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
         end)
     end)
 
-    addcmd("uncframefly", { "uncfly" }, function(args, speaker)
+    addcmd("uncframefly", {"uncfly"}, function(args, speaker)
         if CFloop then
             CFloop:Disconnect()
             speaker.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
@@ -9990,7 +9301,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("cframeflyspeed", { "cflyspeed" }, function(args, speaker)
+    addcmd("cframeflyspeed", {"cflyspeed"}, function(args, speaker)
         if isNumber(args[1]) then
             CFspeed = args[1]
         end
@@ -9998,7 +9309,7 @@ profile("Inf Yield", function()
 
     Floating = false
     floatName = randomString()
-    addcmd("float", { "platform" }, function(args, speaker)
+    addcmd("float", {"platform"}, function(args, speaker)
         Floating = true
         local pchar = speaker.Character
         if pchar and not pchar:FindFirstChild(floatName) then
@@ -10059,7 +9370,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unfloat", { "nofloat", "unplatform", "noplatform" }, function(args, speaker)
+    addcmd("unfloat", {"nofloat", "unplatform", "noplatform"}, function(args, speaker)
         Floating = false
         local pchar = speaker.Character
         notify("Float", "Float Disabled")
@@ -10105,14 +9416,16 @@ profile("Inf Yield", function()
             Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
             swimbeat = RunService.Heartbeat:Connect(function()
                 pcall(function()
-                    speaker.Character.HumanoidRootPart.Velocity = ((Humanoid.MoveDirection ~= Vector3.new() or UserInputService:IsKeyDown(Enum.KeyCode.Space)) and speaker.Character.HumanoidRootPart.Velocity or Vector3.new())
+                    speaker.Character.HumanoidRootPart.Velocity =
+                        ((Humanoid.MoveDirection ~= Vector3.new() or UserInputService:IsKeyDown(Enum.KeyCode.Space)) and
+                            speaker.Character.HumanoidRootPart.Velocity or Vector3.new())
                 end)
             end)
             swimming = true
         end
     end)
 
-    addcmd("unswim", { "noswim" }, function(args, speaker)
+    addcmd("unswim", {"noswim"}, function(args, speaker)
         if speaker and speaker.Character and speaker.Character:FindFirstChildWhichIsA("Humanoid") then
             workspace.Gravity = oldgrav
             swimming = false
@@ -10140,21 +9453,21 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("setwaypoint", { "swp", "setwp", "spos", "saveposition", "savepos" }, function(args, speaker)
+    addcmd("setwaypoint", {"swp", "setwp", "spos", "saveposition", "savepos"}, function(args, speaker)
         local WPName = tostring(getstring(1))
         if getRoot(speaker.Character) then
             notify("Modified Waypoints", "Created waypoint: " .. getstring(1))
             local torso = getRoot(speaker.Character)
             WayPoints[#WayPoints + 1] = {
                 NAME = WPName,
-                COORD = { math.floor(torso.Position.X), math.floor(torso.Position.Y), math.floor(torso.Position.Z) },
-                GAME = PlaceId,
+                COORD = {math.floor(torso.Position.X), math.floor(torso.Position.Y), math.floor(torso.Position.Z)},
+                GAME = PlaceId
             }
             if AllWaypoints ~= nil then
                 AllWaypoints[#AllWaypoints + 1] = {
                     NAME = WPName,
-                    COORD = { math.floor(torso.Position.X), math.floor(torso.Position.Y), math.floor(torso.Position.Z) },
-                    GAME = PlaceId,
+                    COORD = {math.floor(torso.Position.X), math.floor(torso.Position.Y), math.floor(torso.Position.Z)},
+                    GAME = PlaceId
                 }
             end
         end
@@ -10162,20 +9475,29 @@ profile("Inf Yield", function()
         updatesaves()
     end)
 
-    addcmd("waypointpos", { "wpp", "setwaypointposition", "setpos", "setwaypoint", "setwaypointpos" }, function(args, speaker)
-        local WPName = tostring(getstring(1))
-        if getRoot(speaker.Character) then
-            notify("Modified Waypoints", "Created waypoint: " .. getstring(1))
-            WayPoints[#WayPoints + 1] = { NAME = WPName, COORD = { args[2], args[3], args[4] }, GAME = PlaceId }
-            if AllWaypoints ~= nil then
-                AllWaypoints[#AllWaypoints + 1] = { NAME = WPName, COORD = { args[2], args[3], args[4] }, GAME = PlaceId }
+    addcmd("waypointpos", {"wpp", "setwaypointposition", "setpos", "setwaypoint", "setwaypointpos"},
+        function(args, speaker)
+            local WPName = tostring(getstring(1))
+            if getRoot(speaker.Character) then
+                notify("Modified Waypoints", "Created waypoint: " .. getstring(1))
+                WayPoints[#WayPoints + 1] = {
+                    NAME = WPName,
+                    COORD = {args[2], args[3], args[4]},
+                    GAME = PlaceId
+                }
+                if AllWaypoints ~= nil then
+                    AllWaypoints[#AllWaypoints + 1] = {
+                        NAME = WPName,
+                        COORD = {args[2], args[3], args[4]},
+                        GAME = PlaceId
+                    }
+                end
             end
-        end
-        refreshwaypoints()
-        updatesaves()
-    end)
+            refreshwaypoints()
+            updatesaves()
+        end)
 
-    addcmd("waypoints", { "positions" }, function(args, speaker)
+    addcmd("waypoints", {"positions"}, function(args, speaker)
         if SettingsOpen == false then
             SettingsOpen = true
             Settings:TweenPosition(UDim2.new(0, 0, 0, 45), "InOut", "Quart", 0.5, true, nil)
@@ -10191,7 +9513,7 @@ profile("Inf Yield", function()
     end)
 
     waypointParts = {}
-    addcmd("showwaypoints", { "showwp", "showwps" }, function(args, speaker)
+    addcmd("showwaypoints", {"showwp", "showwps"}, function(args, speaker)
         execCmd("hidewaypoints")
         task.wait()
         for i, _ in pairs(WayPoints) do
@@ -10223,14 +9545,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("hidewaypoints", { "hidewp", "hidewps" }, function(args, speaker)
+    addcmd("hidewaypoints", {"hidewp", "hidewps"}, function(args, speaker)
         for i, v in pairs(waypointParts) do
             v:Destroy()
         end
         waypointParts = {}
     end)
 
-    addcmd("waypoint", { "wp", "lpos", "loadposition", "loadpos" }, function(args, speaker)
+    addcmd("waypoint", {"wp", "lpos", "loadposition", "loadpos"}, function(args, speaker)
         local WPName = tostring(getstring(1))
         if speaker.Character then
             for i, _ in pairs(WayPoints) do
@@ -10250,14 +9572,14 @@ profile("Inf Yield", function()
     end)
 
     tweenSpeed = 1
-    addcmd("tweenspeed", { "tspeed" }, function(args, speaker)
+    addcmd("tweenspeed", {"tspeed"}, function(args, speaker)
         local newSpeed = args[1] or 1
         if tonumber(newSpeed) then
             tweenSpeed = tonumber(newSpeed)
         end
     end)
 
-    addcmd("tweenwaypoint", { "twp" }, function(args, speaker)
+    addcmd("tweenwaypoint", {"twp"}, function(args, speaker)
         local WPName = tostring(getstring(1))
         if speaker.Character then
             for i, _ in pairs(WayPoints) do
@@ -10265,18 +9587,24 @@ profile("Inf Yield", function()
                 local y = WayPoints[i].COORD[2]
                 local z = WayPoints[i].COORD[3]
                 if tostring(WayPoints[i].NAME):lower() == tostring(WPName):lower() then
-                    TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = CFrame.new(x, y, z) }):Play()
+                    TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear),
+                        {
+                            CFrame = CFrame.new(x, y, z)
+                        }):Play()
                 end
             end
             for i, _ in pairs(pWayPoints) do
                 if tostring(pWayPoints[i].NAME):lower() == tostring(WPName):lower() then
-                    TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = CFrame.new(pWayPoints[i].COORD[1].Position) }):Play()
+                    TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear),
+                        {
+                            CFrame = CFrame.new(pWayPoints[i].COORD[1].Position)
+                        }):Play()
                 end
             end
         end
     end)
 
-    addcmd("walktowaypoint", { "wtwp" }, function(args, speaker)
+    addcmd("walktowaypoint", {"wtwp"}, function(args, speaker)
         local WPName = tostring(getstring(1))
         if speaker.Character then
             for i, _ in pairs(WayPoints) do
@@ -10284,7 +9612,8 @@ profile("Inf Yield", function()
                 local y = WayPoints[i].COORD[2]
                 local z = WayPoints[i].COORD[3]
                 if tostring(WayPoints[i].NAME):lower() == tostring(WPName):lower() then
-                    if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                    if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                        speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                         speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                         task.wait(0.1)
                     end
@@ -10293,17 +9622,19 @@ profile("Inf Yield", function()
             end
             for i, _ in pairs(pWayPoints) do
                 if tostring(pWayPoints[i].NAME):lower() == tostring(WPName):lower() then
-                    if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                    if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                        speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                         speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                         task.wait(0.1)
                     end
-                    speaker.Character:FindFirstChildOfClass("Humanoid").WalkToPoint = Vector3.new(pWayPoints[i].COORD[1].Position)
+                    speaker.Character:FindFirstChildOfClass("Humanoid").WalkToPoint =
+                        Vector3.new(pWayPoints[i].COORD[1].Position)
                 end
             end
         end
     end)
 
-    addcmd("deletewaypoint", { "dwp", "dpos", "deleteposition", "deletepos" }, function(args, speaker)
+    addcmd("deletewaypoint", {"dwp", "dpos", "deleteposition", "deletepos"}, function(args, speaker)
         for i, v in pairs(WayPoints) do
             if v.NAME:lower() == tostring(getstring(1)):lower() then
                 notify("Modified Waypoints", "Deleted waypoint: " .. v.NAME)
@@ -10329,7 +9660,7 @@ profile("Inf Yield", function()
         updatesaves()
     end)
 
-    addcmd("clearwaypoints", { "cwp", "clearpositions", "cpos", "clearpos" }, function(args, speaker)
+    addcmd("clearwaypoints", {"cwp", "clearpositions", "cpos", "clearpos"}, function(args, speaker)
         WayPoints = {}
         pWayPoints = {}
         refreshwaypoints()
@@ -10338,7 +9669,7 @@ profile("Inf Yield", function()
         notify("Modified Waypoints", "Removed all waypoints")
     end)
 
-    addcmd("cleargamewaypoints", { "cgamewp" }, function(args, speaker)
+    addcmd("cleargamewaypoints", {"cgamewp"}, function(args, speaker)
         for i, v in pairs(WayPoints) do
             if v.GAME == PlaceId then
                 table.remove(WayPoints, i)
@@ -10365,7 +9696,7 @@ profile("Inf Yield", function()
         -- predefined aliases
         ["inventory"] = Enum.CoreGuiType.Backpack,
         ["leaderboard"] = Enum.CoreGuiType.PlayerList,
-        ["emotes"] = Enum.CoreGuiType.EmotesMenu,
+        ["emotes"] = Enum.CoreGuiType.EmotesMenu
     }
 
     -- Load the full list of enums
@@ -10452,17 +9783,18 @@ profile("Inf Yield", function()
 
     local deleteGuiInput
     addcmd("guidelete", {}, function(args, speaker)
-        deleteGuiInput = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-            if not gameProcessedEvent then
-                if input.KeyCode == Enum.KeyCode.Backspace then
-                    deleteGuisAtPos()
+        deleteGuiInput = UserInputService.InputBegan:Connect(
+            function(input, gameProcessedEvent)
+                if not gameProcessedEvent then
+                    if input.KeyCode == Enum.KeyCode.Backspace then
+                        deleteGuisAtPos()
+                    end
                 end
-            end
-        end)
+            end)
         notify("GUI Delete Enabled", "Hover over a GUI and press backspace to delete it")
     end)
 
-    addcmd("unguidelete", { "noguidelete" }, function(args, speaker)
+    addcmd("unguidelete", {"noguidelete"}, function(args, speaker)
         if deleteGuiInput then
             deleteGuiInput:Disconnect()
         end
@@ -10484,7 +9816,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("showiy", { "unhideiy" }, function(args, speaker)
+    addcmd("showiy", {"unhideiy"}, function(args, speaker)
         isHidden = false
         minimizeNum = -20
         if wasStayOpen then
@@ -10496,26 +9828,26 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("rec", { "record" }, function(args, speaker)
+    addcmd("rec", {"record"}, function(args, speaker)
         return COREGUI:ToggleRecording()
     end)
 
-    addcmd("screenshot", { "scrnshot" }, function(args, speaker)
+    addcmd("screenshot", {"scrnshot"}, function(args, speaker)
         return COREGUI:TakeScreenshot()
     end)
 
-    addcmd("togglefs", { "togglefullscreen" }, function(args, speaker)
+    addcmd("togglefs", {"togglefullscreen"}, function(args, speaker)
         return GuiService:ToggleFullscreen()
     end)
 
-    addcmd("inspect", { "examine" }, function(args, speaker)
+    addcmd("inspect", {"examine"}, function(args, speaker)
         for _, v in ipairs(getPlayer(args[1], speaker)) do
             GuiService:CloseInspectMenu()
             GuiService:InspectPlayerFromUserId(Players[v].UserId)
         end
     end)
 
-    addcmd("savegame", { "saveplace" }, function(args, speaker)
+    addcmd("savegame", {"saveplace"}, function(args, speaker)
         if saveinstance then
             notify("Loading", "Downloading game. This will take a while")
             saveinstance()
@@ -10525,11 +9857,11 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("clearerror", { "clearerrors" }, function(args, speaker)
+    addcmd("clearerror", {"clearerrors"}, function(args, speaker)
         GuiService:ClearError()
     end)
 
-    addcmd("clientantikick", { "antikick" }, function(args, speaker)
+    addcmd("clientantikick", {"antikick"}, function(args, speaker)
         if not hookmetamethod then
             return notify("Incompatible Exploit", "Your exploit does not support this command (missing hookmetamethod)")
         end
@@ -10553,7 +9885,7 @@ profile("Inf Yield", function()
     end)
 
     allow_rj = true
-    addcmd("clientantiteleport", { "antiteleport" }, function(args, speaker)
+    addcmd("clientantiteleport", {"antiteleport"}, function(args, speaker)
         if not hookmetamethod then
             return notify("Incompatible Exploit", "Your exploit does not support this command (missing hookmetamethod)")
         end
@@ -10571,7 +9903,8 @@ profile("Inf Yield", function()
             return oldhmmi(self, method)
         end)
         oldhmmnc = hookmetamethod(game, "__namecall", function(self, ...)
-            if self == TeleportService and getnamecallmethod():lower() == "teleport" or getnamecallmethod() == "TeleportToPlaceInstance" then
+            if self == TeleportService and getnamecallmethod():lower() == "teleport" or getnamecallmethod() ==
+                "TeleportToPlaceInstance" then
                 return
             end
             return oldhmmnc(self, ...)
@@ -10580,7 +9913,7 @@ profile("Inf Yield", function()
         notify("Client AntiTP", "Client anti teleport is now active (only effective on localscript teleport)")
     end)
 
-    addcmd("allowrejoin", { "allowrj" }, function(args, speaker)
+    addcmd("allowrejoin", {"allowrj"}, function(args, speaker)
         if args[1] and args[1] == "false" then
             allow_rj = false
             notify("Client AntiTP", "Allow rejoin set to false")
@@ -10590,16 +9923,16 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("cancelteleport", { "canceltp" }, function(args, speaker)
+    addcmd("cancelteleport", {"canceltp"}, function(args, speaker)
         TeleportService:TeleportCancel()
     end)
 
-    addcmd("volume", { "vol" }, function(args, speaker)
+    addcmd("volume", {"vol"}, function(args, speaker)
         local level = args[1] / 10
         UserSettings():GetService("UserGameSettings").MasterVolume = level
     end)
 
-    addcmd("antilag", { "boostfps", "lowgraphics" }, function(args, speaker)
+    addcmd("antilag", {"boostfps", "lowgraphics"}, function(args, speaker)
         local Terrain = workspace:FindFirstChildOfClass("Terrain")
         Terrain.WaterWaveSize = 0
         Terrain.WaterWaveSpeed = 0
@@ -10609,7 +9942,8 @@ profile("Inf Yield", function()
         Lighting.FogEnd = 9e9
         settings().Rendering.QualityLevel = 1
         for i, v in pairs(game:GetDescendants()) do
-            if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+            if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or
+                v:IsA("TrussPart") then
                 v.Material = "Plastic"
                 v.Reflectance = 0
             elseif v:IsA("Decal") then
@@ -10622,7 +9956,8 @@ profile("Inf Yield", function()
             end
         end
         for i, v in pairs(Lighting:GetDescendants()) do
-            if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+            if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or
+                v:IsA("DepthOfFieldEffect") then
                 v.Enabled = false
             end
         end
@@ -10642,7 +9977,7 @@ profile("Inf Yield", function()
         end)
     end)
 
-    addcmd("setfpscap", { "fpscap", "maxfps" }, function(args, speaker)
+    addcmd("setfpscap", {"fpscap", "maxfps"}, function(args, speaker)
         if setfpscap and type(setfpscap) == "function" then
             local num = args[1] or 1e6
             if num == "none" then
@@ -10661,7 +9996,7 @@ profile("Inf Yield", function()
         notify(getstring(1))
     end)
 
-    addcmd("lastcommand", { "lastcmd" }, function(args, speaker)
+    addcmd("lastcommand", {"lastcmd"}, function(args, speaker)
         if cmdHistory[1]:sub(1, 11) ~= "lastcommand" and cmdHistory[1]:sub(1, 7) ~= "lastcmd" then
             execCmd(cmdHistory[1])
         end
@@ -10669,7 +10004,7 @@ profile("Inf Yield", function()
 
     local RemoteSpy = false
 
-    addcmd("remote", { "remotespy", "spy", "rspy", "simplespy", "sspy" }, function(args, speaker)
+    addcmd("remote", {"remotespy", "spy", "rspy", "simplespy", "sspy"}, function(args, speaker)
         if RemoteSpy then
             return
         end
@@ -10684,7 +10019,7 @@ profile("Inf Yield", function()
             local method = getnamecallmethod()
 
             if RemoteSpy and (self:IsA("RemoteEvent") or self:IsA("RemoteFunction")) then
-                local args = { ... }
+                local args = {...}
 
                 task.spawn(function()
                     local safeArgs = {}
@@ -10708,10 +10043,12 @@ profile("Inf Yield", function()
         notify("RemoteSpy", "Now spying on remote calls. Use :unremote to stop.")
     end)
 
-    addcmd("unremote", { "noremote", "unremotespy", "noremotespy", "unspy", "nospy", "unrspy", "norspy", "unsimplespy", "nosimplespy", "unsspy", "nosspy" }, function(args, speaker)
-        RemoteSpy = false
-        notify("RemoteSpy", "Remote spying disabled.")
-    end)
+    addcmd("unremote",
+        {"noremote", "unremotespy", "noremotespy", "unspy", "nospy", "unrspy", "norspy", "unsimplespy", "nosimplespy",
+         "unsspy", "nosspy"}, function(args, speaker)
+            RemoteSpy = false
+            notify("RemoteSpy", "Remote spying disabled.")
+        end)
 
     addcmd("esp", {}, function(args, speaker)
         if not CHMSenabled then
@@ -10726,7 +10063,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("noesp", { "unesp" }, function(args, speaker)
+    addcmd("noesp", {"unesp"}, function(args, speaker)
         ESPenabled = false
         for i, c in pairs(COREGUI:GetChildren()) do
             if string.sub(c.Name, -4) == "_ESP" then
@@ -10784,7 +10121,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unpartesp", { "nopartesp" }, function(args, speaker)
+    addcmd("unpartesp", {"nopartesp"}, function(args, speaker)
         if args[1] then
             local partEspName = getstring(1):lower()
             if FindInTable(espParts, partEspName) then
@@ -10820,7 +10157,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("nochams", { "unchams" }, function(args, speaker)
+    addcmd("nochams", {"unchams"}, function(args, speaker)
         CHMSenabled = false
         for i, v in pairs(Players:GetPlayers()) do
             local chmsplr = v
@@ -10839,7 +10176,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("nolocate", { "unlocate" }, function(args, speaker)
+    addcmd("nolocate", {"unlocate"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         if args[1] then
             for i, v in pairs(players) do
@@ -10859,7 +10196,7 @@ profile("Inf Yield", function()
     end)
 
     viewing = nil
-    addcmd("view", { "spectate" }, function(args, speaker)
+    addcmd("view", {"spectate"}, function(args, speaker)
         StopFreecam()
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
@@ -10884,7 +10221,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("viewpart", { "viewp" }, function(args, speaker)
+    addcmd("viewpart", {"viewp"}, function(args, speaker)
         StopFreecam()
         if args[1] then
             for i, v in pairs(workspace:GetDescendants()) do
@@ -10896,7 +10233,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unview", { "unspectate" }, function(args, speaker)
+    addcmd("unview", {"unspectate"}, function(args, speaker)
         StopFreecam()
         if viewing ~= nil then
             viewing = nil
@@ -10972,11 +10309,11 @@ profile("Inf Yield", function()
             Q = 0,
             Up = 0,
             Down = 0,
-            LeftShift = 0,
+            LeftShift = 0
         }
 
         mouse = {
-            Delta = Vector2.new(),
+            Delta = Vector2.new()
         }
 
         NAV_KEYBOARD_SPEED = Vector3.new(1, 1, 1)
@@ -10989,7 +10326,8 @@ profile("Inf Yield", function()
         function Input.Vel(dt)
             navSpeed = math.clamp(navSpeed + dt * (keyboard.Up - keyboard.Down) * NAV_ADJ_SPEED, 0.01, 4)
 
-            local kKeyboard = Vector3.new(keyboard.D - keyboard.A, keyboard.E - keyboard.Q, keyboard.S - keyboard.W) * NAV_KEYBOARD_SPEED
+            local kKeyboard = Vector3.new(keyboard.D - keyboard.A, keyboard.E - keyboard.Q, keyboard.S - keyboard.W) *
+                                  NAV_KEYBOARD_SPEED
 
             local shift = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift)
 
@@ -11021,8 +10359,11 @@ profile("Inf Yield", function()
             end
 
             function Input.StartCapture()
-                ContextActionService:BindActionAtPriority("FreecamKeyboard", Keypress, false, INPUT_PRIORITY, Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D, Enum.KeyCode.E, Enum.KeyCode.Q, Enum.KeyCode.Up, Enum.KeyCode.Down)
-                ContextActionService:BindActionAtPriority("FreecamMousePan", MousePan, false, INPUT_PRIORITY, Enum.UserInputType.MouseMovement)
+                ContextActionService:BindActionAtPriority("FreecamKeyboard", Keypress, false, INPUT_PRIORITY,
+                    Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D, Enum.KeyCode.E, Enum.KeyCode.Q,
+                    Enum.KeyCode.Up, Enum.KeyCode.Down)
+                ContextActionService:BindActionAtPriority("FreecamMousePan", MousePan, false, INPUT_PRIORITY,
+                    Enum.UserInputType.MouseMovement)
             end
 
             function Input.StopCapture()
@@ -11074,7 +10415,8 @@ profile("Inf Yield", function()
         cameraRot = cameraRot + pan * Vector2.new(0.75, 1) * 8 * (dt / zoomFactor)
         cameraRot = Vector2.new(math.clamp(cameraRot.x, -math.rad(90), math.rad(90)), cameraRot.y % (2 * math.pi))
 
-        local cameraCFrame = CFrame.new(cameraPos) * CFrame.fromOrientation(cameraRot.x, cameraRot.y, 0) * CFrame.new(vel * Vector3.new(1, 1, 1) * 64 * dt)
+        local cameraCFrame = CFrame.new(cameraPos) * CFrame.fromOrientation(cameraRot.x, cameraRot.y, 0) *
+                                 CFrame.new(vel * Vector3.new(1, 1, 1) * 64 * dt)
         cameraPos = cameraCFrame.p
 
         Camera.CFrame = cameraCFrame
@@ -11160,11 +10502,11 @@ profile("Inf Yield", function()
         fcRunning = false
     end
 
-    addcmd("freecam", { "fc" }, function(args, speaker)
+    addcmd("freecam", {"fc"}, function(args, speaker)
         StartFreecam()
     end)
 
-    addcmd("freecampos", { "fcpos", "fcp", "freecamposition", "fcposition" }, function(args, speaker)
+    addcmd("freecampos", {"fcpos", "fcp", "freecamposition", "fcposition"}, function(args, speaker)
         if not args[1] then
             return
         end
@@ -11172,7 +10514,7 @@ profile("Inf Yield", function()
         StartFreecam(freecamPos)
     end)
 
-    addcmd("freecamwaypoint", { "fcwp" }, function(args, speaker)
+    addcmd("freecamwaypoint", {"fcwp"}, function(args, speaker)
         local WPName = tostring(getstring(1))
         if speaker.Character then
             for i, _ in pairs(WayPoints) do
@@ -11191,14 +10533,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("freecamgoto", { "fcgoto", "freecamtp", "fctp" }, function(args, speaker)
+    addcmd("freecamgoto", {"fcgoto", "freecamtp", "fctp"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             StartFreecam(getRoot(Players[v].Character).CFrame)
         end
     end)
 
-    addcmd("snaptocframe", { "forcetp", "godmove" }, function(args, speaker)
+    addcmd("snaptocframe", {"forcetp", "godmove"}, function(args, speaker)
         if not args[1] then
             return
         end
@@ -11216,39 +10558,43 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unfreecam", { "nofreecam", "unfc", "nofc" }, function(args, speaker)
+    addcmd("unfreecam", {"nofreecam", "unfc", "nofc"}, function(args, speaker)
         StopFreecam()
     end)
 
-    addcmd("freecamspeed", { "fcspeed" }, function(args, speaker)
+    addcmd("freecamspeed", {"fcspeed"}, function(args, speaker)
         local FCspeed = args[1] or 1
         if isNumber(FCspeed) then
             NAV_KEYBOARD_SPEED = Vector3.new(FCspeed, FCspeed, FCspeed)
         end
     end)
 
-    addcmd("notifyfreecamposition", { "notifyfcpos" }, function(args, speaker)
+    addcmd("notifyfreecamposition", {"notifyfcpos"}, function(args, speaker)
         if fcRunning then
-            local X, Y, Z = workspace.CurrentCamera.CFrame.Position.X, workspace.CurrentCamera.CFrame.Position.Y, workspace.CurrentCamera.CFrame.Position.Z
+            local X, Y, Z = workspace.CurrentCamera.CFrame.Position.X, workspace.CurrentCamera.CFrame.Position.Y,
+                workspace.CurrentCamera.CFrame.Position.Z
             local Format, Round = string.format, math.round
             notify("Current Position", Format("%s, %s, %s", Round(X), Round(Y), Round(Z)))
         end
     end)
 
-    addcmd("copyfreecamposition", { "copyfcpos" }, function(args, speaker)
+    addcmd("copyfreecamposition", {"copyfcpos"}, function(args, speaker)
         if fcRunning then
-            local X, Y, Z = workspace.CurrentCamera.CFrame.Position.X, workspace.CurrentCamera.CFrame.Position.Y, workspace.CurrentCamera.CFrame.Position.Z
+            local X, Y, Z = workspace.CurrentCamera.CFrame.Position.X, workspace.CurrentCamera.CFrame.Position.Y,
+                workspace.CurrentCamera.CFrame.Position.Z
             local Format, Round = string.format, math.round
             toClipboard(Format("%s, %s, %s", Round(X), Round(Y), Round(Z)))
         end
     end)
 
-    addcmd("gotocamera", { "gotocam", "tocam" }, function(args, speaker)
+    addcmd("gotocamera", {"gotocam", "tocam"}, function(args, speaker)
         getRoot(speaker.Character).CFrame = workspace.Camera.CFrame
     end)
 
-    addcmd("tweengotocamera", { "tweengotocam", "tgotocam", "ttocam" }, function(args, speaker)
-        TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = workspace.Camera.CFrame }):Play()
+    addcmd("tweengotocamera", {"tweengotocam", "tgotocam", "ttocam"}, function(args, speaker)
+        TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+            CFrame = workspace.Camera.CFrame
+        }):Play()
     end)
 
     addcmd("fov", {}, function(args, speaker)
@@ -11280,7 +10626,7 @@ profile("Inf Yield", function()
         speaker.CameraMinZoomDistance = preMinZoom
     end)
 
-    addcmd("fixcam", { "restorecam" }, function(args, speaker)
+    addcmd("fixcam", {"restorecam"}, function(args, speaker)
         StopFreecam()
         execCmd("unview")
         workspace.CurrentCamera:remove()
@@ -11296,7 +10642,7 @@ profile("Inf Yield", function()
         speaker.Character.Head.Anchored = false
     end)
 
-    addcmd("enableshiftlock", { "enablesl", "shiftlock" }, function(args, speaker)
+    addcmd("enableshiftlock", {"enablesl", "shiftlock"}, function(args, speaker)
         speaker.DevEnableMouseLock = true
         notify("Shiftlock", "Shift lock is now available")
     end)
@@ -11309,11 +10655,12 @@ profile("Inf Yield", function()
         speaker.CameraMode = "Classic"
     end)
 
-    addcmd("noclipcam", { "nccam" }, function(args, speaker)
+    addcmd("noclipcam", {"nccam"}, function(args, speaker)
         local sc = (debug and debug.setconstant) or setconstant
         local gc = (debug and debug.getconstants) or getconstants
         if not sc or not getgc or not gc then
-            return notify("Incompatible Exploit", "Your exploit does not support this command (missing setconstant or getconstants or getgc)")
+            return notify("Incompatible Exploit",
+                "Your exploit does not support this command (missing setconstant or getconstants or getgc)")
         end
         local pop = speaker.PlayerScripts.PlayerModule.CameraModule.ZoomController.Popper
         for _, v in pairs(getgc()) do
@@ -11350,7 +10697,7 @@ profile("Inf Yield", function()
         speaker.CameraMinZoomDistance = camMin
     end)
 
-    addcmd("unlockws", { "unlockworkspace" }, function(args, speaker)
+    addcmd("unlockws", {"unlockworkspace"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v:IsA("BasePart") then
                 v.Locked = false
@@ -11358,7 +10705,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("lockws", { "lockworkspace" }, function(args, speaker)
+    addcmd("lockws", {"lockworkspace"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v:IsA("BasePart") then
                 v.Locked = true
@@ -11366,7 +10713,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("delete", { "remove" }, function(args, speaker)
+    addcmd("delete", {"remove"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.Name:lower() == getstring(1):lower() then
                 v:Destroy()
@@ -11375,7 +10722,7 @@ profile("Inf Yield", function()
         notify("Item(s) Deleted", "Deleted " .. getstring(1))
     end)
 
-    addcmd("deleteclass", { "removeclass", "deleteclassname", "removeclassname", "dc" }, function(args, speaker)
+    addcmd("deleteclass", {"removeclass", "deleteclassname", "removeclassname", "dc"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.ClassName:lower() == getstring(1):lower() then
                 v:Destroy()
@@ -11384,7 +10731,7 @@ profile("Inf Yield", function()
         notify("Item(s) Deleted", "Deleted items with ClassName " .. getstring(1))
     end)
 
-    addcmd("chardelete", { "charremove", "cd" }, function(args, speaker)
+    addcmd("chardelete", {"charremove", "cd"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
             if v.Name:lower() == getstring(1):lower() then
                 v:Destroy()
@@ -11393,24 +10740,27 @@ profile("Inf Yield", function()
         notify("Item(s) Deleted", "Deleted " .. getstring(1))
     end)
 
-    addcmd("chardeleteclass", { "charremoveclass", "chardeleteclassname", "charremoveclassname", "cdc" }, function(args, speaker)
+    addcmd("chardeleteclass", {"charremoveclass", "chardeleteclassname", "charremoveclassname", "cdc"},
+        function(args, speaker)
+            for i, v in pairs(speaker.Character:GetDescendants()) do
+                if v.ClassName:lower() == getstring(1):lower() then
+                    v:Destroy()
+                end
+            end
+            notify("Item(s) Deleted", "Deleted items with ClassName " .. getstring(1))
+        end)
+
+    addcmd("deletevelocity", {"dv", "removevelocity", "removeforces"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
-            if v.ClassName:lower() == getstring(1):lower() then
+            if v:IsA("BodyVelocity") or v:IsA("BodyGyro") or v:IsA("RocketPropulsion") or v:IsA("BodyThrust") or
+                v:IsA("BodyAngularVelocity") or v:IsA("AngularVelocity") or v:IsA("BodyForce") or v:IsA("VectorForce") or
+                v:IsA("LineForce") then
                 v:Destroy()
             end
         end
-        notify("Item(s) Deleted", "Deleted items with ClassName " .. getstring(1))
     end)
 
-    addcmd("deletevelocity", { "dv", "removevelocity", "removeforces" }, function(args, speaker)
-        for i, v in pairs(speaker.Character:GetDescendants()) do
-            if v:IsA("BodyVelocity") or v:IsA("BodyGyro") or v:IsA("RocketPropulsion") or v:IsA("BodyThrust") or v:IsA("BodyAngularVelocity") or v:IsA("AngularVelocity") or v:IsA("BodyForce") or v:IsA("VectorForce") or v:IsA("LineForce") then
-                v:Destroy()
-            end
-        end
-    end)
-
-    addcmd("deleteinvisparts", { "deleteinvisibleparts", "dip" }, function(args, speaker)
+    addcmd("deleteinvisparts", {"deleteinvisibleparts", "dip"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v:IsA("BasePart") and v.Transparency == 1 and v.CanCollide then
                 v:Destroy()
@@ -11419,7 +10769,7 @@ profile("Inf Yield", function()
     end)
 
     local shownParts = {}
-    addcmd("invisibleparts", { "invisparts" }, function(args, speaker)
+    addcmd("invisibleparts", {"invisparts"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v:IsA("BasePart") and v.Transparency == 1 then
                 if not table.find(shownParts, v) then
@@ -11430,7 +10780,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("uninvisibleparts", { "uninvisparts" }, function(args, speaker)
+    addcmd("uninvisibleparts", {"uninvisparts"}, function(args, speaker)
         for i, v in pairs(shownParts) do
             v.Transparency = 1
         end
@@ -11446,15 +10796,15 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("f3x", { "fex" }, function(args, speaker)
+    addcmd("f3x", {"fex"}, function(args, speaker)
         loadstring(game:GetObjects("rbxassetid://6695644299")[1].Source)()
     end)
 
-    addcmd("partpath", { "partname" }, function(args, speaker)
+    addcmd("partpath", {"partname"}, function(args, speaker)
         selectPart()
     end)
 
-    addcmd("antiafk", { "antiidle" }, function(args, speaker)
+    addcmd("antiafk", {"antiidle"}, function(args, speaker)
         local GC = getconnections or get_signal_cons
         if GC then
             for i, v in pairs(GC(Players.LocalPlayer.Idled)) do
@@ -11482,17 +10832,17 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("replicationlag", { "backtrack" }, function(args, speaker)
+    addcmd("replicationlag", {"backtrack"}, function(args, speaker)
         if tonumber(args[1]) then
             settings():GetService("NetworkSettings").IncomingReplicationLag = args[1]
         end
     end)
 
-    addcmd("noprompts", { "nopurchaseprompts" }, function(args, speaker)
+    addcmd("noprompts", {"nopurchaseprompts"}, function(args, speaker)
         COREGUI.PurchasePrompt.Enabled = false
     end)
 
-    addcmd("showprompts", { "showpurchaseprompts" }, function(args, speaker)
+    addcmd("showprompts", {"showpurchaseprompts"}, function(args, speaker)
         COREGUI.PurchasePrompt.Enabled = true
     end)
 
@@ -11515,8 +10865,9 @@ profile("Inf Yield", function()
         promptNewRig(speaker, "R15")
     end)
 
-    addcmd("wallwalk", { "walkonwalls" }, function(args, speaker)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/wallwalk.lua"))()
+    addcmd("wallwalk", {"walkonwalls"}, function(args, speaker)
+        loadstring(game:HttpGet(
+            "https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/wallwalk.lua"))()
     end)
 
     addcmd("age", {}, function(args, speaker)
@@ -11540,7 +10891,7 @@ profile("Inf Yield", function()
         chatMessage(chatString)
     end)
 
-    addcmd("joindate", { "jd" }, function(args, speaker)
+    addcmd("joindate", {"jd"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         local dates = {}
         notify("Loading", "Hold on a sec")
@@ -11549,12 +10900,13 @@ profile("Inf Yield", function()
             local json = HttpService:JSONDecode(user)
             local date = json["created"]:sub(1, 10)
             local splitDates = string.split(date, "-")
-            table.insert(dates, Players[v].Name .. " joined: " .. splitDates[2] .. "/" .. splitDates[3] .. "/" .. splitDates[1])
+            table.insert(dates, Players[v].Name .. " joined: " .. splitDates[2] .. "/" .. splitDates[3] .. "/" ..
+                splitDates[1])
         end
         notify("Join Date (Month/Day/Year)", table.concat(dates, ",\n"))
     end)
 
-    addcmd("chatjoindate", { "cjd" }, function(args, speaker)
+    addcmd("chatjoindate", {"cjd"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         local dates = {}
         notify("Loading", "Hold on a sec")
@@ -11563,13 +10915,14 @@ profile("Inf Yield", function()
             local json = HttpService:JSONDecode(user)
             local date = json["created"]:sub(1, 10)
             local splitDates = string.split(date, "-")
-            table.insert(dates, Players[v].Name .. " joined: " .. splitDates[2] .. "/" .. splitDates[3] .. "/" .. splitDates[1])
+            table.insert(dates, Players[v].Name .. " joined: " .. splitDates[2] .. "/" .. splitDates[3] .. "/" ..
+                splitDates[1])
         end
         local chatString = table.concat(dates, ", ")
         chatMessage(chatString)
     end)
 
-    addcmd("copyname", { "copyuser" }, function(args, speaker)
+    addcmd("copyname", {"copyuser"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local name = tostring(Players[v].Name)
@@ -11577,7 +10930,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("userid", { "id" }, function(args, speaker)
+    addcmd("userid", {"id"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local id = tostring(Players[v].UserId)
@@ -11585,7 +10938,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("copyid", { "copyuserid" }, function(args, speaker)
+    addcmd("copyid", {"copyuserid"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local id = tostring(Players[v].UserId)
@@ -11593,7 +10946,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("creatorid", { "creator" }, function(args, speaker)
+    addcmd("creatorid", {"creator"}, function(args, speaker)
         if game.CreatorType == Enum.CreatorType.User then
             notify("Creator ID", game.CreatorId)
         elseif game.CreatorType == Enum.CreatorType.Group then
@@ -11603,7 +10956,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("copycreatorid", { "copycreator" }, function(args, speaker)
+    addcmd("copycreatorid", {"copycreator"}, function(args, speaker)
         if game.CreatorType == Enum.CreatorType.User then
             toClipboard(game.CreatorId)
             notify("Copied ID", "Copied creator ID to clipboard")
@@ -11614,7 +10967,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("setcreatorid", { "setcreator" }, function(args, speaker)
+    addcmd("setcreatorid", {"setcreator"}, function(args, speaker)
         if game.CreatorType == Enum.CreatorType.User then
             speaker.UserId = game.CreatorId
             notify("Set ID", "Set UserId to " .. game.CreatorId)
@@ -11625,7 +10978,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("appearanceid", { "aid" }, function(args, speaker)
+    addcmd("appearanceid", {"aid"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local aid = tostring(Players[v].CharacterAppearanceId)
@@ -11633,7 +10986,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("copyappearanceid", { "caid" }, function(args, speaker)
+    addcmd("copyappearanceid", {"caid"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local aid = tostring(Players[v].CharacterAppearanceId)
@@ -11649,7 +11002,7 @@ profile("Inf Yield", function()
         RunService:Set3dRenderingEnabled(true)
     end)
 
-    addcmd("2022materials", { "use2022materials" }, function(args, speaker)
+    addcmd("2022materials", {"use2022materials"}, function(args, speaker)
         if sethidden then
             sethidden(MaterialService, "Use2022Materials", true)
         else
@@ -11657,7 +11010,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("un2022materials", { "unuse2022materials" }, function(args, speaker)
+    addcmd("un2022materials", {"unuse2022materials"}, function(args, speaker)
         if sethidden then
             sethidden(MaterialService, "Use2022Materials", false)
         else
@@ -11665,11 +11018,12 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("goto", { "to" }, function(args, speaker)
+    addcmd("goto", {"to"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -11679,21 +11033,24 @@ profile("Inf Yield", function()
         execCmd("breakvelocity")
     end)
 
-    addcmd("tweengoto", { "tgoto", "tto", "tweento" }, function(args, speaker)
+    addcmd("tweengoto", {"tgoto", "tto", "tweento"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
-                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3, 1, 0) }):Play()
+                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+                    CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3, 1, 0)
+                }):Play()
             end
         end
         execCmd("breakvelocity")
     end)
 
-    addcmd("vehiclegoto", { "vgoto", "vtp", "vehicletp" }, function(args, speaker)
+    addcmd("vehiclegoto", {"vgoto", "vtp", "vehicletp"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
@@ -11704,13 +11061,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("pulsetp", { "ptp" }, function(args, speaker)
+    addcmd("pulsetp", {"ptp"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
                 local startPos = getRoot(speaker.Character).CFrame
                 local seconds = args[2] or 1
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -11723,7 +11081,7 @@ profile("Inf Yield", function()
     end)
 
     local vnoclipParts = {}
-    addcmd("vehiclenoclip", { "vnoclip" }, function(args, speaker)
+    addcmd("vehiclenoclip", {"vnoclip"}, function(args, speaker)
         vnoclipParts = {}
         local seat = speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart
         local vehicleModel = seat.Parent
@@ -11742,7 +11100,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("vehicleclip", { "vclip", "unvnoclip", "unvehiclenoclip" }, function(args, speaker)
+    addcmd("vehicleclip", {"vclip", "unvnoclip", "unvehiclenoclip"}, function(args, speaker)
         execCmd("clip")
         for i, v in pairs(vnoclipParts) do
             v.CanCollide = true
@@ -11754,7 +11112,7 @@ profile("Inf Yield", function()
         execCmd(Clip and "vnoclip" or "vclip")
     end)
 
-    addcmd("clientbring", { "cbring" }, function(args, speaker)
+    addcmd("clientbring", {"cbring"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
@@ -11768,7 +11126,7 @@ profile("Inf Yield", function()
     end)
 
     local bringT = {}
-    addcmd("loopbring", { "lbring" }, function(args, speaker)
+    addcmd("loopbring", {"lbring"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             task.spawn(function()
@@ -11788,8 +11146,10 @@ profile("Inf Yield", function()
                         for i, c in pairs(players) do
                             if Players:FindFirstChild(v) then
                                 pchar = Players[v].Character
-                                if pchar ~= nil and Players[v].Character ~= nil and getRoot(pchar) and speaker.Character ~= nil and getRoot(speaker.Character) then
-                                    getRoot(pchar).CFrame = getRoot(speaker.Character).CFrame + Vector3.new(distance, 1, 0)
+                                if pchar ~= nil and Players[v].Character ~= nil and getRoot(pchar) and speaker.Character ~=
+                                    nil and getRoot(speaker.Character) then
+                                    getRoot(pchar).CFrame = getRoot(speaker.Character).CFrame +
+                                                                Vector3.new(distance, 1, 0)
                                 end
                                 task.wait(lDelay)
                             else
@@ -11806,7 +11166,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unloopbring", { "noloopbring", "unlbring", "nolbring" }, function(args, speaker)
+    addcmd("unloopbring", {"noloopbring", "unlbring", "nolbring"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             task.spawn(function()
@@ -11821,11 +11181,12 @@ profile("Inf Yield", function()
 
     local walkto = false
     local waypointwalkto = false
-    addcmd("walkto", { "follow" }, function(args, speaker)
+    addcmd("walkto", {"follow"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -11838,7 +11199,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("pathfindwalkto", { "pathfindfollow" }, function(args, speaker)
+    addcmd("pathfindwalkto", {"pathfindfollow"}, function(args, speaker)
         walkto = false
         task.wait()
         local players = getPlayer(args[1], speaker)
@@ -11846,7 +11207,8 @@ profile("Inf Yield", function()
         local path = PathService:CreatePath()
         for i, v in pairs(players) do
             if Players[v].Character ~= nil then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -11867,14 +11229,15 @@ profile("Inf Yield", function()
                         end
                     end)
                     if not success then
-                        speaker.Character:FindFirstChildOfClass("Humanoid"):MoveTo(getRoot(Players[v].Character).Position)
+                        speaker.Character:FindFirstChildOfClass("Humanoid"):MoveTo(
+                            getRoot(Players[v].Character).Position)
                     end
                 until Players[v].Character == nil or not getRoot(Players[v].Character) or walkto == false
             end
         end
     end)
 
-    addcmd("pathfindwalktowaypoint", { "pathfindwalktowp" }, function(args, speaker)
+    addcmd("pathfindwalktowaypoint", {"pathfindwalktowp"}, function(args, speaker)
         waypointwalkto = false
         task.wait()
         local WPName = tostring(getstring(1))
@@ -11883,7 +11246,8 @@ profile("Inf Yield", function()
         if speaker.Character then
             for i, _ in pairs(WayPoints) do
                 if tostring(WayPoints[i].NAME):lower() == tostring(WPName):lower() then
-                    if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                    if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                        speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                         speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                         task.wait(0.1)
                     end
@@ -11912,7 +11276,8 @@ profile("Inf Yield", function()
             end
             for i, _ in pairs(pWayPoints) do
                 if tostring(pWayPoints[i].NAME):lower() == tostring(WPName):lower() then
-                    if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                    if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                        speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                         speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                         task.wait(0.1)
                     end
@@ -11942,7 +11307,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unwalkto", { "nowalkto", "unfollow", "nofollow" }, function(args, speaker)
+    addcmd("unwalkto", {"nowalkto", "unfollow", "nofollow"}, function(args, speaker)
         walkto = false
         waypointwalkto = false
     end)
@@ -11959,7 +11324,8 @@ profile("Inf Yield", function()
             orbit1 = RunService.Heartbeat:Connect(function()
                 pcall(function()
                     rotation = rotation + speed
-                    root.CFrame = CFrame.new(getRoot(target.Character).Position) * CFrame.Angles(0, math.rad(rotation), 0) * CFrame.new(distance, 0, 0)
+                    root.CFrame = CFrame.new(getRoot(target.Character).Position) *
+                                      CFrame.Angles(0, math.rad(rotation), 0) * CFrame.new(distance, 0, 0)
                 end)
             end)
             orbit2 = RunService.RenderStepped:Connect(function()
@@ -11997,7 +11363,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("freeze", { "fr" }, function(args, speaker)
+    addcmd("freeze", {"fr"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         if players ~= nil then
             for i, v in pairs(players) do
@@ -12012,7 +11378,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("thaw", { "unfreeze", "unfr" }, function(args, speaker)
+    addcmd("thaw", {"unfreeze", "unfr"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         if players ~= nil then
             for i, v in pairs(players) do
@@ -12028,7 +11394,7 @@ profile("Inf Yield", function()
     end)
 
     oofing = false
-    addcmd("loopoof", { "loof" }, function(args, speaker)
+    addcmd("loopoof", {"loof"}, function(args, speaker)
         oofing = true
         repeat
             task.wait(0.1)
@@ -12044,7 +11410,7 @@ profile("Inf Yield", function()
         until oofing == false
     end)
 
-    addcmd("unloopoof", { "unloof" }, function(args, speaker)
+    addcmd("unloopoof", {"unloof"}, function(args, speaker)
         oofing = false
     end)
 
@@ -12052,7 +11418,8 @@ profile("Inf Yield", function()
     addcmd("muteboombox", {}, function(args, speaker)
         if not notifiedRespectFiltering and SoundService.RespectFilteringEnabled then
             notifiedRespectFiltering = true
-            notify("RespectFilteringEnabled", "RespectFilteringEnabled is set to true (the command will still work but may only be clientsided)")
+            notify("RespectFilteringEnabled",
+                "RespectFilteringEnabled is set to true (the command will still work but may only be clientsided)")
         end
         local players = getPlayer(args[1], speaker)
         if players ~= nil then
@@ -12076,7 +11443,8 @@ profile("Inf Yield", function()
     addcmd("unmuteboombox", {}, function(args, speaker)
         if not notifiedRespectFiltering and SoundService.RespectFilteringEnabled then
             notifiedRespectFiltering = true
-            notify("RespectFilteringEnabled", "RespectFilteringEnabled is set to true (the command will still work but may only be clientsided)")
+            notify("RespectFilteringEnabled",
+                "RespectFilteringEnabled is set to true (the command will still work but may only be clientsided)")
         end
         local players = getPlayer(args[1], speaker)
         if players ~= nil then
@@ -12097,7 +11465,8 @@ profile("Inf Yield", function()
     end)
 
     addcmd("freezeanims", {}, function(args, speaker)
-        local Humanoid = speaker.Character:FindFirstChildOfClass("Humanoid") or speaker.Character:FindFirstChildOfClass("AnimationController")
+        local Humanoid = speaker.Character:FindFirstChildOfClass("Humanoid") or
+                             speaker.Character:FindFirstChildOfClass("AnimationController")
         local ActiveTracks = Humanoid:GetPlayingAnimationTracks()
         for _, v in pairs(ActiveTracks) do
             v:AdjustSpeed(0)
@@ -12105,7 +11474,8 @@ profile("Inf Yield", function()
     end)
 
     addcmd("unfreezeanims", {}, function(args, speaker)
-        local Humanoid = speaker.Character:FindFirstChildOfClass("Humanoid") or speaker.Character:FindFirstChildOfClass("AnimationController")
+        local Humanoid = speaker.Character:FindFirstChildOfClass("Humanoid") or
+                             speaker.Character:FindFirstChildOfClass("AnimationController")
         local ActiveTracks = Humanoid:GetPlayingAnimationTracks()
         for _, v in pairs(ActiveTracks) do
             v:AdjustSpeed(1)
@@ -12116,7 +11486,7 @@ profile("Inf Yield", function()
         respawn(speaker)
     end)
 
-    addcmd("refresh", { "re" }, function(args, speaker)
+    addcmd("refresh", {"re"}, function(args, speaker)
         refresh(speaker)
     end)
 
@@ -12142,7 +11512,7 @@ profile("Inf Yield", function()
     end)
 
     invisRunning = false
-    addcmd("invisible", { "invis" }, function(args, speaker)
+    addcmd("invisible", {"invis"}, function(args, speaker)
         if invisRunning then
             return
         end
@@ -12271,7 +11641,7 @@ profile("Inf Yield", function()
         notify("Invisible", "You now appear invisible to other players")
     end)
 
-    addcmd("visible", { "vis" }, function(args, speaker)
+    addcmd("visible", {"vis"}, function(args, speaker)
         TurnVisible()
     end)
 
@@ -12279,7 +11649,7 @@ profile("Inf Yield", function()
         execCmd(invisRunning and "visible" or "invisible")
     end)
 
-    addcmd("toolinvisible", { "toolinvis", "tinvis" }, function(args, speaker)
+    addcmd("toolinvisible", {"toolinvis", "tinvis"}, function(args, speaker)
         local Char = Players.LocalPlayer.Character
         local touched = false
         local tpdback = false
@@ -12344,7 +11714,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unweaken", { "unstrengthen" }, function(args, speaker)
+    addcmd("unweaken", {"unstrengthen"}, function(args, speaker)
         for _, child in pairs(speaker.Character:GetDescendants()) do
             if child.ClassName == "Part" then
                 child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
@@ -12367,7 +11737,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("jpower", { "jumppower", "jp" }, function(args, speaker)
+    addcmd("jpower", {"jumppower", "jp"}, function(args, speaker)
         local jpower = args[1] or 50
         if isNumber(jpower) then
             if speaker.Character:FindFirstChildOfClass("Humanoid").UseJumpPower then
@@ -12378,41 +11748,30 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("maxslopeangle", { "msa" }, function(args, speaker)
+    addcmd("maxslopeangle", {"msa"}, function(args, speaker)
         local sangle = args[1] or 89
         if isNumber(sangle) then
             speaker.Character:FindFirstChildWhichIsA("Humanoid").MaxSlopeAngle = sangle
         end
     end)
 
-    addcmd("gravity", { "grav" }, function(args, speaker)
+    addcmd("gravity", {"grav"}, function(args, speaker)
         local grav = args[1] or 196.2
         if isNumber(grav) then
             workspace.Gravity = grav
         end
     end)
 
-    addcmd("hipheight", { "hheight" }, function(args, speaker)
+    addcmd("hipheight", {"hheight"}, function(args, speaker)
         speaker.Character:FindFirstChildWhichIsA("Humanoid").HipHeight = args[1] or (r15(speaker) and 2.1 or 0)
     end)
 
     addcmd("dance", {}, function(args, speaker)
         pcall(execCmd, "undance")
-        local dances = { "27789359", "30196114", "248263260", "45834924", "33796059", "28488254", "52155728" }
+        local dances = {"27789359", "30196114", "248263260", "45834924", "33796059", "28488254", "52155728"}
         if r15(speaker) then
-            dances = {
-                "3333432454",
-                "4555808220",
-                "4049037604",
-                "4555782893",
-                "10214311282",
-                "10714010337",
-                "10713981723",
-                "10714372526",
-                "10714076981",
-                "10714392151",
-                "11444443576",
-            }
+            dances = {"3333432454", "4555808220", "4049037604", "4555782893", "10214311282", "10714010337",
+                      "10713981723", "10714372526", "10714076981", "10714392151", "11444443576"}
         end
         local animation = Instance.new("Animation")
         animation.AnimationId = "rbxassetid://" .. dances[math.random(1, #dances)]
@@ -12421,28 +11780,30 @@ profile("Inf Yield", function()
         danceTrack:Play()
     end)
 
-    addcmd("undance", { "nodance" }, function(args, speaker)
+    addcmd("undance", {"nodance"}, function(args, speaker)
         danceTrack:Stop()
         danceTrack:Destroy()
     end)
 
-    addcmd("nolimbs", { "rlimbs" }, function(args, speaker)
+    addcmd("nolimbs", {"rlimbs"}, function(args, speaker)
         if r15(speaker) then
             for i, v in pairs(speaker.Character:GetChildren()) do
-                if v:IsA("BasePart") and v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" or v.Name == "RightUpperArm" or v.Name == "LeftUpperArm" then
+                if v:IsA("BasePart") and v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" or v.Name ==
+                    "RightUpperArm" or v.Name == "LeftUpperArm" then
                     v:Destroy()
                 end
             end
         else
             for i, v in pairs(speaker.Character:GetChildren()) do
-                if v:IsA("BasePart") and v.Name == "Right Leg" or v.Name == "Left Leg" or v.Name == "Right Arm" or v.Name == "Left Arm" then
+                if v:IsA("BasePart") and v.Name == "Right Leg" or v.Name == "Left Leg" or v.Name == "Right Arm" or
+                    v.Name == "Left Arm" then
                     v:Destroy()
                 end
             end
         end
     end)
 
-    addcmd("noarms", { "rarms" }, function(args, speaker)
+    addcmd("noarms", {"rarms"}, function(args, speaker)
         if r15(speaker) then
             for i, v in pairs(speaker.Character:GetChildren()) do
                 if v:IsA("BasePart") and v.Name == "RightUpperArm" or v.Name == "LeftUpperArm" then
@@ -12458,7 +11819,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("nolegs", { "rlegs" }, function(args, speaker)
+    addcmd("nolegs", {"rlegs"}, function(args, speaker)
         if r15(speaker) then
             for i, v in pairs(speaker.Character:GetChildren()) do
                 if v:IsA("BasePart") and v.Name == "RightUpperLeg" or v.Name == "LeftUpperLeg" then
@@ -12478,7 +11839,7 @@ profile("Inf Yield", function()
         speaker.Character:FindFirstChildWhichIsA("Humanoid").Sit = true
     end)
 
-    addcmd("lay", { "laydown" }, function(args, speaker)
+    addcmd("lay", {"laydown"}, function(args, speaker)
         local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
         humanoid.Sit = true
         task.wait(0.1)
@@ -12509,13 +11870,15 @@ profile("Inf Yield", function()
             noSit:Disconnect()
             nositDied:Disconnect()
         end
-        noSit = Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetPropertyChangedSignal("Sit"):Connect(noSitFunc)
+        noSit = Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetPropertyChangedSignal("Sit"):Connect(
+            noSitFunc)
         local function nositDiedFunc()
             repeat
                 task.wait()
             until speaker.Character ~= nil and speaker.Character:FindFirstChildOfClass("Humanoid")
             noSit:Disconnect()
-            noSit = Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetPropertyChangedSignal("Sit"):Connect(noSitFunc)
+            noSit = Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetPropertyChangedSignal("Sit")
+                :Connect(noSitFunc)
         end
         nositDied = speaker.CharacterAdded:Connect(nositDiedFunc)
     end)
@@ -12533,7 +11896,7 @@ profile("Inf Yield", function()
 
     local infJump
     infJumpDebounce = false
-    addcmd("infjump", { "infinitejump" }, function(args, speaker)
+    addcmd("infjump", {"infinitejump"}, function(args, speaker)
         if infJump then
             infJump:Disconnect()
         end
@@ -12548,7 +11911,7 @@ profile("Inf Yield", function()
         end)
     end)
 
-    addcmd("uninfjump", { "uninfinitejump", "noinfjump", "noinfinitejump" }, function(args, speaker)
+    addcmd("uninfjump", {"uninfinitejump", "noinfjump", "noinfinitejump"}, function(args, speaker)
         if infJump then
             infJump:Disconnect()
         end
@@ -12565,40 +11928,45 @@ profile("Inf Yield", function()
         end)
     end)
 
-    addcmd("unflyjump", { "noflyjump" }, function(args, speaker)
+    addcmd("unflyjump", {"noflyjump"}, function(args, speaker)
         if flyjump then
             flyjump:Disconnect()
         end
     end)
 
     local HumanModCons = {}
-    addcmd("autojump", { "ajump" }, function(args, speaker)
+    addcmd("autojump", {"ajump"}, function(args, speaker)
         local Char = speaker.Character
         local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
         local function autoJump()
             if Char and Human then
-                local check1 = workspace:FindPartOnRay(Ray.new(Human.RootPart.Position - Vector3.new(0, 1.5, 0), Human.RootPart.CFrame.lookVector * 3), Human.Parent)
-                local check2 = workspace:FindPartOnRay(Ray.new(Human.RootPart.Position + Vector3.new(0, 1.5, 0), Human.RootPart.CFrame.lookVector * 3), Human.Parent)
+                local check1 = workspace:FindPartOnRay(Ray.new(Human.RootPart.Position - Vector3.new(0, 1.5, 0),
+                    Human.RootPart.CFrame.lookVector * 3), Human.Parent)
+                local check2 = workspace:FindPartOnRay(Ray.new(Human.RootPart.Position + Vector3.new(0, 1.5, 0),
+                    Human.RootPart.CFrame.lookVector * 3), Human.Parent)
                 if check1 or check2 then
                     Human.Jump = true
                 end
             end
         end
         autoJump()
-        HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or RunService.RenderStepped:Connect(autoJump)
-        HumanModCons.ajCA = (HumanModCons.ajCA and HumanModCons.ajCA:Disconnect() and false) or speaker.CharacterAdded:Connect(function(nChar)
-            Char, Human = nChar, nChar:WaitForChild("Humanoid")
-            autoJump()
-            HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or RunService.RenderStepped:Connect(autoJump)
-        end)
+        HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or
+                                  RunService.RenderStepped:Connect(autoJump)
+        HumanModCons.ajCA = (HumanModCons.ajCA and HumanModCons.ajCA:Disconnect() and false) or
+                                speaker.CharacterAdded:Connect(function(nChar)
+                Char, Human = nChar, nChar:WaitForChild("Humanoid")
+                autoJump()
+                HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or
+                                          RunService.RenderStepped:Connect(autoJump)
+            end)
     end)
 
-    addcmd("unautojump", { "noautojump", "noajump", "unajump" }, function(args, speaker)
+    addcmd("unautojump", {"noautojump", "noajump", "unajump"}, function(args, speaker)
         HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or nil
         HumanModCons.ajCA = (HumanModCons.ajCA and HumanModCons.ajCA:Disconnect() and false) or nil
     end)
 
-    addcmd("edgejump", { "ejump" }, function(args, speaker)
+    addcmd("edgejump", {"ejump"}, function(args, speaker)
         local Char = speaker.Character
         local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
         -- Full credit to NoelGamer06 @V3rmillion
@@ -12609,23 +11977,28 @@ profile("Inf Yield", function()
             if Char and Human then
                 laststate = state
                 state = Human:GetState()
-                if laststate ~= state and state == Enum.HumanoidStateType.Freefall and laststate ~= Enum.HumanoidStateType.Jumping then
+                if laststate ~= state and state == Enum.HumanoidStateType.Freefall and laststate ~=
+                    Enum.HumanoidStateType.Jumping then
                     Char.HumanoidRootPart.CFrame = lastcf
-                    Char.HumanoidRootPart.Velocity = Vector3.new(Char.HumanoidRootPart.Velocity.X, Human.JumpPower or Human.JumpHeight, Char.HumanoidRootPart.Velocity.Z)
+                    Char.HumanoidRootPart.Velocity = Vector3.new(Char.HumanoidRootPart.Velocity.X,
+                        Human.JumpPower or Human.JumpHeight, Char.HumanoidRootPart.Velocity.Z)
                 end
                 lastcf = Char.HumanoidRootPart.CFrame
             end
         end
         edgejump()
-        HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or RunService.RenderStepped:Connect(edgejump)
-        HumanModCons.ejCA = (HumanModCons.ejCA and HumanModCons.ejCA:Disconnect() and false) or speaker.CharacterAdded:Connect(function(nChar)
-            Char, Human = nChar, nChar:WaitForChild("Humanoid")
-            edgejump()
-            HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or RunService.RenderStepped:Connect(edgejump)
-        end)
+        HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or
+                                  RunService.RenderStepped:Connect(edgejump)
+        HumanModCons.ejCA = (HumanModCons.ejCA and HumanModCons.ejCA:Disconnect() and false) or
+                                speaker.CharacterAdded:Connect(function(nChar)
+                Char, Human = nChar, nChar:WaitForChild("Humanoid")
+                edgejump()
+                HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or
+                                          RunService.RenderStepped:Connect(edgejump)
+            end)
     end)
 
-    addcmd("unedgejump", { "noedgejump", "noejump", "unejump" }, function(args, speaker)
+    addcmd("unedgejump", {"noedgejump", "noejump", "unejump"}, function(args, speaker)
         HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or nil
         HumanModCons.ejCA = (HumanModCons.ejCA and HumanModCons.ejCA:Disconnect() and false) or nil
     end)
@@ -12642,7 +12015,7 @@ profile("Inf Yield", function()
         speaker.Team = teamname
     end)
 
-    addcmd("nobgui", { "unbgui", "nobillboardgui", "unbillboardgui", "noname", "rohg" }, function(args, speaker)
+    addcmd("nobgui", {"unbgui", "nobillboardgui", "unbillboardgui", "noname", "rohg"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
             if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
                 v:Destroy()
@@ -12650,26 +12023,30 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("loopnobgui", { "loopunbgui", "loopnobillboardgui", "loopunbillboardgui", "loopnoname", "looprohg", "lnobgui", "lnoname", "lnobillboardgui", "lunbillboardgui", "lunbgui" }, function(args, speaker)
-        for i, v in pairs(speaker.Character:GetDescendants()) do
-            if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
-                v:Destroy()
+    addcmd("loopnobgui",
+        {"loopunbgui", "loopnobillboardgui", "loopunbillboardgui", "loopnoname", "looprohg", "lnobgui", "lnoname",
+         "lnobillboardgui", "lunbillboardgui", "lunbgui"}, function(args, speaker)
+            for i, v in pairs(speaker.Character:GetDescendants()) do
+                if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
+                    v:Destroy()
+                end
             end
-        end
-        local function charPartAdded(part)
-            if part:IsA("BillboardGui") or part:IsA("SurfaceGui") then
-                task.wait()
-                part:Destroy()
+            local function charPartAdded(part)
+                if part:IsA("BillboardGui") or part:IsA("SurfaceGui") then
+                    task.wait()
+                    part:Destroy()
+                end
             end
-        end
-        charPartTrigger = speaker.Character.DescendantAdded:Connect(charPartAdded)
-    end)
+            charPartTrigger = speaker.Character.DescendantAdded:Connect(charPartAdded)
+        end)
 
-    addcmd("unloopnobgui", { "unloopunbgui", "unloopnobillboardgui", "unloopunbillboardgui", "unloopnoname", "unlooprohg", "unlnobgui", "unlnoname", "unlnobillboardgui", "unlunbillboardgui", "unlunbgui" }, function(args, speaker)
-        if charPartTrigger then
-            charPartTrigger:Disconnect()
-        end
-    end)
+    addcmd("unloopnobgui",
+        {"unloopunbgui", "unloopnobillboardgui", "unloopunbillboardgui", "unloopnoname", "unlooprohg", "unlnobgui",
+         "unlnoname", "unlnobillboardgui", "unlunbillboardgui", "unlunbgui"}, function(args, speaker)
+            if charPartTrigger then
+                charPartTrigger:Disconnect()
+            end
+        end)
 
     addcmd("spasm", {}, function(args, speaker)
         if not r15(speaker) then
@@ -12685,7 +12062,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unspasm", { "nospasm" }, function(args, speaker)
+    addcmd("unspasm", {"nospasm"}, function(args, speaker)
         Spasm:Stop()
         SpasmAnim:Destroy()
     end)
@@ -12703,7 +12080,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("animation", { "anim" }, function(args, speaker)
+    addcmd("animation", {"anim"}, function(args, speaker)
         if not r15(speaker) then
             local pchar = speaker.Character
             local AnimationId = tostring(args[1])
@@ -12736,7 +12113,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("copyanimation", { "copyanim", "copyemote" }, function(args, speaker)
+    addcmd("copyanimation", {"copyanim", "copyemote"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for _, v in ipairs(players) do
             local char = Players[v].Character
@@ -12758,7 +12135,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("copyanimationid", { "copyanimid", "copyemoteid" }, function(args, speaker)
+    addcmd("copyanimationid", {"copyanimid", "copyemoteid"}, function(args, speaker)
         local copyAnimId = function(player)
             local found = "Animations Copied"
 
@@ -12793,7 +12170,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("stopanimations", { "stopanims", "stopanim" }, function(args, speaker)
+    addcmd("stopanimations", {"stopanims", "stopanim"}, function(args, speaker)
         local Char = speaker.Character
         local Hum = Char:FindFirstChildOfClass("Humanoid") or Char:FindFirstChildOfClass("AnimationController")
 
@@ -12802,7 +12179,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("refreshanimations", { "refreshanimation", "refreshanims", "refreshanim" }, function(args, speaker)
+    addcmd("refreshanimations", {"refreshanimation", "refreshanims", "refreshanim"}, function(args, speaker)
         local Char = speaker.Character or speaker.CharacterAdded:Wait()
         local Human = Char and Char:WaitForChild("Humanoid", 15)
         local Animate = Char and Char:WaitForChild("Animate", 15)
@@ -12816,17 +12193,17 @@ profile("Inf Yield", function()
         Animate.Disabled = false
     end)
 
-    addcmd("allowcustomanim", { "allowcustomanimations" }, function(args, speaker)
+    addcmd("allowcustomanim", {"allowcustomanimations"}, function(args, speaker)
         StarterPlayer.AllowCustomAnimations = true
         execCmd("refreshanimations")
     end)
 
-    addcmd("unallowcustomanim", { "unallowcustomanimations" }, function(args, speaker)
+    addcmd("unallowcustomanim", {"unallowcustomanimations"}, function(args, speaker)
         StarterPlayer.AllowCustomAnimations = false
         execCmd("refreshanimations")
     end)
 
-    addcmd("loopanimation", { "loopanim", "lanimation", "lanim" }, function(args, speaker)
+    addcmd("loopanimation", {"loopanim", "lanimation", "lanim"}, function(args, speaker)
         local Char = speaker.Character
         local Human = Char and Char.FindFirstChildWhichIsA(Char, "Humanoid")
         for _, v in ipairs(Human.GetPlayingAnimationTracks(Human)) do
@@ -12834,25 +12211,29 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("tpposition", { "tppos" }, function(args, speaker)
+    addcmd("tpposition", {"tppos"}, function(args, speaker)
         if #args < 3 then
             return
         end
-        local tpX, tpY, tpZ = tonumber((args[1]:gsub(",", ""))), tonumber((args[2]:gsub(",", ""))), tonumber((args[3]:gsub(",", "")))
+        local tpX, tpY, tpZ = tonumber((args[1]:gsub(",", ""))), tonumber((args[2]:gsub(",", ""))),
+            tonumber((args[3]:gsub(",", "")))
         local char = speaker.Character
         if char and getRoot(char) then
             getRoot(char).CFrame = CFrame.new(tpX, tpY, tpZ)
         end
     end)
 
-    addcmd("tweentpposition", { "ttppos" }, function(args, speaker)
+    addcmd("tweentpposition", {"ttppos"}, function(args, speaker)
         if #args < 3 then
             return
         end
-        local tpX, tpY, tpZ = tonumber((args[1]:gsub(",", ""))), tonumber((args[2]:gsub(",", ""))), tonumber((args[3]:gsub(",", "")))
+        local tpX, tpY, tpZ = tonumber((args[1]:gsub(",", ""))), tonumber((args[2]:gsub(",", ""))),
+            tonumber((args[3]:gsub(",", "")))
         local char = speaker.Character
         if char and getRoot(char) then
-            TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = CFrame.new(tpX, tpY, tpZ) }):Play()
+            TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+                CFrame = CFrame.new(tpX, tpY, tpZ)
+            }):Play()
         end
     end)
 
@@ -12861,18 +12242,21 @@ profile("Inf Yield", function()
             return
         end
         if speaker.Character then
-            speaker.Character:TranslateBy(Vector3.new(tonumber(args[1]) or 0, tonumber(args[2]) or 0, tonumber(args[3]) or 0))
+            speaker.Character:TranslateBy(Vector3.new(tonumber(args[1]) or 0, tonumber(args[2]) or 0,
+                tonumber(args[3]) or 0))
         end
     end)
 
-    addcmd("tweenoffset", { "toffset" }, function(args, speaker)
+    addcmd("tweenoffset", {"toffset"}, function(args, speaker)
         if #args < 3 then
             return
         end
         local tpX, tpY, tpZ = tonumber(args[1]), tonumber(args[2]), tonumber(args[3])
         local char = speaker.Character
         if char and getRoot(char) then
-            TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = CFrame.new(tpX, tpY, tpZ) }):Play()
+            TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+                CFrame = CFrame.new(tpX, tpY, tpZ)
+            }):Play()
         end
     end)
 
@@ -12882,7 +12266,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("mouseteleport", { "mousetp" }, function(args, speaker)
+    addcmd("mouseteleport", {"mousetp"}, function(args, speaker)
         local root = getRoot(speaker.Character)
         local pos = IYMouse.Hit
         if root and pos then
@@ -12890,7 +12274,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("tptool", { "teleporttool" }, function(args, speaker)
+    addcmd("tptool", {"teleporttool"}, function(args, speaker)
         local TpTool = Instance.new("Tool")
         TpTool.Name = "Teleport Tool"
         TpTool.RequiresHandle = false
@@ -12911,7 +12295,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("getposition", { "getpos", "notifypos", "notifyposition" }, function(args, speaker)
+    addcmd("getposition", {"getpos", "notifypos", "notifyposition"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local char = Players[v].Character
@@ -12925,7 +12309,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("copyposition", { "copypos" }, function(args, speaker)
+    addcmd("copyposition", {"copypos"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local char = Players[v].Character
@@ -12939,15 +12323,16 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("walktopos", { "walktoposition" }, function(args, speaker)
-        if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+    addcmd("walktopos", {"walktoposition"}, function(args, speaker)
+        if speaker.Character:FindFirstChildOfClass("Humanoid") and
+            speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
             speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
             task.wait(0.1)
         end
         speaker.Character:FindFirstChildOfClass("Humanoid").WalkToPoint = Vector3.new(args[1], args[2], args[3])
     end)
 
-    addcmd("speed", { "ws", "walkspeed" }, function(args, speaker)
+    addcmd("speed", {"ws", "walkspeed"}, function(args, speaker)
         if args[2] then
             local speed = args[2] or 16
             if isNumber(speed) then
@@ -12961,7 +12346,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("spoofspeed", { "spoofws", "spoofwalkspeed" }, function(args, speaker)
+    addcmd("spoofspeed", {"spoofws", "spoofwalkspeed"}, function(args, speaker)
         if args[1] and isNumber(args[1]) then
             if hookmetamethod then
                 local char = speaker.Character
@@ -12969,7 +12354,8 @@ profile("Inf Yield", function()
                 local index
                 index = hookmetamethod(game, "__index", function(self, key)
                     local keyclean = key:gsub("\0", "")
-                    if (keyclean == "WalkSpeed" or keyclean == "walkSpeed") and self:IsA("Humanoid") and self:IsDescendantOf(char) and not checkcaller() then
+                    if (keyclean == "WalkSpeed" or keyclean == "walkSpeed") and self:IsA("Humanoid") and
+                        self:IsDescendantOf(char) and not checkcaller() then
                         return setspeed or args[1]
                     end
                     return index(self, key)
@@ -12977,7 +12363,8 @@ profile("Inf Yield", function()
                 local newindex
                 newindex = hookmetamethod(game, "__newindex", function(self, key, value)
                     local keyclean = string.gsub(key, "\0", "")
-                    if (keyclean == "WalkSpeed" or keyclean == "walkSpeed") and self:IsA("Humanoid") and self:IsDescendantOf(char) and not checkcaller() then
+                    if (keyclean == "WalkSpeed" or keyclean == "walkSpeed") and self:IsA("Humanoid") and
+                        self:IsDescendantOf(char) and not checkcaller() then
                         setspeed = tonumber(value)
                         return setspeed
                     end
@@ -12989,7 +12376,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("loopspeed", { "loopws", "lspeed", "lws" }, function(args, speaker)
+    addcmd("loopspeed", {"loopws", "lspeed", "lws"}, function(args, speaker)
         local speed = args[1] or 16
         if args[2] then
             speed = args[2] or 16
@@ -13003,21 +12390,24 @@ profile("Inf Yield", function()
                 end
             end
             WalkSpeedChange()
-            HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or Human:GetPropertyChangedSignal("WalkSpeed"):Connect(WalkSpeedChange)
-            HumanModCons.wsCA = (HumanModCons.wsCA and HumanModCons.wsCA:Disconnect() and false) or speaker.CharacterAdded:Connect(function(nChar)
-                Char, Human = nChar, nChar:WaitForChild("Humanoid")
-                WalkSpeedChange()
-                HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or Human:GetPropertyChangedSignal("WalkSpeed"):Connect(WalkSpeedChange)
-            end)
+            HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or
+                                      Human:GetPropertyChangedSignal("WalkSpeed"):Connect(WalkSpeedChange)
+            HumanModCons.wsCA = (HumanModCons.wsCA and HumanModCons.wsCA:Disconnect() and false) or
+                                    speaker.CharacterAdded:Connect(function(nChar)
+                    Char, Human = nChar, nChar:WaitForChild("Humanoid")
+                    WalkSpeedChange()
+                    HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or
+                                              Human:GetPropertyChangedSignal("WalkSpeed"):Connect(WalkSpeedChange)
+                end)
         end
     end)
 
-    addcmd("unloopspeed", { "unloopws", "unlspeed", "unlws" }, function(args, speaker)
+    addcmd("unloopspeed", {"unloopws", "unlspeed", "unlws"}, function(args, speaker)
         HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or nil
         HumanModCons.wsCA = (HumanModCons.wsCA and HumanModCons.wsCA:Disconnect() and false) or nil
     end)
 
-    addcmd("spoofjumppower", { "spoofjp" }, function(args, speaker)
+    addcmd("spoofjumppower", {"spoofjp"}, function(args, speaker)
         if args[1] and isNumber(args[1]) then
             if hookmetamethod then
                 local char = speaker.Character
@@ -13025,7 +12415,8 @@ profile("Inf Yield", function()
                 local index
                 index = hookmetamethod(game, "__index", function(self, key)
                     local keyclean = key:gsub("\0", "")
-                    if (keyclean == "JumpPower" or keyclean == "jumpPower") and self:IsA("Humanoid") and self:IsDescendantOf(char) and not checkcaller() then
+                    if (keyclean == "JumpPower" or keyclean == "jumpPower") and self:IsA("Humanoid") and
+                        self:IsDescendantOf(char) and not checkcaller() then
                         return setpower or args[1]
                     end
                     return index(self, key)
@@ -13033,7 +12424,8 @@ profile("Inf Yield", function()
                 local newindex
                 newindex = hookmetamethod(game, "__newindex", function(self, key, value)
                     local keyclean = string.gsub(key, "\0", "")
-                    if (keyclean == "JumpPower" or keyclean == "jumpPower") and self:IsA("Humanoid") and self:IsDescendantOf(char) and not checkcaller() then
+                    if (keyclean == "JumpPower" or keyclean == "jumpPower") and self:IsA("Humanoid") and
+                        self:IsDescendantOf(char) and not checkcaller() then
                         setpower = tonumber(value)
                         return setpower
                     end
@@ -13045,31 +12437,35 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("loopjumppower", { "loopjp", "loopjump", "loopjpower", "ljumppower", "ljump", "ljpower", "ljp" }, function(args, speaker)
-        local jpower = args[1] or 50
-        if isNumber(jpower) then
-            local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
-            local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
-            local function JumpPowerChange()
-                if Char and Human then
-                    if speaker.Character:FindFirstChildOfClass("Humanoid").UseJumpPower then
-                        speaker.Character:FindFirstChildOfClass("Humanoid").JumpPower = jpower
-                    else
-                        speaker.Character:FindFirstChildOfClass("Humanoid").JumpHeight = jpower
+    addcmd("loopjumppower", {"loopjp", "loopjump", "loopjpower", "ljumppower", "ljump", "ljpower", "ljp"},
+        function(args, speaker)
+            local jpower = args[1] or 50
+            if isNumber(jpower) then
+                local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
+                local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
+                local function JumpPowerChange()
+                    if Char and Human then
+                        if speaker.Character:FindFirstChildOfClass("Humanoid").UseJumpPower then
+                            speaker.Character:FindFirstChildOfClass("Humanoid").JumpPower = jpower
+                        else
+                            speaker.Character:FindFirstChildOfClass("Humanoid").JumpHeight = jpower
+                        end
                     end
                 end
-            end
-            JumpPowerChange()
-            HumanModCons.jpLoop = (HumanModCons.jpLoop and HumanModCons.jpLoop:Disconnect() and false) or Human:GetPropertyChangedSignal("JumpPower"):Connect(JumpPowerChange)
-            HumanModCons.jpCA = (HumanModCons.jpCA and HumanModCons.jpCA:Disconnect() and false) or speaker.CharacterAdded:Connect(function(nChar)
-                Char, Human = nChar, nChar:WaitForChild("Humanoid")
                 JumpPowerChange()
-                HumanModCons.jpLoop = (HumanModCons.jpLoop and HumanModCons.jpLoop:Disconnect() and false) or Human:GetPropertyChangedSignal("JumpPower"):Connect(JumpPowerChange)
-            end)
-        end
-    end)
+                HumanModCons.jpLoop = (HumanModCons.jpLoop and HumanModCons.jpLoop:Disconnect() and false) or
+                                          Human:GetPropertyChangedSignal("JumpPower"):Connect(JumpPowerChange)
+                HumanModCons.jpCA = (HumanModCons.jpCA and HumanModCons.jpCA:Disconnect() and false) or
+                                        speaker.CharacterAdded:Connect(function(nChar)
+                        Char, Human = nChar, nChar:WaitForChild("Humanoid")
+                        JumpPowerChange()
+                        HumanModCons.jpLoop = (HumanModCons.jpLoop and HumanModCons.jpLoop:Disconnect() and false) or
+                                                  Human:GetPropertyChangedSignal("JumpPower"):Connect(JumpPowerChange)
+                    end)
+            end
+        end)
 
-    addcmd("unloopjumppower", { "unloopjp", "unloopjpower", "unljumppower", "unljp", "unljump" }, function(args, speaker)
+    addcmd("unloopjumppower", {"unloopjp", "unloopjpower", "unljumppower", "unljp", "unljump"}, function(args, speaker)
         local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
         local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
         HumanModCons.jpLoop = (HumanModCons.jpLoop and HumanModCons.jpLoop:Disconnect() and false) or nil
@@ -13083,7 +12479,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("tools", { "gears" }, function(args, speaker)
+    addcmd("tools", {"gears"}, function(args, speaker)
         local function copy(instance)
             for i, c in pairs(instance:GetChildren()) do
                 if c:IsA("Tool") or c:IsA("HopperBin") then
@@ -13105,7 +12501,7 @@ profile("Inf Yield", function()
         notify("Tools", "Copied tools from ReplicatedStorage and Lighting")
     end)
 
-    addcmd("notools", { "rtools", "clrtools", "removetools", "deletetools", "dtools" }, function(args, speaker)
+    addcmd("notools", {"rtools", "clrtools", "removetools", "deletetools", "dtools"}, function(args, speaker)
         for i, v in pairs(speaker:FindFirstChildOfClass("Backpack"):GetDescendants()) do
             if v:IsA("Tool") or v:IsA("HopperBin") then
                 v:Destroy()
@@ -13118,7 +12514,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("deleteselectedtool", { "dst" }, function(args, speaker)
+    addcmd("deleteselectedtool", {"dst"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
             if v:IsA("Tool") or v:IsA("HopperBin") then
                 v:Destroy()
@@ -13154,12 +12550,13 @@ profile("Inf Yield", function()
         notify("Console", "Press F9 to open the console")
     end)
 
-    addcmd("explorer", { "dex" }, function(args, speaker)
+    addcmd("explorer", {"dex"}, function(args, speaker)
         notify("Loading", "Hold on a sec")
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/ephemeral8997's%20Dex.lua"))()
+        loadstring(game:HttpGet(
+            "https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/ephemeral8997's%20Dex.lua"))()
     end)
 
-    addcmd("olddex", { "odex" }, function(args, speaker)
+    addcmd("olddex", {"odex"}, function(args, speaker)
         notify("Loading old explorer", "Hold on a sec")
 
         local getobjects = function(a)
@@ -13207,7 +12604,7 @@ profile("Inf Yield", function()
                         end
 
                         return {}
-                    end,
+                    end
                 }, {}
                 FenvMt.__index = function(a, b)
                     return RealFenv[b] == nil and getgenv()[b] or RealFenv[b]
@@ -13239,17 +12636,19 @@ profile("Inf Yield", function()
         Load(Dex)
     end)
 
-    addcmd("audiologger", { "alogger" }, function(args, speaker)
+    addcmd("audiologger", {"alogger"}, function(args, speaker)
         notify("Loading", "Hold on a sec")
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/audiologger.lua", true))()
+        loadstring(game:HttpGet(
+            "https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/audiologger.lua", true))()
     end)
 
     local loopgoto = nil
-    addcmd("loopgoto", { "lgoto" }, function(args, speaker)
+    addcmd("loopgoto", {"lgoto"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             loopgoto = nil
-            if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+            if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                 speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                 task.wait(0.1)
             end
@@ -13265,7 +12664,8 @@ profile("Inf Yield", function()
             repeat
                 if Players:FindFirstChild(v) then
                     if Players[v].Character ~= nil then
-                        getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(distance, 1, 0)
+                        getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame +
+                                                                Vector3.new(distance, 1, 0)
                     end
                     task.wait(lDelay)
                 else
@@ -13275,7 +12675,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unloopgoto", { "noloopgoto", "unlgoto", "nolgoto" }, function(args, speaker)
+    addcmd("unloopgoto", {"noloopgoto", "unlgoto", "nolgoto"}, function(args, speaker)
         loopgoto = nil
     end)
 
@@ -13287,8 +12687,11 @@ profile("Inf Yield", function()
         for i, v in pairs(players) do
             speaker.Character:FindFirstChildOfClass("Humanoid").Sit = true
             headSit = RunService.Heartbeat:Connect(function()
-                if Players:FindFirstChild(Players[v].Name) and Players[v].Character ~= nil and getRoot(Players[v].Character) and getRoot(speaker.Character) and speaker.Character:FindFirstChildOfClass("Humanoid").Sit == true then
-                    getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 1.6, 0.4)
+                if Players:FindFirstChild(Players[v].Name) and Players[v].Character ~= nil and
+                    getRoot(Players[v].Character) and getRoot(speaker.Character) and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").Sit == true then
+                    getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame *
+                                                            CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 1.6, 0.4)
                 else
                     headSit:Disconnect()
                 end
@@ -13296,7 +12699,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("chat", { "say" }, function(args, speaker)
+    addcmd("chat", {"say"}, function(args, speaker)
         local cString = getstring(1)
         chatMessage(cString)
     end)
@@ -13312,11 +12715,11 @@ profile("Inf Yield", function()
         until spamming == false
     end)
 
-    addcmd("nospam", { "unspam" }, function(args, speaker)
+    addcmd("nospam", {"unspam"}, function(args, speaker)
         spamming = false
     end)
 
-    addcmd("whisper", { "pm" }, function(args, speaker)
+    addcmd("whisper", {"pm"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             task.spawn(function()
@@ -13354,7 +12757,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("nopmspam", { "unpmspam" }, function(args, speaker)
+    addcmd("nopmspam", {"unpmspam"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             task.spawn(function()
@@ -13378,7 +12781,7 @@ profile("Inf Yield", function()
         ChatService.BubbleChatEnabled = true
     end)
 
-    addcmd("unbubblechat", { "nobubblechat" }, function(args, speaker)
+    addcmd("unbubblechat", {"nobubblechat"}, function(args, speaker)
         ChatService.BubbleChatEnabled = false
     end)
 
@@ -13386,7 +12789,7 @@ profile("Inf Yield", function()
         speaker:SetSuperSafeChat(true)
     end)
 
-    addcmd("nosafechat", { "disablesafechat", "unsafechat" }, function(args, speaker)
+    addcmd("nosafechat", {"disablesafechat", "unsafechat"}, function(args, speaker)
         speaker:SetSuperSafeChat(false)
     end)
 
@@ -13432,13 +12835,14 @@ profile("Inf Yield", function()
 
     function getTorso(x)
         x = x or Players.LocalPlayer.Character
-        return x:FindFirstChild("Torso") or x:FindFirstChild("UpperTorso") or x:FindFirstChild("LowerTorso") or x:FindFirstChild("HumanoidRootPart")
+        return x:FindFirstChild("Torso") or x:FindFirstChild("UpperTorso") or x:FindFirstChild("LowerTorso") or
+                   x:FindFirstChild("HumanoidRootPart")
     end
 
     local bangAnim, bang, bangLoop, bangDied
     local isDead = false
 
-    addcmd("bang", { "rape" }, function(args, speaker)
+    addcmd("bang", {"rape"}, function(args, speaker)
         execCmd("unbang", speaker)
         task.wait()
 
@@ -13490,7 +12894,7 @@ profile("Inf Yield", function()
         end)
     end)
 
-    addcmd("unbang", { "unrape" }, function(args, speaker)
+    addcmd("unbang", {"unrape"}, function(args, speaker)
         if bang then
             pcall(function()
                 bang:Stop()
@@ -13544,7 +12948,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("uncarpet", { "nocarpet" }, function(args, speaker)
+    addcmd("uncarpet", {"nocarpet"}, function(args, speaker)
         if carpetLoop then
             carpetLoop:Disconnect()
             carpetDied:Disconnect()
@@ -13575,7 +12979,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("bringpartclass", { "bpc" }, function(args, speaker)
+    addcmd("bringpartclass", {"bpc"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.ClassName:lower() == getstring(1):lower() and v:IsA("BasePart") then
                 v.CFrame = getRoot(speaker.Character).CFrame
@@ -13584,10 +12988,11 @@ profile("Inf Yield", function()
     end)
 
     gotopartDelay = 0.1
-    addcmd("gotopart", { "topart" }, function(args, speaker)
+    addcmd("gotopart", {"topart"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.Name:lower() == getstring(1):lower() and v:IsA("BasePart") then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -13597,23 +13002,27 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("tweengotopart", { "tgotopart", "ttopart" }, function(args, speaker)
+    addcmd("tweengotopart", {"tgotopart", "ttopart"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.Name:lower() == getstring(1):lower() and v:IsA("BasePart") then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
                 task.wait(gotopartDelay)
-                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = v.CFrame }):Play()
+                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+                    CFrame = v.CFrame
+                }):Play()
             end
         end
     end)
 
-    addcmd("gotopartclass", { "gpc" }, function(args, speaker)
+    addcmd("gotopartclass", {"gpc"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.ClassName:lower() == getstring(1):lower() and v:IsA("BasePart") then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -13623,23 +13032,27 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("tweengotopartclass", { "tgpc" }, function(args, speaker)
+    addcmd("tweengotopartclass", {"tgpc"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.ClassName:lower() == getstring(1):lower() and v:IsA("BasePart") then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
                 task.wait(gotopartDelay)
-                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = v.CFrame }):Play()
+                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+                    CFrame = v.CFrame
+                }):Play()
             end
         end
     end)
 
-    addcmd("gotomodel", { "tomodel" }, function(args, speaker)
+    addcmd("gotomodel", {"tomodel"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.Name:lower() == getstring(1):lower() and v:IsA("Model") then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -13649,15 +13062,18 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("tweengotomodel", { "tgotomodel", "ttomodel" }, function(args, speaker)
+    addcmd("tweengotomodel", {"tgotomodel", "ttomodel"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v.Name:lower() == getstring(1):lower() and v:IsA("Model") then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
                 task.wait(gotopartDelay)
-                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), { CFrame = v:GetModelCFrame() }):Play()
+                TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {
+                    CFrame = v:GetModelCFrame()
+                }):Play()
             end
         end
     end)
@@ -13669,7 +13085,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("noclickdetectorlimits", { "nocdlimits", "removecdlimits" }, function(args, speaker)
+    addcmd("noclickdetectorlimits", {"nocdlimits", "removecdlimits"}, function(args, speaker)
         for i, v in ipairs(workspace:GetDescendants()) do
             if v:IsA("ClickDetector") then
                 v.MaxActivationDistance = math.huge
@@ -13677,7 +13093,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("fireclickdetectors", { "firecd", "firecds" }, function(args, speaker)
+    addcmd("fireclickdetectors", {"firecd", "firecds"}, function(args, speaker)
         if fireclickdetector then
             if args[1] then
                 local name = getstring(1)
@@ -13698,7 +13114,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("noproximitypromptlimits", { "nopplimits", "removepplimits" }, function(args, speaker)
+    addcmd("noproximitypromptlimits", {"nopplimits", "removepplimits"}, function(args, speaker)
         for i, v in pairs(workspace:GetDescendants()) do
             if v:IsA("ProximityPrompt") then
                 v.MaxActivationDistance = math.huge
@@ -13706,7 +13122,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("fireproximityprompts", { "firepp" }, function(args, speaker)
+    addcmd("fireproximityprompts", {"firepp"}, function(args, speaker)
         if fireproximityprompt then
             if args[1] then
                 local name = getstring(1)
@@ -13728,7 +13144,7 @@ profile("Inf Yield", function()
     end)
 
     local PromptButtonHoldBegan = nil
-    addcmd("instantproximityprompts", { "instantpp" }, function(args, speaker)
+    addcmd("instantproximityprompts", {"instantpp"}, function(args, speaker)
         if fireproximityprompt then
             execCmd("uninstantproximityprompts")
             task.wait(0.1)
@@ -13740,14 +13156,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("uninstantproximityprompts", { "uninstantpp" }, function(args, speaker)
+    addcmd("uninstantproximityprompts", {"uninstantpp"}, function(args, speaker)
         if PromptButtonHoldBegan ~= nil then
             PromptButtonHoldBegan:Disconnect()
             PromptButtonHoldBegan = nil
         end
     end)
 
-    addcmd("notifyping", { "ping" }, function(args, speaker)
+    addcmd("notifyping", {"ping"}, function(args, speaker)
         notify("Ping", math.round(speaker:GetNetworkPing() * 1000) .. "ms")
     end)
 
@@ -13772,7 +13188,7 @@ profile("Inf Yield", function()
         notify("Grabtools", "Picking up any dropped tools")
     end)
 
-    addcmd("nograbtools", { "ungrabtools" }, function(args, speaker)
+    addcmd("nograbtools", {"ungrabtools"}, function(args, speaker)
         if grabtoolsFunc then
             grabtoolsFunc:Disconnect()
         end
@@ -13826,7 +13242,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unlight", { "nolight" }, function(args, speaker)
+    addcmd("unlight", {"nolight"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
             if v.ClassName == "PointLight" then
                 v:Destroy()
@@ -13855,7 +13271,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("noface", { "removeface" }, function(args, speaker)
+    addcmd("noface", {"removeface"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
             if v:IsA("Decal") and v.Name == "face" then
                 v:Destroy()
@@ -13863,21 +13279,22 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("spawnpoint", { "spawn" }, function(args, speaker)
+    addcmd("spawnpoint", {"spawn"}, function(args, speaker)
         spawnpos = getRoot(speaker.Character).CFrame
         spawnpoint = true
         spDelay = tonumber(args[1]) or 0.1
         notify("Spawn Point", "Spawn point created at " .. tostring(spawnpos))
     end)
 
-    addcmd("nospawnpoint", { "nospawn", "removespawnpoint" }, function(args, speaker)
+    addcmd("nospawnpoint", {"nospawn", "removespawnpoint"}, function(args, speaker)
         spawnpoint = false
         notify("Spawn Point", "Removed spawn point")
     end)
 
-    addcmd("flashback", { "diedtp" }, function(args, speaker)
+    addcmd("flashback", {"diedtp"}, function(args, speaker)
         if lastDeath ~= nil then
-            if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+            if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                 speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                 task.wait(0.1)
             end
@@ -13885,7 +13302,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("hatspin", { "spinhats" }, function(args, speaker)
+    addcmd("hatspin", {"spinhats"}, function(args, speaker)
         execCmd("unhatspin")
         task.wait(0.5)
         for _, v in pairs(speaker.Character:FindFirstChildOfClass("Humanoid"):GetAccessories()) do
@@ -13913,7 +13330,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unhatspin", { "unspinhats" }, function(args, speaker)
+    addcmd("unhatspin", {"unspinhats"}, function(args, speaker)
         if spinhats then
             spinhats:Disconnect()
         end
@@ -13929,7 +13346,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("clearhats", { "cleanhats" }, function(args, speaker)
+    addcmd("clearhats", {"cleanhats"}, function(args, speaker)
         if firetouchinterest then
             local Player = Players.LocalPlayer
             local Character = Player.Character
@@ -13989,13 +13406,13 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unnilchar", { "nonilchar" }, function(args, speaker)
+    addcmd("unnilchar", {"nonilchar"}, function(args, speaker)
         if speaker.Character ~= nil then
             speaker.Character.Parent = workspace
         end
     end)
 
-    addcmd("noroot", { "removeroot", "rroot" }, function(args, speaker)
+    addcmd("noroot", {"removeroot", "rroot"}, function(args, speaker)
         if speaker.Character ~= nil then
             local char = Players.LocalPlayer.Character
             char.Parent = nil
@@ -14004,7 +13421,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("replaceroot", { "replacerootpart" }, function(args, speaker)
+    addcmd("replaceroot", {"replacerootpart"}, function(args, speaker)
         if speaker.Character ~= nil and speaker.Character:FindFirstChild("HumanoidRootPart") then
             local Char = speaker.Character
             local OldParent = Char.Parent
@@ -14019,7 +13436,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("clearcharappearance", { "clearchar", "clrchar" }, function(args, speaker)
+    addcmd("clearcharappearance", {"clearchar", "clrchar"}, function(args, speaker)
         speaker:ClearCharacterAppearance()
     end)
 
@@ -14050,7 +13467,7 @@ profile("Inf Yield", function()
         end
         return r
     end
-    addcmd("dupetools", { "clonetools" }, function(args, speaker)
+    addcmd("dupetools", {"clonetools"}, function(args, speaker)
         local LOOP_NUM = tonumber(args[1]) or 1
         local OrigPos = speaker.Character.HumanoidRootPart.Position
         local Tools, TempPos = {}, Vector3.new(math.random(-2e5, 2e5), 2e5, math.random(-2e5, 2e5))
@@ -14076,7 +13493,8 @@ profile("Inf Yield", function()
             end
             task.wait(0.1)
             speaker.Character = speaker.Character:Destroy()
-            speaker.CharacterAdded:Wait():WaitForChild("Humanoid").Parent:MoveTo(LOOP_NUM == i and OrigPos or TempPos, task.wait(0.1))
+            speaker.CharacterAdded:Wait():WaitForChild("Humanoid").Parent:MoveTo(LOOP_NUM == i and OrigPos or TempPos,
+                task.wait(0.1))
             if i == LOOP_NUM or i % 5 == 0 then
                 local HRP = speaker.Character.HumanoidRootPart
                 if type(firetouchinterest) == "function" then
@@ -14105,7 +13523,7 @@ profile("Inf Yield", function()
     end)
 
     local RS = RunService.RenderStepped
-    addcmd("givetool", { "givetools" }, function(args, speaker)
+    addcmd("givetool", {"givetools"}, function(args, speaker)
         local v = Players[getPlayer(args[1], speaker)[1]].Character
         workspace.CurrentCamera.CameraSubject = v
         local Char = speaker.Character or workspace:FindFirstChild(speaker.Name)
@@ -14138,7 +13556,7 @@ profile("Inf Yield", function()
         execCmd("re")
     end)
 
-    addcmd("touchinterests", { "touchinterest", "firetouchinterests", "firetouchinterest" }, function(args, speaker)
+    addcmd("touchinterests", {"touchinterest", "firetouchinterests", "firetouchinterest"}, function(args, speaker)
         if not firetouchinterest then
             notify("Incompatible Exploit", "Your exploit does not support this command (missing firetouchinterest)")
             return
@@ -14176,7 +13594,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("fullbright", { "fb", "fullbrightness" }, function(args, speaker)
+    addcmd("fullbright", {"fb", "fullbrightness"}, function(args, speaker)
         Lighting.Brightness = 2
         Lighting.ClockTime = 14
         Lighting.FogEnd = 100000
@@ -14184,7 +13602,7 @@ profile("Inf Yield", function()
         Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
     end)
 
-    addcmd("loopfullbright", { "loopfb", "lfullbright", "lfb" }, function(args, speaker)
+    addcmd("loopfullbright", {"loopfb", "lfullbright", "lfb"}, function(args, speaker)
         if brightLoop then
             brightLoop:Disconnect()
         end
@@ -14199,7 +13617,7 @@ profile("Inf Yield", function()
         brightLoop = RunService.RenderStepped:Connect(brightFunc)
     end)
 
-    addcmd("unloopfullbright", { "unloopfb", "unlfullbright", "unlfb" }, function(args, speaker)
+    addcmd("unloopfullbright", {"unloopfb", "unlfullbright", "unlfb"}, function(args, speaker)
         if brightLoop then
             brightLoop:Disconnect()
         end
@@ -14231,11 +13649,11 @@ profile("Inf Yield", function()
         Lighting.Brightness = args[1]
     end)
 
-    addcmd("globalshadows", { "gshadows" }, function(args, speaker)
+    addcmd("globalshadows", {"gshadows"}, function(args, speaker)
         Lighting.GlobalShadows = true
     end)
 
-    addcmd("unglobalshadows", { "nogshadows", "ungshadows", "noglobalshadows" }, function(args, speaker)
+    addcmd("unglobalshadows", {"nogshadows", "ungshadows", "noglobalshadows"}, function(args, speaker)
         Lighting.GlobalShadows = false
     end)
 
@@ -14246,10 +13664,10 @@ profile("Inf Yield", function()
         time = Lighting.ClockTime,
         fe = Lighting.FogEnd,
         fs = Lighting.FogStart,
-        gs = Lighting.GlobalShadows,
+        gs = Lighting.GlobalShadows
     }
 
-    addcmd("restorelighting", { "rlighting" }, function(args, speaker)
+    addcmd("restorelighting", {"rlighting"}, function(args, speaker)
         Lighting.Ambient = origsettings.abt
         Lighting.OutdoorAmbient = origsettings.oabt
         Lighting.Brightness = origsettings.brt
@@ -14259,19 +13677,19 @@ profile("Inf Yield", function()
         Lighting.GlobalShadows = origsettings.gs
     end)
 
-    addcmd("stun", { "platformstand" }, function(args, speaker)
+    addcmd("stun", {"platformstand"}, function(args, speaker)
         speaker.Character:FindFirstChildOfClass("Humanoid").PlatformStand = true
     end)
 
-    addcmd("unstun", { "nostun", "unplatformstand", "noplatformstand" }, function(args, speaker)
+    addcmd("unstun", {"nostun", "unplatformstand", "noplatformstand"}, function(args, speaker)
         speaker.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
     end)
 
-    addcmd("norotate", { "noautorotate" }, function(args, speaker)
+    addcmd("norotate", {"noautorotate"}, function(args, speaker)
         speaker.Character:FindFirstChildOfClass("Humanoid").AutoRotate = false
     end)
 
-    addcmd("unnorotate", { "autorotate" }, function(args, speaker)
+    addcmd("unnorotate", {"autorotate"}, function(args, speaker)
         speaker.Character:FindFirstChildOfClass("Humanoid").AutoRotate = true
     end)
 
@@ -14291,7 +13709,7 @@ profile("Inf Yield", function()
         speaker.Character:FindFirstChildOfClass("Humanoid"):SetStateEnabled(x, false)
     end)
 
-    addcmd("drophats", { "drophat" }, function(args, speaker)
+    addcmd("drophats", {"drophat"}, function(args, speaker)
         if speaker.Character then
             for _, v in pairs(speaker.Character:FindFirstChildOfClass("Humanoid"):GetAccessories()) do
                 v.Parent = workspace
@@ -14299,7 +13717,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("deletehats", { "nohats", "rhats" }, function(args, speaker)
+    addcmd("deletehats", {"nohats", "rhats"}, function(args, speaker)
         for i, v in next, speaker.Character:GetDescendants() do
             if v:IsA("Accessory") then
                 for i, p in next, v:GetDescendants() do
@@ -14311,7 +13729,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("droptools", { "droptool" }, function(args, speaker)
+    addcmd("droptools", {"droptool"}, function(args, speaker)
         for i, v in pairs(Players.LocalPlayer.Backpack:GetChildren()) do
             if v:IsA("Tool") then
                 v.Parent = Players.LocalPlayer.Character
@@ -14396,7 +13814,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unreach", { "noreach", "unboxreach" }, function(args, speaker)
+    addcmd("unreach", {"noreach", "unboxreach"}, function(args, speaker)
         for i, v in pairs(speaker.Character:GetDescendants()) do
             if v:IsA("Tool") then
                 v.Handle.Size = currentToolSize
@@ -14438,7 +13856,7 @@ profile("Inf Yield", function()
         logs:TweenPosition(UDim2.new(0, 0, 1, -265), "InOut", "Quart", 0.3, true, nil)
     end)
 
-    addcmd("chatlogs", { "clogs" }, function(args, speaker)
+    addcmd("chatlogs", {"clogs"}, function(args, speaker)
         join.Visible = false
         chat.Visible = true
         table.remove(shade3, table.find(shade3, selectChat))
@@ -14450,7 +13868,7 @@ profile("Inf Yield", function()
         logs:TweenPosition(UDim2.new(0, 0, 1, -265), "InOut", "Quart", 0.3, true, nil)
     end)
 
-    addcmd("joinlogs", { "jlogs" }, function(args, speaker)
+    addcmd("joinlogs", {"jlogs"}, function(args, speaker)
         chat.Visible = false
         join.Visible = true
         table.remove(shade3, table.find(shade3, selectJoin))
@@ -14462,7 +13880,7 @@ profile("Inf Yield", function()
         logs:TweenPosition(UDim2.new(0, 0, 1, -265), "InOut", "Quart", 0.3, true, nil)
     end)
 
-    addcmd("chatlogswebhook", { "logswebhook" }, function(args, speaker)
+    addcmd("chatlogswebhook", {"logswebhook"}, function(args, speaker)
         if httprequest then
             logsWebhook = args[1] or nil
             updatesaves()
@@ -14471,22 +13889,23 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("antichatlogs", { "antichatlogger" }, function(args, speaker)
+    addcmd("antichatlogs", {"antichatlogger"}, function(args, speaker)
         if not isLegacyChat then
             return notify("antichatlogs", "Game needs the legacy chat")
         end
         local MessagePosted, _ = pcall(function()
-            rawset(require(speaker:FindFirstChild("PlayerScripts"):FindFirstChild("ChatScript").ChatMain), "MessagePosted", {
-                ["fire"] = function(msg)
-                    return msg
-                end,
-                ["task.wait"] = function()
-                    return
-                end,
-                ["connect"] = function()
-                    return
-                end,
-            })
+            rawset(require(speaker:FindFirstChild("PlayerScripts"):FindFirstChild("ChatScript").ChatMain),
+                "MessagePosted", {
+                    ["fire"] = function(msg)
+                        return msg
+                    end,
+                    ["task.wait"] = function()
+                        return
+                    end,
+                    ["connect"] = function()
+                        return
+                    end
+                })
         end)
         notify("antichatlogs", MessagePosted and "Enabled" or "Failed to enable antichatlogs")
     end)
@@ -14528,7 +13947,7 @@ profile("Inf Yield", function()
         until flinging == false
     end)
 
-    addcmd("unfling", { "nofling" }, function(args, speaker)
+    addcmd("unfling", {"nofling"}, function(args, speaker)
         execCmd("clip")
         if flingDied then
             flingDied:Disconnect()
@@ -14616,7 +14035,7 @@ profile("Inf Yield", function()
         until walkflinging == false
     end)
 
-    addcmd("unwalkfling", { "nowalkfling" }, function(args, speaker)
+    addcmd("unwalkfling", {"nowalkfling"}, function(args, speaker)
         walkflinging = false
         execCmd("unnoclip nonotify")
     end)
@@ -14717,9 +14136,12 @@ profile("Inf Yield", function()
             hum:Destroy()
             workspace.CurrentCamera.CameraSubject = char
             newHum.DisplayDistanceType = "None"
-            local tool = speaker:FindFirstChildOfClass("Backpack"):FindFirstChildOfClass("Tool") or speaker.Character:FindFirstChildOfClass("Tool")
+            local tool = speaker:FindFirstChildOfClass("Backpack"):FindFirstChildOfClass("Tool") or
+                             speaker.Character:FindFirstChildOfClass("Tool")
             tool.Parent = char
-            hrp.CFrame = hrp2.CFrame * CFrame.new(0, 0, 0) * CFrame.new(math.random(-100, 100) / 200, math.random(-100, 100) / 200, math.random(-100, 100) / 200)
+            hrp.CFrame = hrp2.CFrame * CFrame.new(0, 0, 0) *
+                             CFrame.new(math.random(-100, 100) / 200, math.random(-100, 100) / 200,
+                    math.random(-100, 100) / 200)
             local n = 0
             repeat
                 task.wait(0.1)
@@ -14763,22 +14185,24 @@ profile("Inf Yield", function()
         end
     end
 
-    addcmd("kill", { "fekill" }, function(args, speaker)
+    addcmd("kill", {"fekill"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             kill(speaker, Players[v])
         end
     end)
 
-    addcmd("handlekill", { "hkill" }, function(args, speaker)
+    addcmd("handlekill", {"hkill"}, function(args, speaker)
         if not firetouchinterest then
-            return notify("Incompatible Exploit", "Your exploit does not support this command (missing firetouchinterest)")
+            return notify("Incompatible Exploit",
+                "Your exploit does not support this command (missing firetouchinterest)")
         end
         local RS = RunService.RenderStepped
         local Tool = speaker.Character.FindFirstChildWhichIsA(speaker.Character, "Tool")
         local Handle = Tool and Tool.FindFirstChild(Tool, "Handle")
         if not Tool or not Handle then
-            return notify("Handle Kill", 'You need to hold a "Tool" that does damage on touch. For example the default "Sword" tool.')
+            return notify("Handle Kill",
+                'You need to hold a "Tool" that does damage on touch. For example the default "Sword" tool.')
         end
         for _, v in ipairs(getPlayer(args[1], speaker)) do
             v = Players[v]
@@ -14789,7 +14213,9 @@ profile("Inf Yield", function()
                         break
                     end
                     for _, v1 in ipairs(v.Character.GetChildren(v.Character)) do
-                        v1 = ((v1.IsA(v1, "BasePart") and firetouchinterest(Handle, v1, 1, (RS.Wait(RS) and nil) or firetouchinterest(Handle, v1, 0)) and nil) or v1) or v1
+                        v1 = ((v1.IsA(v1, "BasePart") and
+                                 firetouchinterest(Handle, v1, 1,
+                                (RS.Wait(RS) and nil) or firetouchinterest(Handle, v1, 0)) and nil) or v1) or v1
                     end
                 end
                 notify("Handle Kill Stopped!", v.Name .. " died/left or you unequipped the tool!")
@@ -14798,7 +14224,7 @@ profile("Inf Yield", function()
     end)
 
     local hb = RunService.Heartbeat
-    addcmd("tpwalk", { "teleportwalk" }, function(args, speaker)
+    addcmd("tpwalk", {"teleportwalk"}, function(args, speaker)
         tpwalking = true
         local chr = speaker.Character
         local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
@@ -14813,11 +14239,11 @@ profile("Inf Yield", function()
             end
         end
     end)
-    addcmd("untpwalk", { "unteleportwalk" }, function(args, speaker)
+    addcmd("untpwalk", {"unteleportwalk"}, function(args, speaker)
         tpwalking = false
     end)
 
-    addcmd("fastkill", { "fastfekill" }, function(args, speaker)
+    addcmd("fastkill", {"fastfekill"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             kill(speaker, Players[v], true)
@@ -14849,14 +14275,14 @@ profile("Inf Yield", function()
         end
     end
 
-    addcmd("bring", { "febring" }, function(args, speaker)
+    addcmd("bring", {"febring"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             bring(speaker, Players[v])
         end
     end)
 
-    addcmd("fastbring", { "fastfebring" }, function(args, speaker)
+    addcmd("fastbring", {"fastfebring"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             bring(speaker, Players[v], true)
@@ -14890,12 +14316,13 @@ profile("Inf Yield", function()
         end
     end
 
-    addcmd("tp", { "teleport" }, function(args, speaker)
+    addcmd("tp", {"teleport"}, function(args, speaker)
         local players1 = getPlayer(args[1], speaker)
         local players2 = getPlayer(args[2], speaker)
         for i, v in pairs(players1) do
             if getRoot(Players[v].Character) and getRoot(Players[players2[1]].Character) then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -14904,12 +14331,13 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("fasttp", { "fastteleport" }, function(args, speaker)
+    addcmd("fasttp", {"fastteleport"}, function(args, speaker)
         local players1 = getPlayer(args[1], speaker)
         local players2 = getPlayer(args[2], speaker)
         for i, v in pairs(players1) do
             if getRoot(Players[v].Character) and getRoot(Players[players2[1]].Character) then
-                if speaker.Character:FindFirstChildOfClass("Humanoid") and speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
+                if speaker.Character:FindFirstChildOfClass("Humanoid") and
+                    speaker.Character:FindFirstChildOfClass("Humanoid").SeatPart then
                     speaker.Character:FindFirstChildOfClass("Humanoid").Sit = false
                     task.wait(0.1)
                 end
@@ -14946,7 +14374,8 @@ profile("Inf Yield", function()
     xrayEnabled = false
     xray = function()
         for _, v in pairs(workspace:GetDescendants()) do
-            if v:IsA("BasePart") and not v.Parent:FindFirstChildWhichIsA("Humanoid") and not v.Parent.Parent:FindFirstChildWhichIsA("Humanoid") then
+            if v:IsA("BasePart") and not v.Parent:FindFirstChildWhichIsA("Humanoid") and
+                not v.Parent.Parent:FindFirstChildWhichIsA("Humanoid") then
                 v.LocalTransparencyModifier = xrayEnabled and 0.5 or 0
             end
         end
@@ -14957,7 +14386,7 @@ profile("Inf Yield", function()
         xray()
     end)
 
-    addcmd("unxray", { "noxray" }, function(args, speaker)
+    addcmd("unxray", {"noxray"}, function(args, speaker)
         xrayEnabled = false
         xray()
     end)
@@ -14967,7 +14396,7 @@ profile("Inf Yield", function()
         xray()
     end)
 
-    addcmd("loopxray", { "lxray" }, function(args, speaker)
+    addcmd("loopxray", {"lxray"}, function(args, speaker)
         if xrayLoop then
             xrayLoop:Disconnect()
         end
@@ -14977,7 +14406,7 @@ profile("Inf Yield", function()
         end)
     end)
 
-    addcmd("unloopxray", { "unlxray", "nolxray" }, function(args, speaker)
+    addcmd("unloopxray", {"unlxray", "nolxray"}, function(args, speaker)
         if xrayLoop then
             xrayLoop:Disconnect()
         end
@@ -14993,19 +14422,24 @@ profile("Inf Yield", function()
         end
         local function touchedFunc(hit)
             local Root = getRoot(speaker.Character)
-            if hit:IsA("BasePart") and hit.Position.Y > Root.Position.Y - speaker.Character:FindFirstChildOfClass("Humanoid").HipHeight then
+            if hit:IsA("BasePart") and hit.Position.Y > Root.Position.Y -
+                speaker.Character:FindFirstChildOfClass("Humanoid").HipHeight then
                 local hitP = getRoot(hit.Parent)
                 if hitP ~= nil then
-                    Root.CFrame = hit.CFrame * CFrame.new(Root.CFrame.lookVector.X, hitP.Size.Z / 2 + speaker.Character:FindFirstChildOfClass("Humanoid").HipHeight, Root.CFrame.lookVector.Z)
+                    Root.CFrame = hit.CFrame *
+                                      CFrame.new(Root.CFrame.lookVector.X, hitP.Size.Z / 2 +
+                            speaker.Character:FindFirstChildOfClass("Humanoid").HipHeight, Root.CFrame.lookVector.Z)
                 elseif hitP == nil then
-                    Root.CFrame = hit.CFrame * CFrame.new(Root.CFrame.lookVector.X, hit.Size.Y / 2 + speaker.Character:FindFirstChildOfClass("Humanoid").HipHeight, Root.CFrame.lookVector.Z)
+                    Root.CFrame = hit.CFrame *
+                                      CFrame.new(Root.CFrame.lookVector.X, hit.Size.Y / 2 +
+                            speaker.Character:FindFirstChildOfClass("Humanoid").HipHeight, Root.CFrame.lookVector.Z)
                 end
             end
         end
         walltpTouch = torso.Touched:Connect(touchedFunc)
     end)
 
-    addcmd("unwalltp", { "nowalltp" }, function(args, speaker)
+    addcmd("unwalltp", {"nowalltp"}, function(args, speaker)
         if walltpTouch then
             walltpTouch:Disconnect()
         end
@@ -15025,14 +14459,16 @@ profile("Inf Yield", function()
                 releaseDelay = args[2]
             end
             autoclicking = true
-            cancelAutoClick = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-                if not gameProcessedEvent then
-                    if (input.KeyCode == Enum.KeyCode.Backspace and UserInputService:IsKeyDown(Enum.KeyCode.Equals)) or (input.KeyCode == Enum.KeyCode.Equals and UserInputService:IsKeyDown(Enum.KeyCode.Backspace)) then
-                        autoclicking = false
-                        cancelAutoClick:Disconnect()
+            cancelAutoClick = UserInputService.InputBegan:Connect(
+                function(input, gameProcessedEvent)
+                    if not gameProcessedEvent then
+                        if (input.KeyCode == Enum.KeyCode.Backspace and UserInputService:IsKeyDown(Enum.KeyCode.Equals)) or
+                            (input.KeyCode == Enum.KeyCode.Equals and UserInputService:IsKeyDown(Enum.KeyCode.Backspace)) then
+                            autoclicking = false
+                            cancelAutoClick:Disconnect()
+                        end
                     end
-                end
-            end)
+                end)
             notify("Auto Clicker", "Press [backspace] and [=] at the same time to stop")
             repeat
                 task.wait(clickDelay)
@@ -15045,14 +14481,14 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unautoclick", { "noautoclick" }, function(args, speaker)
+    addcmd("unautoclick", {"noautoclick"}, function(args, speaker)
         autoclicking = false
         if cancelAutoClick then
             cancelAutoClick:Disconnect()
         end
     end)
 
-    addcmd("mousesensitivity", { "ms" }, function(args, speaker)
+    addcmd("mousesensitivity", {"ms"}, function(args, speaker)
         UserInputService.MouseDeltaSensitivity = args[1]
     end)
 
@@ -15082,7 +14518,8 @@ profile("Inf Yield", function()
             local target = IYMouse.Target
 
             if target then
-                local humanoid = target.Parent:FindFirstChildOfClass("Humanoid") or target.Parent.Parent:FindFirstChildOfClass("Humanoid")
+                local humanoid = target.Parent:FindFirstChildOfClass("Humanoid") or
+                                     target.Parent.Parent:FindFirstChildOfClass("Humanoid")
                 if humanoid then
                     t = humanoid.Parent
                 end
@@ -15114,7 +14551,7 @@ profile("Inf Yield", function()
         nbUpdateFunc = IYMouse.Move:Connect(updateNameBox)
     end)
 
-    addcmd("unhovername", { "nohovername" }, function(args, speaker)
+    addcmd("unhovername", {"nohovername"}, function(args, speaker)
         if nbUpdateFunc then
             nbUpdateFunc:Disconnect()
             nameBox:Destroy()
@@ -15161,17 +14598,19 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("stareat", { "stare" }, function(args, speaker)
+    addcmd("stareat", {"stare"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             if stareLoop then
                 stareLoop:Disconnect()
             end
-            if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and Players[v].Character:FindFirstChild("HumanoidRootPart") then
+            if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and
+                Players[v].Character:FindFirstChild("HumanoidRootPart") then
                 return
             end
             local function stareFunc()
-                if Players.LocalPlayer.Character.PrimaryPart and Players:FindFirstChild(v) and Players[v].Character ~= nil and Players[v].Character:FindFirstChild("HumanoidRootPart") then
+                if Players.LocalPlayer.Character.PrimaryPart and Players:FindFirstChild(v) and Players[v].Character ~=
+                    nil and Players[v].Character:FindFirstChild("HumanoidRootPart") then
                     local chrPos = Players.LocalPlayer.Character.PrimaryPart.Position
                     local tPos = Players[v].Character:FindFirstChild("HumanoidRootPart").Position
                     local modTPos = Vector3.new(tPos.X, chrPos.Y, tPos.Z)
@@ -15186,13 +14625,17 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unstareat", { "unstare", "nostare", "nostareat" }, function(args, speaker)
+    addcmd("unstareat", {"unstare", "nostare", "nostareat"}, function(args, speaker)
         if stareLoop then
             stareLoop:Disconnect()
         end
     end)
 
-    RolewatchData = { Group = 0, Role = "", Leave = false }
+    RolewatchData = {
+        Group = 0,
+        Role = "",
+        Leave = false
+    }
     RolewatchConnection = Players.PlayerAdded:Connect(function(player)
         if RolewatchData.Group == 0 then
             return
@@ -15200,9 +14643,11 @@ profile("Inf Yield", function()
         if player:IsInGroup(RolewatchData.Group) then
             if tostring(player:GetRoleInGroup(RolewatchData.Group)):lower() == RolewatchData.Role:lower() then
                 if RolewatchData.Leave == true then
-                    Players.LocalPlayer:Kick('\n\nRolewatch\nPlayer "' .. tostring(player.Name) .. '" has joined with the Role "' .. RolewatchData.Role .. '"\n')
+                    Players.LocalPlayer:Kick('\n\nRolewatch\nPlayer "' .. tostring(player.Name) ..
+                                                 '" has joined with the Role "' .. RolewatchData.Role .. '"\n')
                 else
-                    notify("Rolewatch", 'Player "' .. tostring(player.Name) .. '" has joined with the Role "' .. RolewatchData.Role .. '"')
+                    notify("Rolewatch", 'Player "' .. tostring(player.Name) .. '" has joined with the Role "' ..
+                        RolewatchData.Role .. '"')
                 end
             end
         end
@@ -15225,32 +14670,20 @@ profile("Inf Yield", function()
         notify("Rolewatch", "Disabled")
     end)
 
-    addcmd("rolewatchleave", { "unrolewatch" }, function(args, speaker)
+    addcmd("rolewatchleave", {"unrolewatch"}, function(args, speaker)
         RolewatchData.Leave = not RolewatchData.Leave
         notify("Rolewatch", RolewatchData.Leave and "Leave has been Enabled" or "Leave has been Disabled")
     end)
 
-    staffRoles = {
-        "mod",
-        "admin",
-        "staff",
-        "dev",
-        "founder",
-        "owner",
-        "supervis",
-        "manager",
-        "management",
-        "executive",
-        "president",
-        "chairman",
-        "chairwoman",
-        "chairperson",
-        "director",
-    }
+    staffRoles = {"mod", "admin", "staff", "dev", "founder", "owner", "supervis", "manager", "management", "executive",
+                  "president", "chairman", "chairwoman", "chairperson", "director"}
 
     getStaffRole = function(player)
         local playerRole = player:GetRoleInGroup(game.CreatorId)
-        local result = { Role = playerRole, Staff = false }
+        local result = {
+            Role = playerRole,
+            Staff = false
+        }
         if player:IsInGroup(1200769) then
             result.Role = "Roblox Employee"
             result.Staff = true
@@ -15298,11 +14731,11 @@ profile("Inf Yield", function()
         notify("Staffwatch", "Disabled")
     end)
 
-    addcmd("removeterrain", { "rterrain", "noterrain" }, function(args, speaker)
+    addcmd("removeterrain", {"rterrain", "noterrain"}, function(args, speaker)
         workspace:FindFirstChildOfClass("Terrain"):Clear()
     end)
 
-    addcmd("clearnilinstances", { "nonilinstances", "cni" }, function(args, speaker)
+    addcmd("clearnilinstances", {"nonilinstances", "cni"}, function(args, speaker)
         if getnilinstances then
             for i, v in pairs(getnilinstances()) do
                 v:Destroy()
@@ -15312,7 +14745,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("destroyheight", { "dh" }, function(args, speaker)
+    addcmd("destroyheight", {"dh"}, function(args, speaker)
         local dh = args[1] or -500
         if isNumber(dh) then
             workspace.FallenPartsDestroyHeight = dh
@@ -15343,7 +14776,7 @@ profile("Inf Yield", function()
         notify("antivoid", "Enabled")
     end)
 
-    addcmd("unantivoid", { "noantivoid" }, function(args, speaker)
+    addcmd("unantivoid", {"noantivoid"}, function(args, speaker)
         antivoidloop:Disconnect()
         antivoidloop = nil
         if args[1] ~= "nonotify" then
@@ -15352,7 +14785,8 @@ profile("Inf Yield", function()
     end)
 
     addcmd("trip", {}, function(args, speaker)
-        if speaker and speaker.Character and speaker.Character:FindFirstChildOfClass("Humanoid") and getRoot(speaker.Character) then
+        if speaker and speaker.Character and speaker.Character:FindFirstChildOfClass("Humanoid") and
+            getRoot(speaker.Character) then
             local hum = speaker.Character:FindFirstChildOfClass("Humanoid")
             local root = getRoot(speaker.Character)
             hum:ChangeState(0)
@@ -15360,7 +14794,7 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("removeads", { "adblock" }, function(args, speaker)
+    addcmd("removeads", {"adblock"}, function(args, speaker)
         while task.wait() do
             pcall(function()
                 for i, v in pairs(workspace:GetDescendants()) do
@@ -15379,30 +14813,11 @@ profile("Inf Yield", function()
 
     local freezingua = nil
     frozenParts = {}
-    addcmd("freezeunanchored", { "freezeua" }, function(args, speaker)
-        local badnames = {
-            "Head",
-            "UpperTorso",
-            "LowerTorso",
-            "RightUpperArm",
-            "LeftUpperArm",
-            "RightLowerArm",
-            "LeftLowerArm",
-            "RightHand",
-            "LeftHand",
-            "RightUpperLeg",
-            "LeftUpperLeg",
-            "RightLowerLeg",
-            "LeftLowerLeg",
-            "RightFoot",
-            "LeftFoot",
-            "Torso",
-            "Right Arm",
-            "Left Arm",
-            "Right Leg",
-            "Left Leg",
-            "HumanoidRootPart",
-        }
+    addcmd("freezeunanchored", {"freezeua"}, function(args, speaker)
+        local badnames = {"Head", "UpperTorso", "LowerTorso", "RightUpperArm", "LeftUpperArm", "RightLowerArm",
+                          "LeftLowerArm", "RightHand", "LeftHand", "RightUpperLeg", "LeftUpperLeg", "RightLowerLeg",
+                          "LeftLowerLeg", "RightFoot", "LeftFoot", "Torso", "Right Arm", "Left Arm", "Right Leg",
+                          "Left Leg", "HumanoidRootPart"}
         local function FREEZENOOB(v)
             if v:IsA("BasePart" or "UnionOperation") and v.Anchored == false then
                 local BADD = false
@@ -15440,7 +14855,7 @@ profile("Inf Yield", function()
         freezingua = workspace.DescendantAdded:Connect(FREEZENOOB)
     end)
 
-    addcmd("thawunanchored", { "thawua", "unfreezeunanchored", "unfreezeua" }, function(args, speaker)
+    addcmd("thawunanchored", {"thawua", "unfreezeunanchored", "unfreezeua"}, function(args, speaker)
         if freezingua then
             freezingua:Disconnect()
         end
@@ -15454,12 +14869,16 @@ profile("Inf Yield", function()
         frozenParts = {}
     end)
 
-    addcmd("tpunanchored", { "tpua" }, function(args, speaker)
+    addcmd("tpunanchored", {"tpua"}, function(args, speaker)
         local players = getPlayer(args[1], speaker)
         for i, v in pairs(players) do
             local Forces = {}
             for _, part in pairs(workspace:GetDescendants()) do
-                if Players[v].Character:FindFirstChild("Head") and part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and not part:IsDescendantOf(speaker.Character) and part.Name == "Torso" == false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name == "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and part.Name == "HumanoidRootPart" == false then
+                if Players[v].Character:FindFirstChild("Head") and part:IsA("BasePart" or "UnionOperation" or "Model") and
+                    part.Anchored == false and not part:IsDescendantOf(speaker.Character) and part.Name == "Torso" ==
+                    false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name ==
+                    "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and
+                    part.Name == "HumanoidRootPart" == false then
                     for i, c in pairs(part:GetChildren()) do
                         if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
                             c:Destroy()
@@ -15546,12 +14965,12 @@ profile("Inf Yield", function()
         ["f9"] = 0x78,
         ["f10"] = 0x79,
         ["f11"] = 0x7A,
-        ["f12"] = 0x7B,
+        ["f12"] = 0x7B
     }
     autoKeyPressing = false
     cancelAutoKeyPress = nil
 
-    addcmd("autokeypress", { "keypress" }, function(args, speaker)
+    addcmd("autokeypress", {"keypress"}, function(args, speaker)
         if keypress and keyrelease and args[1] then
             local code = keycodeMap[args[1]:lower()]
             if not code then
@@ -15569,14 +14988,16 @@ profile("Inf Yield", function()
                 releaseDelay = args[3]
             end
             autoKeyPressing = true
-            cancelAutoKeyPress = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-                if not gameProcessedEvent then
-                    if (input.KeyCode == Enum.KeyCode.Backspace and UserInputService:IsKeyDown(Enum.KeyCode.Equals)) or (input.KeyCode == Enum.KeyCode.Equals and UserInputService:IsKeyDown(Enum.KeyCode.Backspace)) then
-                        autoKeyPressing = false
-                        cancelAutoKeyPress:Disconnect()
+            cancelAutoKeyPress = UserInputService.InputBegan:Connect(
+                function(input, gameProcessedEvent)
+                    if not gameProcessedEvent then
+                        if (input.KeyCode == Enum.KeyCode.Backspace and UserInputService:IsKeyDown(Enum.KeyCode.Equals)) or
+                            (input.KeyCode == Enum.KeyCode.Equals and UserInputService:IsKeyDown(Enum.KeyCode.Backspace)) then
+                            autoKeyPressing = false
+                            cancelAutoKeyPress:Disconnect()
+                        end
                     end
-                end
-            end)
+                end)
             notify("Auto Key Press", "Press [backspace] and [=] at the same time to stop")
             repeat
                 task.wait(clickDelay)
@@ -15593,18 +15014,18 @@ profile("Inf Yield", function()
         end
     end)
 
-    addcmd("unautokeypress", { "noautokeypress", "unkeypress", "nokeypress" }, function(args, speaker)
+    addcmd("unautokeypress", {"noautokeypress", "unkeypress", "nokeypress"}, function(args, speaker)
         autoKeyPressing = false
         if cancelAutoKeyPress then
             cancelAutoKeyPress:Disconnect()
         end
     end)
 
-    addcmd("addplugin", { "plugin" }, function(args, speaker)
+    addcmd("addplugin", {"plugin"}, function(args, speaker)
         addPlugin(getstring(1))
     end)
 
-    addcmd("removeplugin", { "deleteplugin" }, function(args, speaker)
+    addcmd("removeplugin", {"deleteplugin"}, function(args, speaker)
         deletePlugin(getstring(1))
     end)
 
@@ -15615,7 +15036,7 @@ profile("Inf Yield", function()
         addPlugin(pluginName)
     end)
 
-    addcmd("removecmd", { "deletecmd" }, function(args, speaker)
+    addcmd("removecmd", {"deletecmd"}, function(args, speaker)
         removecmd(args[1])
     end)
 
@@ -15724,30 +15145,47 @@ profile("Inf Yield", function()
 
     -- Events
     eventEditor.RegisterEvent("OnExecute")
-    eventEditor.RegisterEvent("OnSpawn", {
-        { Type = "Player", Name = "Player Filter ($1)" },
-    })
-    eventEditor.RegisterEvent("OnDied", {
-        { Type = "Player", Name = "Player Filter ($1)" },
-    })
-    eventEditor.RegisterEvent("OnDamage", {
-        { Type = "Player", Name = "Player Filter ($1)" },
-        { Type = "Number", Name = "Below Health ($2)" },
-    })
-    eventEditor.RegisterEvent("OnKilled", {
-        { Type = "Player", Name = "Victim Player ($1)" },
-        { Type = "Player", Name = "Killer Player ($2)", Default = 1 },
-    })
-    eventEditor.RegisterEvent("OnJoin", {
-        { Type = "Player", Name = "Player Filter ($1)", Default = 1 },
-    })
-    eventEditor.RegisterEvent("OnLeave", {
-        { Type = "Player", Name = "Player Filter ($1)", Default = 1 },
-    })
-    eventEditor.RegisterEvent("OnChatted", {
-        { Type = "Player", Name = "Player Filter ($1)", Default = 1 },
-        { Type = "String", Name = "Message Filter ($2)" },
-    })
+    eventEditor.RegisterEvent("OnSpawn", {{
+        Type = "Player",
+        Name = "Player Filter ($1)"
+    }})
+    eventEditor.RegisterEvent("OnDied", {{
+        Type = "Player",
+        Name = "Player Filter ($1)"
+    }})
+    eventEditor.RegisterEvent("OnDamage", {{
+        Type = "Player",
+        Name = "Player Filter ($1)"
+    }, {
+        Type = "Number",
+        Name = "Below Health ($2)"
+    }})
+    eventEditor.RegisterEvent("OnKilled", {{
+        Type = "Player",
+        Name = "Victim Player ($1)"
+    }, {
+        Type = "Player",
+        Name = "Killer Player ($2)",
+        Default = 1
+    }})
+    eventEditor.RegisterEvent("OnJoin", {{
+        Type = "Player",
+        Name = "Player Filter ($1)",
+        Default = 1
+    }})
+    eventEditor.RegisterEvent("OnLeave", {{
+        Type = "Player",
+        Name = "Player Filter ($1)",
+        Default = 1
+    }})
+    eventEditor.RegisterEvent("OnChatted", {{
+        Type = "Player",
+        Name = "Player Filter ($1)",
+        Default = 1
+    }, {
+        Type = "String",
+        Name = "Message Filter ($2)"
+    }})
 
     function hookCharEvents(plr, instant)
         task.spawn(function()
@@ -15842,7 +15280,7 @@ profile("Inf Yield", function()
 
     if spawnCmds and #spawnCmds > 0 then
         for i, v in pairs(spawnCmds) do
-            eventEditor.AddCmd("OnSpawn", { v.COMMAND or "", { 0 }, v.DELAY or 0 })
+            eventEditor.AddCmd("OnSpawn", {v.COMMAND or "", {0}, v.DELAY or 0})
         end
         updatesaves()
     end
@@ -15880,8 +15318,12 @@ profile("Inf Yield", function()
         Logo:TweenSizeAndPosition(UDim2.new(0, 175, 0, 175), UDim2.new(0, 37, 0, 45), "Out", "Quart", 0.3)
         task.wait(1)
         local OutInfo = TweenInfo.new(1.6809, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
-        TweenService:Create(Logo, OutInfo, { ImageTransparency = 1 }):Play()
-        TweenService:Create(IntroBackground, OutInfo, { BackgroundTransparency = 1 }):Play()
+        TweenService:Create(Logo, OutInfo, {
+            ImageTransparency = 1
+        }):Play()
+        TweenService:Create(IntroBackground, OutInfo, {
+            BackgroundTransparency = 1
+        }):Play()
         Credits:TweenPosition(UDim2.new(0, 0, 0.9, 30), "Out", "Quart", 0.2)
         task.wait(0.2)
         Logo:Destroy()
