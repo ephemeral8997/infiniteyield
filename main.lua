@@ -10867,7 +10867,7 @@ profile("Inf Yield", function()
 
     addcmd("wallwalk", {"walkonwalls"}, function(args, speaker)
         loadstring(game:HttpGet(
-            "https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/wallwalk.lua"))()
+            "https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/wallwalk.lua"))()
     end)
 
     addcmd("age", {}, function(args, speaker)
