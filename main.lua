@@ -8344,7 +8344,7 @@ profile("Inf Yield", function()
         if KeepInfYield and not TeleportCheck and queueteleport then
             TeleportCheck = true
             queueteleport(
-                "loadstring(game:HttpGet('https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/Infinite%20Yield%20v6.1.lua'))()")
+                "loadstring(game:HttpGet('https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/main.lua'))()")
         end
     end)
 
@@ -12530,7 +12530,7 @@ profile("Inf Yield", function()
         -- Thanks wally!!
         notify("Loading", "Hold on a sec")
         local _, str = pcall(function()
-            return game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/console.lua", true)
+            return game:HttpGet("https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/console.lua", true)
         end)
 
         local s, e = loadstring(str)
@@ -12639,7 +12639,7 @@ profile("Inf Yield", function()
     addcmd("audiologger", {"alogger"}, function(args, speaker)
         notify("Loading", "Hold on a sec")
         loadstring(game:HttpGet(
-            "https://raw.githubusercontent.com/ephemeral8997/RBXScriptLibrary/refs/heads/main/audiologger.lua", true))()
+            "https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/audiologger.lua", true))()
     end)
 
     local loopgoto = nil
