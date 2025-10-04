@@ -10002,43 +10002,39 @@ profile("Inf Yield", function()
         end
     end)
 
-    local RemoteSpy = false
+    local RemoteSpyEnabled = false
+    local remoteConnections = {}
+
+    local function hookRemote(remote)
+        if remote:IsA("RemoteEvent") then
+            local connection = remote.OnClientEvent:Connect(function(...)
+                print("RemoteEvent fired:", remote.Name)
+                local args = {...}
+                for i, v in ipairs(args) do
+                    print("Arg", i, ":", v)
+                end
+            end)
+            table.insert(remoteConnections, connection)
+        end
+    end
 
     addcmd("remote", {"remotespy", "spy", "rspy", "simplespy", "sspy"}, function(args, speaker)
-        if RemoteSpy then
+        if RemoteSpyEnabled then
+            notify("RemoteSpy", "Already spying on remote calls.")
             return
         end
-        RemoteSpy = true
 
-        --    local mt = getrawmetatable(game)
-        setreadonly(mt, false)
+        RemoteSpyEnabled = true
+        local replicatedStorage = game:GetService("ReplicatedStorage")
 
-        local __namecall = mt.__namecall
+        for _, obj in ipairs(replicatedStorage:GetDescendants()) do
+            hookRemote(obj)
+        end
 
-        mt.__namecall = newcclosure(function(self, ...)
-            local method = getnamecallmethod()
-
-            if RemoteSpy and (self:IsA("RemoteEvent") or self:IsA("RemoteFunction")) then
-                local args = {...}
-
-                task.spawn(function()
-                    local safeArgs = {}
-                    for i, v in ipairs(args) do
-                        if typeof(v) == "string" or typeof(v) == "number" or typeof(v) == "boolean" then
-                            table.insert(safeArgs, v)
-                        else
-                            table.insert(safeArgs, "<" .. typeof(v) .. ">")
-                        end
-                    end
-
-                    warn("[RemoteSpy] " .. method .. " ->", self:GetFullName(), unpack(safeArgs))
-                end)
-            end
-
-            return __namecall(self, ...)
+        local descendantConnection = replicatedStorage.DescendantAdded:Connect(function(obj)
+            hookRemote(obj)
         end)
-
-        setreadonly(mt, true)
+        table.insert(remoteConnections, descendantConnection)
 
         notify("RemoteSpy", "Now spying on remote calls. Use :unremote to stop.")
     end)
@@ -10046,7 +10042,19 @@ profile("Inf Yield", function()
     addcmd("unremote",
         {"noremote", "unremotespy", "noremotespy", "unspy", "nospy", "unrspy", "norspy", "unsimplespy", "nosimplespy",
          "unsspy", "nosspy"}, function(args, speaker)
-            RemoteSpy = false
+            if not RemoteSpyEnabled then
+                notify("RemoteSpy", "Remote spying is already disabled.")
+                return
+            end
+
+            RemoteSpyEnabled = false
+            for _, conn in ipairs(remoteConnections) do
+                if conn and typeof(conn) == "RBXScriptConnection" then
+                    conn:Disconnect()
+                end
+            end
+            remoteConnections = {}
+
             notify("RemoteSpy", "Remote spying disabled.")
         end)
 
@@ -12530,7 +12538,9 @@ profile("Inf Yield", function()
         -- Thanks wally!!
         notify("Loading", "Hold on a sec")
         local _, str = pcall(function()
-            return game:HttpGet("https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/console.lua", true)
+            return game:HttpGet(
+                "https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/console.lua",
+                true)
         end)
 
         local s, e = loadstring(str)
@@ -12639,7 +12649,8 @@ profile("Inf Yield", function()
     addcmd("audiologger", {"alogger"}, function(args, speaker)
         notify("Loading", "Hold on a sec")
         loadstring(game:HttpGet(
-            "https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/audiologger.lua", true))()
+            "https://raw.githubusercontent.com/ephemeral8997/infiniteyield/refs/heads/master/addons/audiologger.lua",
+            true))()
     end)
 
     local loopgoto = nil
