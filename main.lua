@@ -17,7 +17,6 @@ pcall(function()
     getgenv().IY_LOADED = true
 end)
 
-
 local cloneref = cloneref or function(o)
     return o
 end
