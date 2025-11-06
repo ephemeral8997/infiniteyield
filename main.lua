@@ -14190,12 +14190,12 @@ local hb = RunService.Heartbeat
 local tpwalking = false
 local tpwalkSpeed = 1
 
-
 local function setupCharacter(char)
-    print("Start of setupCharacter")
-    local hum = char:FindFirstChildWhichIsA("Humanoid")
-    if not hum then return end
-    print("setupCharacter")
+    local hum = char:WaitForChild("Humanoid", 5)
+    if not hum then
+        warn("Humanoid not found in character after respawn")
+        return
+    end
 
     task.spawn(function()
         while tpwalking and char.Parent and hum.Parent do
