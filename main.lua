@@ -14187,21 +14187,35 @@ addcmd("handlekill", {"hkill"}, function(args, speaker)
 end)
 
 local hb = RunService.Heartbeat
-addcmd("tpwalk", {"teleportwalk"}, function(args, speaker)
-    tpwalking = true
-    local chr = speaker.Character
-    local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-    while tpwalking and chr and hum and hum.Parent do
-        local delta = hb:Wait()
-        if hum.MoveDirection.Magnitude > 0 then
-            if args[1] and isNumber(args[1]) then
-                chr:TranslateBy(hum.MoveDirection * tonumber(args[1]) * delta * 10)
-            else
-                chr:TranslateBy(hum.MoveDirection * delta * 10)
+local tpwalking = false
+local tpwalkSpeed = 1
+
+local function setupCharacter(char)
+    local hum = char:FindFirstChildWhichIsA("Humanoid")
+    if not hum then return end
+
+    task.spawn(function()
+        while tpwalking and char.Parent and hum.Parent do
+            local delta = hb:Wait()
+            if hum.MoveDirection.Magnitude > 0 then
+                char:TranslateBy(hum.MoveDirection * delta * 10 * tpwalkSpeed)
             end
         end
+    end)
+end
+
+addcmd("tpwalk", {"teleportwalk"}, function(args, speaker)
+    tpwalking = true
+    tpwalkSpeed = (args[1] and isNumber(args[1])) and tonumber(args[1]) or 1
+
+    if speaker.Character then
+        setupCharacter(speaker.Character)
     end
+
+    -- future respawns
+    speaker.CharacterAdded:Connect(setupCharacter)
 end)
+
 addcmd("untpwalk", {"unteleportwalk"}, function(args, speaker)
     tpwalking = false
 end)
