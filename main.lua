@@ -14191,6 +14191,7 @@ local tpwalking = false
 local tpwalkSpeed = 1
 
 local function setupCharacter(char)
+    print("Start of setupCharacter")
     local hum = char:FindFirstChildWhichIsA("Humanoid")
     if not hum then return end
     print("setupCharacter")
