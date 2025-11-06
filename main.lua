@@ -14193,6 +14193,7 @@ local tpwalkSpeed = 1
 local function setupCharacter(char)
     local hum = char:FindFirstChildWhichIsA("Humanoid")
     if not hum then return end
+    print("setupCharacter")
 
     task.spawn(function()
         while tpwalking and char.Parent and hum.Parent do
