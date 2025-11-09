@@ -4,11 +4,19 @@ end
 
 local Services = setmetatable({}, {
     __index = function(self, key)
-        local service = game:GetService(key)
-        if service then
+        local ok, service = pcall(game.GetService, game, key)
+        if ok and service then
             rawset(self, key, service)
             return service
         end
+
+        for _, obj in ipairs(game:GetChildren()) do
+            if obj:IsA(key) then
+                rawset(self, key, obj)
+                return obj
+            end
+        end
+
         error("Service '" .. key .. "' not found", 2)
     end
 })
@@ -9971,7 +9979,7 @@ addcmd("remote", {"remotespy", "spy", "rspy", "simplespy", "sspy"}, function(arg
     end
 
     RemoteSpyEnabled = true
-    local replicatedStorage = game:GetService("ReplicatedStorage")
+    local replicatedStorage = Services.ReplicatedStorage
 
     for _, obj in ipairs(replicatedStorage:GetDescendants()) do
         hookRemote(obj)
