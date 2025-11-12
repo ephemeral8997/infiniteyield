@@ -21,9 +21,6 @@ local Services = setmetatable({}, {
     end
 })
 
-
-local LocalPlayer = Services.Players.LocalPlayer
-
 pcall(function()
     getgenv().IY_LOADED = true
 end)
@@ -33,6 +30,7 @@ local cloneref = cloneref or function(o)
 end
 COREGUI = cloneref(Services.CoreGui)
 Players = cloneref(Services.Players)
+LocalPlayer = Players.LocalPlayer
 
 if not game:IsLoaded() then
     local notLoaded = Instance.new("Message", COREGUI)
@@ -7492,7 +7490,7 @@ end
 local function createESPFolder(plr)
     local folder = Instance.new("Folder")
     folder.Name = plr.Name .. "_ESP"
-    folder.Parent = CoreGui
+    folder.Parent = COREGUI
     return folder
 end
 
@@ -7527,55 +7525,6 @@ local function createBillboard(plr, parent)
     label.Parent = billboard
 
     return label
-end
-
-function ESP(plr)
-    if plr == LocalPlayer then return end
-    if not plr.Character then return end
-
-    local old = CoreGui:FindFirstChild(plr.Name .. "_ESP")
-    if old then old:Destroy() end
-
-    local folder = createESPFolder(plr)
-
-    local root = plr.Character:WaitForChild("HumanoidRootPart", 5)
-    local humanoid = plr.Character:WaitForChild("Humanoid", 5)
-    if not root or not humanoid then return end
-
-    for _, part in ipairs(plr.Character:GetChildren()) do
-        if part:IsA("BasePart") then
-            createBox(part, folder, plr.TeamColor.Color)
-        end
-    end
-
-    local label = createBillboard(plr, folder)
-
-    local conn
-    conn = RunService.RenderStepped:Connect(function()
-        if not folder.Parent then
-            conn:Disconnect()
-            return
-        end
-        if plr.Character and humanoid and humanoid.Parent then
-            local distance = (LocalPlayer.Character.HumanoidRootPart.Position - root.Position).Magnitude
-            label.Text = string.format(
-    "Display: %s | Username: %s | Health: %.1f | Studs: %d",
-    plr.DisplayName,
-    plr.Name,
-    humanoid.Health,
-    distance
-)
-
-        end
-    end)
-
-    plr.CharacterAdded:Connect(function()
-        if ESPenabled then ESP(plr) end
-    end)
-
-    plr:GetPropertyChangedSignal("TeamColor"):Connect(function()
-        if ESPenabled then ESP(plr) end
-    end)
 end
 
 function CHMS(plr)
@@ -9820,7 +9769,6 @@ addcmd("clientantikick", {"antikick"}, function(args, speaker)
     if not hookmetamethod then
         return notify("Incompatible Exploit", "Your exploit does not support this command (missing hookmetamethod)")
     end
-    local LocalPlayer = Players.LocalPlayer
     local oldhmmi
     local oldhmmnc
     oldhmmi = hookmetamethod(game, "__index", function(self, method)
@@ -10013,23 +9961,144 @@ addcmd("unremote",
         notify("RemoteSpy", "Remote spying disabled.")
     end)
 
+ESPenabled = false
+espTransparency = 0.3
+
+-- Missing helper functions (you need these implemented)
+function createESPFolder(plr)
+    local folder = Instance.new("Folder")
+    folder.Name = plr.Name .. "_ESP"
+    folder.Parent = COREGUI
+    return folder
+end
+
+function createBox(part, folder, color)
+    local box = Instance.new("BoxHandleAdornment")
+    box.Name = "ESP_Box"
+    box.Adornee = part
+    box.AlwaysOnTop = true
+    box.ZIndex = 10
+    box.Size = part.Size
+    box.Color3 = color
+    box.Transparency = espTransparency
+    box.Parent = folder
+    return box
+end
+
+function createBillboard(plr, folder)
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "ESP_Label"
+    billboard.Size = UDim2.new(0, 200, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 3, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Adornee = plr.Character:FindFirstChild("Head") or plr.Character:WaitForChild("HumanoidRootPart")
+    billboard.Parent = folder
+    
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.TextStrokeTransparency = 0
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextStrokeColor3 = Color3.new(0, 0, 0)
+    label.TextSize = 14
+    label.Font = Enum.Font.GothamBold
+    label.Parent = billboard
+    
+    return label
+end
+
+-- Your ESP function with fixes
+function ESP(plr)
+    if plr == LocalPlayer then return end
+    if not plr.Character then return end
+
+    local old = COREGUI:FindFirstChild(plr.Name .. "_ESP")
+    if old then old:Destroy() end
+
+    local folder = createESPFolder(plr)
+
+    local root = plr.Character:FindFirstChild("HumanoidRootPart")
+    local humanoid = plr.Character:FindFirstChild("Humanoid")
+    
+    if not root or not humanoid then 
+        folder:Destroy()
+        return 
+    end
+
+    for _, part in ipairs(plr.Character:GetChildren()) do
+        if part:IsA("BasePart") then
+            createBox(part, folder, plr.TeamColor.Color)
+        end
+    end
+
+    local label = createBillboard(plr, folder)
+
+    local conn
+    conn = RunService.RenderStepped:Connect(function()
+        if not folder.Parent then
+            conn:Disconnect()
+            return
+        end
+        
+        -- Safety checks
+        if not plr.Character or not humanoid or humanoid.Parent ~= plr.Character then
+            conn:Disconnect()
+            folder:Destroy()
+            return
+        end
+        
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (LocalPlayer.Character.HumanoidRootPart.Position - root.Position).Magnitude
+            label.Text = string.format(
+                "Display: %s | Username: %s | Health: %.1f | Studs: %d",
+                plr.DisplayName,
+                plr.Name,
+                humanoid.Health,
+                math.floor(distance)
+            )
+        end
+    end)
+
+    -- Handle character respawns
+    plr.CharacterAdded:Connect(function()
+        wait(1) -- Wait for character to load
+        if ESPenabled and folder.Parent then
+            folder:Destroy()
+            ESP(plr)
+        end
+    end)
+
+    -- Handle team changes
+    plr:GetPropertyChangedSignal("TeamColor"):Connect(function()
+        if ESPenabled and folder.Parent then
+            folder:Destroy()
+            ESP(plr)
+        end
+    end)
+end
+
 addcmd("esp", {}, function(args, speaker)
     if CHMSenabled then
         return notify("ESP", "Disable chams (nochams) before using esp")
     end
     
-    if ESPenabled then return end 
+    if ESPenabled then 
+        return notify("ESP", "ESP is already enabled")
+    end
     
     ESPenabled = true
     for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= speaker then
+        if player ~= LocalPlayer then  -- Use LocalPlayer consistently
             ESP(player)
         end
     end
+    notify("ESP", "ESP enabled")
 end)
 
 addcmd("noesp", {"unesp"}, function(args, speaker)
-    if not ESPenabled then return end  -- guard clause
+    if not ESPenabled then 
+        return notify("ESP", "ESP is not enabled")
+    end
     
     ESPenabled = false
     for _, child in ipairs(COREGUI:GetChildren()) do
@@ -10037,15 +10106,29 @@ addcmd("noesp", {"unesp"}, function(args, speaker)
             child:Destroy()
         end
     end
+    notify("ESP", "ESP disabled")
 end)
 
 addcmd("esptransparency", {}, function(args, speaker)
     local value = tonumber(args[1])
     if value and value >= 0 and value <= 1 then
         espTransparency = value
+        notify("ESP", "Transparency set to " .. value)
+        
+        -- Update existing ESP elements
+        if ESPenabled then
+            for _, folder in ipairs(COREGUI:GetChildren()) do
+                if folder.Name:match("_ESP$") then
+                    for _, child in ipairs(folder:GetChildren()) do
+                        if child:IsA("BoxHandleAdornment") then
+                            child.Transparency = espTransparency
+                        end
+                    end
+                end
+            end
+        end
     else
-        espTransparency = 0.3
-        notify("ESP", "Invalid transparency value. Defaulting to 0.3")
+        notify("ESP", "Invalid transparency value (0-1 required)")
     end
     updatesaves()
 end)
