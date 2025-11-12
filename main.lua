@@ -38,7 +38,7 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
     notLoaded:Destroy()
 end
-currentVersion = "6.1"
+currentVersion = "DiddyVer"
 
 -- Frame Instances (start: 5ms)
 Holder = Instance.new("Frame")
@@ -9964,119 +9964,188 @@ addcmd("unremote",
 ESPenabled = false
 espTransparency = 0.3
 
--- Missing helper functions (you need these implemented)
-function createESPFolder(plr)
-    local folder = Instance.new("Folder")
-    folder.Name = plr.Name .. "_ESP"
-    folder.Parent = COREGUI
-    return folder
-end
+-- Modern ESP system
+local ESPFolders = {}
+local ESPConnections = {}
 
-function createBox(part, folder, color)
-    local box = Instance.new("BoxHandleAdornment")
-    box.Name = "ESP_Box"
-    box.Adornee = part
-    box.AlwaysOnTop = true
-    box.ZIndex = 10
-    box.Size = part.Size
-    box.Color3 = color
-    box.Transparency = espTransparency
-    box.Parent = folder
-    return box
-end
-
-function createBillboard(plr, folder)
-    local billboard = Instance.new("BillboardGui")
-    billboard.Name = "ESP_Label"
-    billboard.Size = UDim2.new(0, 200, 0, 50)
-    billboard.StudsOffset = Vector3.new(0, 3, 0)
-    billboard.AlwaysOnTop = true
-    billboard.Adornee = plr.Character:FindFirstChild("Head") or plr.Character:WaitForChild("HumanoidRootPart")
-    billboard.Parent = folder
-    
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 1, 0)
-    label.BackgroundTransparency = 1
-    label.TextStrokeTransparency = 0
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.TextStrokeColor3 = Color3.new(0, 0, 0)
-    label.TextSize = 14
-    label.Font = Enum.Font.GothamBold
-    label.Parent = billboard
-    
-    return label
-end
-
--- Your ESP function with fixes
-function ESP(plr)
+function createESP(plr)
     if plr == LocalPlayer then return end
-    if not plr.Character then return end
-
-    local old = COREGUI:FindFirstChild(plr.Name .. "_ESP")
-    if old then old:Destroy() end
-
-    local folder = createESPFolder(plr)
-
-    local root = plr.Character:FindFirstChild("HumanoidRootPart")
-    local humanoid = plr.Character:FindFirstChild("Humanoid")
     
-    if not root or not humanoid then 
-        folder:Destroy()
-        return 
+    -- Clean up existing ESP
+    if ESPFolders[plr] then
+        ESPFolders[plr]:Destroy()
+        ESPFolders[plr] = nil
+    end
+    
+    if ESPConnections[plr] then
+        ESPConnections[plr]:Disconnect()
+        ESPConnections[plr] = nil
     end
 
-    for _, part in ipairs(plr.Character:GetChildren()) do
-        if part:IsA("BasePart") then
-            createBox(part, folder, plr.TeamColor.Color)
-        end
-    end
+    local folder = Instance.new("Folder", COREGUI)
+    folder.Name = plr.Name .. "_ESP"
+    ESPFolders[plr] = folder
 
-    local label = createBillboard(plr, folder)
-
-    local conn
-    conn = RunService.RenderStepped:Connect(function()
-        if not folder.Parent then
-            conn:Disconnect()
+    local function setupCharacter(char)
+        if not char or not folder.Parent then return end
+        
+        -- Wait for character to load
+        local root, humanoid, head
+        
+        local success = pcall(function()
+            root = char:WaitForChild("HumanoidRootPart", 2)
+            humanoid = char:WaitForChild("Humanoid", 2)
+            head = char:WaitForChild("Head", 2)
+        end)
+        
+        if not success or not root or not humanoid then
             return
         end
-        
-        -- Safety checks
-        if not plr.Character or not humanoid or humanoid.Parent ~= plr.Character then
-            conn:Disconnect()
-            folder:Destroy()
-            return
+
+        -- Create modern ESP boxes with outlines
+        for _, part in ipairs(char:GetChildren()) do
+            if part:IsA("BasePart") and part.Name ~= "HumanoidRootPart" then
+                -- Main box
+                local box = Instance.new("BoxHandleAdornment", folder)
+                box.Name = "ESP_Box"
+                box.Adornee = part
+                box.AlwaysOnTop = true
+                box.ZIndex = 5
+                box.Size = part.Size + Vector3.new(0.1, 0.1, 0.1)
+                box.Color3 = plr.TeamColor.Color
+                box.Transparency = espTransparency
+                
+                -- Outline
+                local outline = Instance.new("BoxHandleAdornment", folder)
+                outline.Name = "ESP_Outline"
+                outline.Adornee = part
+                outline.AlwaysOnTop = false
+                outline.ZIndex = 4
+                outline.Size = part.Size + Vector3.new(0.15, 0.15, 0.15)
+                outline.Color3 = Color3.new(0, 0, 0)
+                outline.Transparency = 0.7
+            end
         end
+
+        -- Create modern billboard with background
+        local billboard = Instance.new("BillboardGui", folder)
+        billboard.Name = "ESP_Label"
+        billboard.Size = UDim2.new(0, 220, 0, 40)
+        billboard.StudsOffset = Vector3.new(0, 3.5, 0)
+        billboard.AlwaysOnTop = true
+        billboard.Adornee = head or root
+        billboard.MaxDistance = 500
+        billboard.ExtentsOffset = Vector3.new(0, 2, 0)
         
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            local distance = (LocalPlayer.Character.HumanoidRootPart.Position - root.Position).Magnitude
+        local frame = Instance.new("Frame", billboard)
+        frame.Size = UDim2.new(1, 0, 1, 0)
+        frame.BackgroundColor3 = Color3.new(0, 0, 0)
+        frame.BackgroundTransparency = 0.3
+        frame.BorderSizePixel = 0
+        
+        local corner = Instance.new("UICorner", frame)
+        corner.CornerRadius = UDim.new(0, 6)
+        
+        local label = Instance.new("TextLabel", frame)
+        label.Size = UDim2.new(1, -10, 1, -10)
+        label.Position = UDim2.new(0, 5, 0, 5)
+        label.BackgroundTransparency = 1
+        label.TextStrokeTransparency = 0.8
+        label.TextColor3 = Color3.new(1, 1, 1)
+        label.TextStrokeColor3 = Color3.new(0, 0, 0)
+        label.TextSize = 12
+        label.Font = Enum.Font.GothamSemibold
+        label.TextXAlignment = Enum.TextXAlignment.Left
+
+        -- Health bar
+        local healthBar = Instance.new("Frame", frame)
+        healthBar.Size = UDim2.new(0, 4, 1, -10)
+        healthBar.Position = UDim2.new(0, 2, 0, 5)
+        healthBar.BorderSizePixel = 0
+        healthBar.BackgroundColor3 = Color3.new(0, 1, 0)
+        
+        local healthCorner = Instance.new("UICorner", healthBar)
+        healthCorner.CornerRadius = UDim.new(0, 2)
+
+        -- Real-time updates with smooth motion
+        ESPConnections[plr] = RunService.Heartbeat:Connect(function()
+            if not folder.Parent or not char.Parent or not humanoid or humanoid.Health <= 0 then
+                folder:Destroy()
+                ESPConnections[plr]:Disconnect()
+                ESPConnections[plr] = nil
+                return
+            end
+            
+            -- Update distance
+            local distance = 0
+            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                distance = (LocalPlayer.Character.HumanoidRootPart.Position - root.Position).Magnitude
+            end
+            
+            -- Modern text format
             label.Text = string.format(
-                "Display: %s | Username: %s | Health: %.1f | Studs: %d",
+                "👤 %s | 💚 %d/%d | 📏 %d studs",
                 plr.DisplayName,
-                plr.Name,
-                humanoid.Health,
+                math.floor(humanoid.Health),
+                math.floor(humanoid.MaxHealth),
                 math.floor(distance)
             )
+            
+            -- Dynamic health bar
+            local healthPercent = humanoid.Health / humanoid.MaxHealth
+            healthBar.Size = UDim2.new(0, 4, healthPercent, -10)
+            healthBar.Position = UDim2.new(0, 2, 1 - healthPercent, 5)
+            
+            -- Health color gradient
+            if healthPercent > 0.7 then
+                healthBar.BackgroundColor3 = Color3.new(0, 1, 0) -- Green
+            elseif healthPercent > 0.3 then
+                healthBar.BackgroundColor3 = Color3.new(1, 1, 0) -- Yellow
+            else
+                healthBar.BackgroundColor3 = Color3.new(1, 0, 0) -- Red
+            end
+            
+            -- Team color updating
+            for _, obj in ipairs(folder:GetChildren()) do
+                if obj:IsA("BoxHandleAdornment") and obj.Name == "ESP_Box" then
+                    obj.Color3 = plr.TeamColor.Color
+                end
+            end
+        end)
+    end
+
+    -- Character events
+    if plr.Character then
+        setupCharacter(plr.Character)
+    end
+    
+    plr.CharacterAdded:Connect(function(char)
+        if ESPenabled then
+            wait(0.5) -- Short delay for character load
+            setupCharacter(char)
         end
     end)
-
-    -- Handle character respawns
-    plr.CharacterAdded:Connect(function()
-        wait(1) -- Wait for character to load
-        if ESPenabled and folder.Parent then
-            folder:Destroy()
-            ESP(plr)
-        end
-    end)
-
-    -- Handle team changes
+    
     plr:GetPropertyChangedSignal("TeamColor"):Connect(function()
         if ESPenabled and folder.Parent then
             folder:Destroy()
-            ESP(plr)
+            createESP(plr)
         end
     end)
 end
 
+function removeESP(plr)
+    if ESPFolders[plr] then
+        ESPFolders[plr]:Destroy()
+        ESPFolders[plr] = nil
+    end
+    if ESPConnections[plr] then
+        ESPConnections[plr]:Disconnect()
+        ESPConnections[plr] = nil
+    end
+end
+
+-- Commands
 addcmd("esp", {}, function(args, speaker)
     if CHMSenabled then
         return notify("ESP", "Disable chams (nochams) before using esp")
@@ -10087,12 +10156,20 @@ addcmd("esp", {}, function(args, speaker)
     end
     
     ESPenabled = true
+    
+    -- ESP for existing players
     for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer then  -- Use LocalPlayer consistently
-            ESP(player)
-        end
+        createESP(player)
     end
-    notify("ESP", "ESP enabled")
+    
+    -- Detect new players
+    Players.PlayerAdded:Connect(function(newPlayer)
+        if ESPenabled then
+            createESP(newPlayer)
+        end
+    end)
+    
+    notify("ESP", "✅ ESP enabled with modern features")
 end)
 
 addcmd("noesp", {"unesp"}, function(args, speaker)
@@ -10101,28 +10178,30 @@ addcmd("noesp", {"unesp"}, function(args, speaker)
     end
     
     ESPenabled = false
-    for _, child in ipairs(COREGUI:GetChildren()) do
-        if child.Name:match("_ESP$") then
-            child:Destroy()
-        end
+    
+    -- Clean up all ESP
+    for player in pairs(ESPFolders) do
+        removeESP(player)
     end
-    notify("ESP", "ESP disabled")
+    
+    table.clear(ESPFolders)
+    table.clear(ESPConnections)
+    
+    notify("ESP", "❌ ESP disabled")
 end)
 
 addcmd("esptransparency", {}, function(args, speaker)
     local value = tonumber(args[1])
     if value and value >= 0 and value <= 1 then
         espTransparency = value
-        notify("ESP", "Transparency set to " .. value)
-        
-        -- Update existing ESP elements
-        if ESPenabled then
-            for _, folder in ipairs(COREGUI:GetChildren()) do
-                if folder.Name:match("_ESP$") then
-                    for _, child in ipairs(folder:GetChildren()) do
-                        if child:IsA("BoxHandleAdornment") then
-                            child.Transparency = espTransparency
-                        end
+        notify("ESP", string.format("Transparency set to %.1f", value))
+
+        -- Update all existing ESP
+        for _, folder in pairs(ESPFolders) do
+            if folder.Parent then
+                for _, child in ipairs(folder:GetChildren()) do
+                    if child:IsA("BoxHandleAdornment") and child.Name == "ESP_Box" then
+                        child.Transparency = espTransparency
                     end
                 end
             end
