@@ -10022,9 +10022,25 @@ function createESP(plr)
 
         local localRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 
-        local heartbeatConnection = RunService.Heartbeat:Connect(function()
-            if not folder.Parent or not char.Parent or not char:IsDescendantOf(workspace) or humanoid.Health <= 0 then
-                heartbeatConnection:Disconnect()
+        local heartbeatConnection
+        heartbeatConnection = RunService.Heartbeat:Connect(function()
+            if not heartbeatConnection or not heartbeatConnection.Connected then
+                return
+            end
+            
+            if not folder.Parent or not char.Parent or not char:IsDescendantOf(workspace) or (humanoid and humanoid.Health <= 0) then
+                if heartbeatConnection then
+                    heartbeatConnection:Disconnect()
+                end
+                highlight:Destroy()
+                billboard:Destroy()
+                return
+            end
+
+            if not humanoid or not root then
+                if heartbeatConnection then
+                    heartbeatConnection:Disconnect()
+                end
                 highlight:Destroy()
                 billboard:Destroy()
                 return
@@ -10035,8 +10051,7 @@ function createESP(plr)
                 distance = (localRoot.Position - root.Position).Magnitude
             end
 
-            label.Text = plr.DisplayName .. " | " .. math.floor(humanoid.Health) .. "HP | " .. math.floor(distance) ..
-                             "m"
+            label.Text = plr.DisplayName .. " | " .. math.floor(humanoid.Health) .. "HP | " .. math.floor(distance) .. "m"
             highlight.FillColor = plr.TeamColor.Color
         end)
 
@@ -10054,13 +10069,7 @@ function createESP(plr)
         end
     end)
 
-    -- Also listen for character removals
-    plr.CharacterRemoving:Connect(function()
-        if ESPConnections[plr] then
-            ESPConnections[plr]:Disconnect()
-            ESPConnections[plr] = nil
-        end
-    end)
+    table.insert(ESPConnections, characterConnection)
 end
 
 function removeESP(plr)
@@ -10068,8 +10077,11 @@ function removeESP(plr)
         ESPFolders[plr]:Destroy()
         ESPFolders[plr] = nil
     end
+
     if ESPConnections[plr] then
-        ESPConnections[plr]:Disconnect()
+        if ESPConnections[plr].Connected then
+            pcall(function() ESPConnections[plr]:Disconnect() end)
+        end
         ESPConnections[plr] = nil
     end
 end
@@ -10080,6 +10092,9 @@ function enableESP()
     end
 
     ESPenabled = true
+
+    ESPConnections = ESPConnections or {}
+    ESPFolders = ESPFolders or {}
 
     for _, player in ipairs(Players:GetPlayers()) do
         createESP(player)
@@ -10106,12 +10121,23 @@ function disableESP()
         PlayerAddedConnection = nil
     end
 
-    for player, _ in pairs(ESPFolders) do
-        removeESP(player)
+    if ESPConnections then
+        for player, connection in pairs(ESPConnections) do
+            if connection and connection.Connected then
+                pcall(function() connection:Disconnect() end)
+            end
+        end
+        table.clear(ESPConnections)
     end
 
-    table.clear(ESPFolders)
-    table.clear(ESPConnections)
+    if ESPFolders then
+        for player, folder in pairs(ESPFolders) do
+            if folder then
+                folder:Destroy()
+            end
+        end
+        table.clear(ESPFolders)
+    end
 
     notify("ESP", "❌ ESP disabled")
 end
